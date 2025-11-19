@@ -12,7 +12,20 @@
 
     <!-- Colors CSS -->
     <link href="assets/css/colors.css" rel="stylesheet" />
-    <style></style>
+    <style>
+.form-fade {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: none;
+}
+
+.form-fade.active {
+  display: block;
+  opacity: 1;
+}
+
+
+    </style>
   </head>
 
   <body>
@@ -505,11 +518,8 @@
                     </div>
                     <!-- ==== Radio Buttons End ==== -->
                     <!-- ==== Employer Register Form Start ==== -->
-                    <div
-                      id="form-employer"
-                      style="display: none"
-                      aria-hidden="true"
-                    >
+                    <div id="form-employer" class="form-fade" aria-hidden="true">
+
                       <!-- employer form headings ==== -->
                       <div
                         class="d-flex align-items-center justify-content-start gap-3"
@@ -690,11 +700,8 @@
                     </div>
                     <!-- ==== Employer Register Form End ==== -->
                     <!-- ==== Candidate Register Form Start ==== -->
-                    <div
-                      id="form-candidate"
-                      style="display: none"
-                      aria-hidden="true"
-                    >
+                    <div id="form-candidate" class="form-fade" aria-hidden="true">
+
                       <!-- employer form headings ==== -->
                       <div
                         class="d-flex align-items-center justify-content-start gap-3"
@@ -1322,57 +1329,35 @@
     <!-- ============================================================== -->
   </body>
   <script>
-    jQuery(function ($) {
-      debugger;
-      var $roleBox = $("#role-select-box");
-      var $emp = $("#form-employer");
-      var $cand = $("#form-candidate");
+   
+   jQuery(function ($) {
+  const $roleBox = $("#role-select-box");
+  const $emp = $("#form-employer");
+  const $cand = $("#form-candidate");
 
-      function hideAll() {
-        $emp.stop(true, true).slideUp(160).attr("aria-hidden", "true");
-        $cand.stop(true, true).slideUp(160).attr("aria-hidden", "true");
-      }
+  function hideAll() {
+    $emp.removeClass("active");
+    $cand.removeClass("active");
+  }
 
-      // on load: hide or show if a radio is pre-checked
-      hideAll();
-      var pre = $("input[name='lokingfor']:checked").attr("id");
-      if (pre === "findjob") {
-        $emp.show().attr("aria-hidden", "false");
-      } else if (pre === "findtalent") {
-        $cand.show().attr("aria-hidden", "false");
-      }
+  hideAll();
 
-      // bind change handler
-      $("input[name='lokingfor']").on("change", function () {
-        var id = $(this).attr("id");
-        if (id === "findjob") {
-          // Employer chosen -> show employer form
-          $cand
-            .stop(true, true)
-            .slideUp(150, function () {
-              $emp.stop(true, true).slideDown(200).attr("aria-hidden", "false");
-              $("#role-select-box").hide();
-            })
-            .attr("aria-hidden", "true");
-        } else if (id === "findtalent") {
-          // Candidate chosen -> show candidate form
-          $emp
-            .stop(true, true)
-            .slideUp(150, function () {
-              $cand
-                .stop(true, true)
-                .slideDown(200)
-                .attr("aria-hidden", "false");
-              $("#role-select-box").hide();
-            })
-            .attr("aria-hidden", "true");
-        } else {
-          hideAll();
-        }
+  $("input[name='lokingfor']").on("change", function () {
+    let id = $(this).attr("id");
+    hideAll();
 
-        // optional: scroll card a bit so user sees the revealed form
-        // $('html,body').animate({scrollTop: ($emp.length ? $emp.closest('.card').offset().top - 20 : 0)}, 220);
-      });
-    });
+    if (id === "findjob") {
+      $emp.addClass("active");
+      $roleBox.fadeOut(250);
+    }
+
+    if (id === "findtalent") {
+      $cand.addClass("active");
+      $roleBox.fadeOut(250);
+    }
+  });
+});
+
+
   </script>
 </html>
