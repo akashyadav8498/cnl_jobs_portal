@@ -1,0 +1,13 @@
+{
+  "name": "crud-app-node22",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "app.mjs",
+  "scripts": {
+    "start": "node app.mjs"
+  },
+  "dependencies": {
+    "express": "^5.0.1",
+    "cors": "^2.8.5"
+  }
+}
