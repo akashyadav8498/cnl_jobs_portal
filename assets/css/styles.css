@@ -49,13 +49,14 @@
 	--primaryfont: 'Jost', sans-serif;
 	--bordercolor:#dee2e6;
 	--graycolor:#f1f1f1;
+    --darkgreycolor:#e7e7e7;
 	--lightcolor:#f8f8f8;
 	--maincolor:#ff3d00;
 	--bghijack:#fff5ee;
 	--secondcolor:#c83000;
 	--headingcolor:#1b2021;
 	--heading-2:#c83000;
-	--greencolor:#e63700;
+	--greencolor:#f9f9f9;
 	--redcolor:#e91e1e;
 	--navcolor:#30363f;
 	--darkheadercolor:#8e97a4;
@@ -1914,6 +1915,18 @@ table.table tr th {
 	color:var(--secondcolor);
 }
 .btn-outline-gray:hover, .btn-outline-gray:focus, .btn-outline-gray:active, .btn-outline-gray:focus-visible{
+	background:transparent !important;
+	border-color:var(--maincolor) !important;
+	color:var(--maincolor) !important;
+}
+
+/* New Class edit by Vinod Yadav */
+.btn-outline-darkgray{
+	background:transparent;
+	border-color:var(--darkgraycolor);
+	color:var(--secondcolor);
+}
+.btn-outline-darkgray:hover, .btn-outline-darkgray:focus, .btn-outline-darkgray:active, .btn-outline-darkgray:focus-visible{
 	background:transparent !important;
 	border-color:var(--maincolor) !important;
 	color:var(--maincolor) !important;
