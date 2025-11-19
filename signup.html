@@ -15,14 +15,38 @@
     <style>
 .form-fade {
   opacity: 0;
-  transition: opacity 0.4s ease;
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(40px); /* start slightly from right */
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s ease;
+  height: 0;
+  overflow: hidden;
 }
 
 .form-fade.active {
-  display: block;
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0); /* slide to normal position */
+  height: auto;
 }
+
+.form-fade.active {
+  height: auto;
+}
+
+
+
+#role-select-box.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    transition: opacity 0.4s ease, height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+}
+
 
 
     </style>
@@ -394,6 +418,7 @@
               <div class="card rounded-4">
                 <div class="card-body p-4">
                   <form class="p-md-4">
+                    <div id="section-wrapper" class="position-relative" style="min-height: 600px;">
                     <!-- ==== Radio Buttons Start ==== -->
                     <div id="role-select-box">
                       <!--  radio buttons heading -->
@@ -518,7 +543,7 @@
                     </div>
                     <!-- ==== Radio Buttons End ==== -->
                     <!-- ==== Employer Register Form Start ==== -->
-                    <div id="form-employer" class="form-fade" aria-hidden="true">
+                    <div id="form-employer" class="form-fade">
 
                       <!-- employer form headings ==== -->
                       <div
@@ -700,7 +725,7 @@
                     </div>
                     <!-- ==== Employer Register Form End ==== -->
                     <!-- ==== Candidate Register Form Start ==== -->
-                    <div id="form-candidate" class="form-fade" aria-hidden="true">
+                    <div id="form-candidate" class="form-fade">
 
                       <!-- employer form headings ==== -->
                       <div
@@ -881,6 +906,7 @@
                       </div>
                     </div>
                     <!-- ==== Candidate Register Form End ==== -->
+                    </div>
                   </form>
                 </div>
               </div>
@@ -1330,7 +1356,8 @@
   </body>
   <script>
    
-   jQuery(function ($) {
+  jQuery(function ($) {
+
   const $roleBox = $("#role-select-box");
   const $emp = $("#form-employer");
   const $cand = $("#form-candidate");
@@ -1344,18 +1371,20 @@
 
   $("input[name='lokingfor']").on("change", function () {
     let id = $(this).attr("id");
+
+    $roleBox.addClass("fade-out");
+
     hideAll();
 
     if (id === "findjob") {
       $emp.addClass("active");
-      $roleBox.fadeOut(250);
     }
 
     if (id === "findtalent") {
       $cand.addClass("active");
-      $roleBox.fadeOut(250);
     }
   });
+
 });
 
 
