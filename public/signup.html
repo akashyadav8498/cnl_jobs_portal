@@ -46,6 +46,10 @@
         transition: opacity 0.4s ease, height 0.4s ease, padding 0.4s ease,
           margin 0.4s ease;
       }
+      .nice-select .list {
+        max-height: 150px;
+        overflow-y: auto;
+      }
     </style>
   </head>
 
@@ -79,24 +83,20 @@
                     <a
                       href="JavaScript:Void(0);"
                       data-bs-toggle="modal"
-                      data-bs-target="#login"
-                    >
+                      data-bs-target="#login">
                       <svg
                         width="32"
                         height="32"
                         viewBox="0 0 24 24"
                         fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
+                        xmlns="http://www.w3.org/2000/svg">
                         <path
                           opacity="0.3"
                           d="M22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2C17.5 2 22 6.5 22 12ZM12 7C10.3 7 9 8.3 9 10C9 11.7 10.3 13 12 13C13.7 13 15 11.7 15 10C15 8.3 13.7 7 12 7Z"
-                          class="fill-main"
-                        />
+                          class="fill-main" />
                         <path
                           d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z"
-                          class="fill-main"
-                        />
+                          class="fill-main" />
                       </svg>
                     </a>
                   </li>
@@ -418,8 +418,7 @@
                     <div
                       id="section-wrapper"
                       class="position-relative"
-                      style="min-height: 600px"
-                    >
+                      style="min-height: 600px">
                       <!-- ==== Radio Buttons Start ==== -->
                       <div
                         id="role-select-box"
@@ -427,13 +426,11 @@
                           background-color: white;
                           padding: 10px 10px 20px 25px;
                           border-radius: 10px;
-                        "
-                      >
+                        ">
                         <!--  radio buttons heading -->
                         <div class="form-heads d-block mb-2">
                           <div
-                            class="d-flex align-items-center justify-content-start gap-3"
-                          >
+                            class="d-flex align-items-center justify-content-start gap-3">
                             <div class="head-caps">
                               <h4>How do we recognize you?</h4>
                             </div>
@@ -449,12 +446,10 @@
                                   class="btn-check"
                                   name="role"
                                   value="employer"
-                                  id="findtalent"
-                                />
+                                  id="findtalent" />
                                 <label
                                   class="btn btn-md btn-outline-gray h-auto"
-                                  for="findtalent"
-                                >
+                                  for="findtalent">
                                   <div class="d-flex align-items-center gap-3">
                                     <div class="icons">
                                       <svg
@@ -462,17 +457,14 @@
                                         height="44"
                                         viewBox="0 0 24 24"
                                         fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
+                                        xmlns="http://www.w3.org/2000/svg">
                                         <path
                                           opacity="0.3"
                                           d="M20 15H4C2.9 15 2 14.1 2 13V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V13C22 14.1 21.1 15 20 15ZM13 12H11C10.5 12 10 12.4 10 13V16C10 16.5 10.4 17 11 17H13C13.6 17 14 16.6 14 16V13C14 12.4 13.6 12 13 12Z"
-                                          fill="#ff3d00"
-                                        />
+                                          fill="#ff3d00" />
                                         <path
                                           d="M14 6V5H10V6H8V5C8 3.9 8.9 3 10 3H14C15.1 3 16 3.9 16 5V6H14ZM20 15H14V16C14 16.6 13.5 17 13 17H11C10.5 17 10 16.6 10 16V15H4C3.6 15 3.3 14.9 3 14.7V18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V14.7C20.7 14.9 20.4 15 20 15Z"
-                                          fill="#ff3d00"
-                                        />
+                                          fill="#ff3d00" />
                                       </svg>
                                     </div>
                                     <div class="btn-caps text-start">
@@ -499,12 +491,10 @@
                                   class="btn-check"
                                   name="role"
                                   value="candidate"
-                                  id="findjob"
-                                />
+                                  id="findjob" />
                                 <label
                                   class="btn btn-md btn-outline-gray h-auto"
-                                  for="findjob"
-                                >
+                                  for="findjob">
                                   <div class="d-flex align-items-center gap-3">
                                     <div class="icons">
                                       <svg
@@ -512,17 +502,14 @@
                                         height="44"
                                         viewBox="0 0 24 24"
                                         fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
+                                        xmlns="http://www.w3.org/2000/svg">
                                         <path
                                           opacity="0.3"
                                           d="M22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2C17.5 2 22 6.5 22 12ZM12 7C10.3 7 9 8.3 9 10C9 11.7 10.3 13 12 13C13.7 13 15 11.7 15 10C15 8.3 13.7 7 12 7Z"
-                                          fill="#ff3d00"
-                                        />
+                                          fill="#ff3d00" />
                                         <path
                                           d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z"
-                                          fill="#ff3d00"
-                                        />
+                                          fill="#ff3d00" />
                                       </svg>
                                     </div>
                                     <div class="btn-caps text-start">
@@ -555,12 +542,10 @@
                           padding: 20px 50px 50px 50px;
                           border-radius: 10px;
                           margin-top: -40px;
-                        "
-                      >
+                        ">
                         <!-- employer form headings ==== -->
                         <div
-                          class="d-flex align-items-center justify-content-start gap-3"
-                        >
+                          class="d-flex align-items-center justify-content-start gap-3">
                           <div class="head-caps">
                             <h4>
                               <span style="font-weight: 100">Welcome</span
@@ -569,8 +554,7 @@
                                   font-weight: 900;
                                   text-transform: uppercase;
                                   color: #ff3d00;
-                                "
-                              >
+                                ">
                                 Employer</span
                               >
                               <span style="font-weight: 100"
@@ -583,45 +567,38 @@
                           <div class="social-signup d-flex flex-row gap-3 mt-4">
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
-                            >
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
                               <img
                                 src="assets/img/google.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Facebook Signup"
-                              />
+                                alt="Facebook Signup" />
                             </a>
 
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
-                            >
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
                               <img
                                 src="assets/img/facebook.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Google Signup"
-                              />
+                                alt="Google Signup" />
                             </a>
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
-                            >
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
                               <img
                                 src="assets/img/linkedin.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Google Signup"
-                              />
+                                alt="Google Signup" />
                             </a>
                           </div>
 
                           <div class="devider position-relative d-block">
                             <hr class="mb-4 mt-4" />
                             <div
-                              class="position-absolute top-50 start-50 translate-middle"
-                            >
+                              class="position-absolute top-50 start-50 translate-middle">
                               <span
                                 class="square--30 circle bg-white text-muted"
                                 >OR</span
@@ -636,8 +613,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              placeholder="Enter your full name?"
-                            />
+                              placeholder="Enter your full name?" />
                           </div>
 
                           <div class="form-group mb-0">
@@ -649,8 +625,7 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="Tell us your Email ID"
-                            />
+                              placeholder="Tell us your Email ID" />
                             <!-- <span class="text-sm opacity-75"
                             >We'll send relevant jobs and updates to this
                             email</span
@@ -667,8 +642,7 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="(Minimum 8 characters)"
-                            />
+                              placeholder="(Minimum 8 characters)" />
                             <!-- <span class="text-sm opacity-75"
                             >This helps your account stay protected</span
                           >
@@ -684,38 +658,49 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="Enter your mobile number"
-                            />
+                              placeholder="Enter your mobile number" />
                             <!-- <span class="text-sm opacity-75"
                             >This helps your account stay protected</span
                           >
 						  -->
                           </div>
-                          <!--
-						<div class="form-group mb-0">
+
+                          <div class="form-group mb-0">
+                            <label class="fw-medium fs-6 text-dark"
+                              >Organization Name<i class="text-danger text-md"
+                                >*</i
+                              ></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Enter Organization Name" />
+                          </div>
+
                           <label class="fw-medium fs-6 text-dark"
-                            >Organization Name<i class="text-danger text-md"
-                              >*</i
-                            ></label
+                            >Location<i class="text-danger text-md">*</i></label
                           >
-                          <input
-                            type="email"
-                            class="form-control"
-                            placeholder="Enter Organization Name"
-                          />
-                          <span class="text-sm opacity-75"
-                            >This helps your account stay protected</span
-                          >
-                        </div>
-						-->
+                          <div class="nice-select form-control" tabindex="0">
+                            <span class="current">Select Location</span>
+                            <ul class="list">
+                              <li data-value="1" class="option">Gurugram</li>
+                              <li data-value="2" class="option">Ghaziabad</li>
+                              <li data-value="3" class="option">Delhi</li>
+                              <li data-value="4" class="option">Noida</li>
+                              <li data-value="5" class="option">
+                                Greater Noida
+                              </li>
+                              <li data-value="6" class="option">Faridabad</li>
+                            </ul>
+                          </div>
+
                           <div class="form-group mb-0">
                             <div class="form-check form-check-inline">
                               <input
                                 class="form-check-input"
                                 type="checkbox"
                                 id="promotions"
-                                value="option1"
-                              />
+                                value="option1" />
                               <label class="form-check-label" for="promotions"
                                 >Send me important updates & promotions via SMS
                                 & email</label
@@ -727,8 +712,7 @@
                             <p class="confirmTex">
                               By clicking Register, you agree to the<a
                                 href="#"
-                                class="text-main"
-                              >
+                                class="text-main">
                                 Terms and Conditions
                               </a>
                               &amp;<a href="#" class="text-main">
@@ -738,8 +722,7 @@
                             </p>
                             <button
                               type="button"
-                              class="btn btn-main full-width"
-                            >
+                              class="btn btn-main full-width">
                               Register now
                             </button>
                           </div>
@@ -755,12 +738,10 @@
                           padding: 20px 50px 50px 50px;
                           border-radius: 10px;
                           margin-top: -70px;
-                        "
-                      >
+                        ">
                         <!-- candidate form headings ==== -->
                         <div
-                          class="d-flex align-items-center justify-content-start gap-3"
-                        >
+                          class="d-flex align-items-center justify-content-start gap-3">
                           <div class="head-caps">
                             <h4>
                               <span style="font-weight: 100">Welcome</span
@@ -769,8 +750,7 @@
                                   font-weight: 900;
                                   text-transform: uppercase;
                                   color: #ff3d00;
-                                "
-                              >
+                                ">
                                 Candidate</span
                               >
                               <span style="font-weight: 100"
@@ -783,45 +763,38 @@
                           <div class="social-signup d-flex flex-row gap-3 mt-4">
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
-                            >
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
                               <img
                                 src="assets/img/google.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Facebook Signup"
-                              />
+                                alt="Facebook Signup" />
                             </a>
 
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
-                            >
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
                               <img
                                 src="assets/img/facebook.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Google Signup"
-                              />
+                                alt="Google Signup" />
                             </a>
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
-                            >
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
                               <img
                                 src="assets/img/linkedin.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Google Signup"
-                              />
+                                alt="Google Signup" />
                             </a>
                           </div>
 
                           <div class="devider position-relative d-block">
                             <hr class="mb-4 mt-4" />
                             <div
-                              class="position-absolute top-50 start-50 translate-middle"
-                            >
+                              class="position-absolute top-50 start-50 translate-middle">
                               <span
                                 class="square--30 circle bg-white text-muted"
                                 >OR</span
@@ -836,8 +809,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              placeholder="Enter your full name?"
-                            />
+                              placeholder="Enter your full name?" />
                           </div>
 
                           <div class="form-group mb-0">
@@ -849,8 +821,7 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="Tell us your Email ID"
-                            />
+                              placeholder="Tell us your Email ID" />
                             <!-- <span class="text-sm opacity-75"
                             >We'll send relevant jobs and updates to this
                             email</span
@@ -867,8 +838,7 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="(Minimum 8 characters)"
-                            />
+                              placeholder="(Minimum 8 characters)" />
                             <!-- <span class="text-sm opacity-75"
                             >This helps your account stay protected</span
                           >
@@ -884,8 +854,7 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="Enter your mobile number"
-                            />
+                              placeholder="Enter your mobile number" />
                             <!-- <span class="text-sm opacity-75"
                             >This helps your account stay protected</span
                           >
@@ -914,8 +883,7 @@
                                 class="form-check-input"
                                 type="checkbox"
                                 id="promotions"
-                                value="option1"
-                              />
+                                value="option1" />
                               <label class="form-check-label" for="promotions"
                                 >Send me important updates & promotions via SMS
                                 & email</label
@@ -927,8 +895,7 @@
                             <p class="confirmTex">
                               By clicking Register, you agree to the<a
                                 href="#"
-                                class="text-main"
-                              >
+                                class="text-main">
                                 Terms and Conditions
                               </a>
                               &amp;<a href="#" class="text-main">
@@ -938,8 +905,7 @@
                             </p>
                             <button
                               type="button"
-                              class="btn btn-main full-width"
-                            >
+                              class="btn btn-main full-width">
                               Register now
                             </button>
                           </div>
@@ -964,8 +930,7 @@
       <!-- ============================ Call To Action ================================== -->
       <section
         class="bg-cover call-action-container dark bg-second"
-        style="background: url(assets/img/footer-bg-dark.png) no-repeat"
-      >
+        style="background: url(assets/img/footer-bg-dark.png) no-repeat">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-7 col-lg-10 col-md-12 col-sm-12">
@@ -985,8 +950,7 @@
                       <input
                         type="text"
                         class="form-control"
-                        placeholder="Enter Your email"
-                      />
+                        placeholder="Enter Your email" />
                       <button type="button" class="btn btn-subscribe">
                         Subscribe
                       </button>
@@ -1007,8 +971,7 @@
         <section class="py-4" style="border-bottom: 1px #f2f2f2 solid">
           <div class="container">
             <div
-              class="row align-items-center justify-content-center gx-3 gy-3"
-            >
+              class="row align-items-center justify-content-center gx-3 gy-3">
               <div class="col-xl-3 col-lg-3 col-md-6 col-12">
                 <div class="d-flex align-items-center justify-content-start">
                   <div class="tryui-pos">
@@ -1174,25 +1137,21 @@
                   <div class="app-wrap d-flex flex-column gap-3">
                     <!-- Google Stiore -->
                     <div
-                      class="d-flex align-items-center border rounded-3 px-2 py-3 gap-2"
-                    >
+                      class="d-flex align-items-center border rounded-3 px-2 py-3 gap-2">
                       <div class="social-icon">
                         <svg
                           width="55"
                           height="55"
                           viewBox="0 0 24 24"
                           fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
+                          xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="M15.0082 5.05202C15.5082 4.45202 15.9082 3.65207 16.0082 2.85207C16.1082 2.25207 15.5082 1.85202 15.0082 2.05202C14.2082 2.35202 13.5082 2.85205 12.9082 3.45205C12.4082 4.05205 12.0082 4.8521 11.9082 5.7521C11.9082 6.2521 12.4082 6.65205 12.8082 6.45205C13.7082 6.35205 14.5082 5.75202 15.0082 5.05202Z"
-                            class="fill-main"
-                          />
+                            class="fill-main" />
                           <path
                             opacity="0.3"
                             d="M18.4082 10.0519C18.8082 9.65195 18.8082 8.95195 18.3082 8.55195C17.6082 8.05195 16.8082 7.65195 15.9082 7.55195C14.6082 7.45195 13.5082 8.35199 12.2082 8.35199C11.0082 8.35199 10.1082 7.55195 8.70818 7.55195C7.30818 7.55195 5.80818 8.45197 4.80818 9.95197C3.50818 12.052 3.70818 15.952 5.90818 19.352C6.70818 20.552 7.70818 21.852 9.10818 21.952C10.3082 21.952 10.7082 21.152 12.3082 21.152C13.9082 21.152 14.3082 21.952 15.5082 21.952C16.9082 21.952 18.0082 20.452 18.7082 19.252C19.1082 18.652 19.3082 18.352 19.5082 17.852C19.7082 17.452 19.5082 16.852 19.1082 16.652C16.8082 15.052 16.5082 11.8519 18.4082 10.0519Z"
-                            class="fill-main"
-                          />
+                            class="fill-main" />
                         </svg>
                       </div>
                       <div class="social-caption">
@@ -1203,37 +1162,30 @@
 
                     <!-- IOS Stiore -->
                     <div
-                      class="d-flex align-items-center border rounded-3 px-2 py-3 gap-2"
-                    >
+                      class="d-flex align-items-center border rounded-3 px-2 py-3 gap-2">
                       <div class="social-icon">
                         <svg
                           width="55"
                           height="55"
                           viewBox="0 0 24 24"
                           fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
+                          xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="M4.335 8.61499C3.98049 8.61579 3.64078 8.75725 3.39048 9.0083C3.14018 9.25935 2.99973 9.59947 3 9.95398V15.307C3 15.6611 3.14065 16.0006 3.39101 16.251C3.64138 16.5013 3.98094 16.642 4.335 16.642C4.68907 16.642 5.02863 16.5013 5.27899 16.251C5.52935 16.0006 5.67 15.6611 5.67 15.307V9.95398C5.67027 9.59947 5.52983 9.25935 5.27953 9.0083C5.02922 8.75725 4.68952 8.61579 4.335 8.61499ZM20.353 8.61499C19.9986 8.61579 19.659 8.75734 19.4088 9.00842C19.1587 9.25951 19.0185 9.59956 19.019 9.95398V15.307C19.0141 15.4853 19.045 15.6628 19.1099 15.829C19.1748 15.9952 19.2723 16.1467 19.3967 16.2745C19.5211 16.4024 19.6699 16.504 19.8342 16.5734C19.9985 16.6428 20.1751 16.6786 20.3535 16.6786C20.5319 16.6786 20.7085 16.6428 20.8728 16.5734C21.0371 16.504 21.1859 16.4024 21.3103 16.2745C21.4347 16.1467 21.5322 15.9952 21.5971 15.829C21.662 15.6628 21.6929 15.4853 21.688 15.307V9.95398C21.6883 9.59947 21.5478 9.25935 21.2975 9.0083C21.0472 8.75725 20.7075 8.61579 20.353 8.61499Z"
-                            class="fill-main"
-                          />
+                            class="fill-main" />
                           <path
                             d="M8.33899 18.062V20.662C8.33899 21.0161 8.47964 21.3556 8.73 21.606C8.98036 21.8563 9.31993 21.9969 9.67399 21.9969C10.0281 21.9969 10.3676 21.8563 10.618 21.606C10.8683 21.3556 11.009 21.0161 11.009 20.662V18.062H8.33899Z"
-                            class="fill-main"
-                          />
+                            class="fill-main" />
                           <path
                             opacity="0.3"
                             d="M16.344 18.062C16.6984 18.0615 17.0381 17.9202 17.2885 17.6693C17.5388 17.4184 17.6793 17.0784 17.679 16.724V8.69299H7.004V16.724C7.00373 17.0784 7.1442 17.4184 7.39454 17.6693C7.64487 17.9202 7.98458 18.0615 8.339 18.062H16.344Z"
-                            fill="#6e8497"
-                          />
+                            fill="#6e8497" />
                           <path
                             d="M13.679 18.062V20.662C13.679 21.0161 13.8196 21.3556 14.07 21.606C14.3204 21.8563 14.6599 21.9969 15.014 21.9969C15.368 21.9969 15.7076 21.8563 15.958 21.606C16.2083 21.3556 16.349 21.0161 16.349 20.662V18.062H13.679Z"
-                            class="fill-main"
-                          />
+                            class="fill-main" />
                           <path
                             d="M15.676 4.53889L16.864 3.09492C16.9209 3.02747 16.9639 2.94945 16.9904 2.8653C17.017 2.78115 17.0266 2.69257 17.0187 2.60468C17.0109 2.51679 16.9857 2.43131 16.9446 2.35322C16.9035 2.27512 16.8474 2.206 16.7794 2.14973C16.7115 2.09345 16.633 2.05112 16.5486 2.02534C16.4642 1.99955 16.3756 1.99079 16.2878 1.99946C16.2 2.00813 16.1147 2.03408 16.037 2.07587C15.9593 2.11767 15.8906 2.17451 15.835 2.24299L14.535 3.82099C13.8435 3.50074 13.0902 3.33617 12.3282 3.33893C11.5662 3.3417 10.8141 3.51173 10.125 3.83698L8.85999 2.2519C8.80503 2.18348 8.73714 2.1266 8.66018 2.08442C8.58322 2.04224 8.49871 2.01569 8.41147 2.00617C8.32423 1.99665 8.23597 2.00441 8.15173 2.029C8.06748 2.05359 7.98891 2.09452 7.92049 2.14948C7.85207 2.20444 7.79515 2.27235 7.75297 2.34931C7.71079 2.42627 7.68418 2.51073 7.67466 2.59797C7.66515 2.68521 7.6729 2.77349 7.69749 2.85773C7.72209 2.94198 7.76303 3.02052 7.81799 3.08893L8.98999 4.55793C8.37138 5.05535 7.87187 5.68486 7.52806 6.40034C7.18426 7.11581 7.00485 7.89915 7.00299 8.69294H17.684C17.6821 7.8943 17.5006 7.10632 17.1531 6.38727C16.8055 5.66823 16.3007 5.03648 15.676 4.53889ZM10.676 7.34699C10.4782 7.34699 10.2849 7.28829 10.1204 7.17841C9.95597 7.06853 9.8278 6.91241 9.75211 6.72968C9.67642 6.54696 9.65662 6.34578 9.69521 6.1518C9.73379 5.95782 9.82903 5.77969 9.96888 5.63984C10.1087 5.49998 10.2869 5.40474 10.4809 5.36616C10.6749 5.32757 10.8759 5.34735 11.0587 5.42304C11.2414 5.49873 11.3976 5.62688 11.5075 5.79133C11.6173 5.95578 11.676 6.14921 11.676 6.34699C11.676 6.61221 11.5706 6.86649 11.3831 7.05402C11.1956 7.24156 10.9412 7.34699 10.676 7.34699ZM14.005 7.34699C13.8072 7.34699 13.6139 7.28829 13.4494 7.17841C13.285 7.06853 13.1568 6.91241 13.0811 6.72968C13.0054 6.54696 12.9856 6.34578 13.0242 6.1518C13.0628 5.95782 13.158 5.77969 13.2979 5.63984C13.4377 5.49998 13.6159 5.40474 13.8099 5.36616C14.0039 5.32757 14.2049 5.34735 14.3877 5.42304C14.5704 5.49873 14.7266 5.62688 14.8365 5.79133C14.9463 5.95578 15.005 6.14921 15.005 6.34699C15.005 6.61221 14.8996 6.86649 14.7121 7.05402C14.5246 7.24156 14.2702 7.34699 14.005 7.34699Z"
-                            class="fill-main"
-                          />
+                            class="fill-main" />
                         </svg>
                       </div>
                       <div class="social-caption">
@@ -1269,12 +1221,10 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="loginmodal"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div
           class="modal-dialog modal-dialog-centered login-pop-form"
-          role="document"
-        >
+          role="document">
           <div class="modal-content" id="loginmodal">
             <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
               ><i class="fas fa-close"></i
@@ -1285,8 +1235,7 @@
                   src="assets/img/ico.png"
                   class="img-fluid"
                   width="70"
-                  alt=""
-                />
+                  alt="" />
               </div>
               <div class="mdl-title">
                 <h4 class="modal-header-title">Hello, Again</h4>
@@ -1299,8 +1248,7 @@
                     <input
                       type="email"
                       class="form-control"
-                      placeholder="name@example.com"
-                    />
+                      placeholder="name@example.com" />
                     <label>User Name</label>
                   </div>
 
@@ -1308,16 +1256,14 @@
                     <input
                       type="password"
                       class="form-control"
-                      placeholder="Password"
-                    />
+                      placeholder="Password" />
                     <label>Password</label>
                   </div>
 
                   <div class="form-group">
                     <button
                       type="submit"
-                      class="btn btn-main full-width font--bold btn-lg"
-                    >
+                      class="btn btn-main full-width font--bold btn-lg">
                       Log In
                     </button>
                   </div>
@@ -1329,8 +1275,7 @@
                           class="form-check-input"
                           type="checkbox"
                           id="savepassword"
-                          value="option1"
-                        />
+                          value="option1" />
                         <label class="form-check-label" for="savepassword"
                           >Save Password</label
                         >
