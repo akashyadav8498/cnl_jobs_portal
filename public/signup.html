@@ -414,7 +414,7 @@
             <div class="col-xl-7 col-lg-8 col-md-12">
               <div class="card rounded-4 bg-transparent">
                 <div class="card-body p-4">
-                  <form class="p-md-4">
+                  <form class="p-md-4" method="post" action="http://localhost:4000/api/users/createUser">
                     <div
                       id="section-wrapper"
                       class="position-relative"
@@ -641,6 +641,7 @@
                               type="text"
                               class="form-control"
                               placeholder="Enter your full name?"
+                              name="name"
                             />
                           </div>
 
@@ -654,6 +655,7 @@
                               type="email"
                               class="form-control"
                               placeholder="Tell us your Email ID"
+                              name="email"
                             />
                             <!-- <span class="text-sm opacity-75"
                             >We'll send relevant jobs and updates to this
@@ -669,9 +671,10 @@
                               ></label
                             >
                             <input
-                              type="email"
+                              type="password"
                               class="form-control"
                               placeholder="(Minimum 8 characters)"
+                              name="password"
                             />
                             <!-- <span class="text-sm opacity-75"
                             >This helps your account stay protected</span
@@ -686,9 +689,10 @@
                               ></label
                             >
                             <input
-                              type="email"
+                              type="text"
                               class="form-control"
                               placeholder="Enter your mobile number"
+                              name="mobile"
                             />
                             <!-- <span class="text-sm opacity-75"
                             >This helps your account stay protected</span
@@ -741,7 +745,7 @@
                               of CNL Placement.
                             </p>
                             <button
-                              type="button"
+                              type="submit"
                               class="btn btn-main full-width"
                             >
                               Register now

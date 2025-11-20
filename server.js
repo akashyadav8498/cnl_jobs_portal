@@ -2,14 +2,22 @@ require("dotenv").config();
 const express = require("express");
 const sequelize = require("./models/index");
 const userRoutes = require("./routes/userRoutes");
+const path = require("path");
+
 
 const app = express();
 app.use(express.json());
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
+// set view engine
+app.set("view engine", "ejs");
+
+// set views directory
+app.set("views", path.join(__dirname, "views"));
 
 // Routes
-app.use("/users", userRoutes);
+app.use("/api/users", userRoutes);
 
 // Sync DB (automatic tables creation)
 sequelize.sync().then(() => {
