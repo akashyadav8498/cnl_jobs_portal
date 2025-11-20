@@ -425,12 +425,12 @@
                         id="role-select-box"
                         style="
                           background-color: white;
-                          padding: 10px 10px 20px 10px;
+                          padding: 10px 10px 20px 25px;
                           border-radius: 10px;
                         "
                       >
                         <!--  radio buttons heading -->
-                        <div class="form-heads d-block mb-4">
+                        <div class="form-heads d-block mb-2">
                           <div
                             class="d-flex align-items-center justify-content-start gap-3"
                           >
@@ -447,12 +447,13 @@
                                 <input
                                   type="radio"
                                   class="btn-check"
-                                  name="lokingfor"
-                                  id="findjob"
+                                  name="role"
+                                  value="employer"
+                                  id="findtalent"
                                 />
                                 <label
                                   class="btn btn-md btn-outline-gray h-auto"
-                                  for="findjob"
+                                  for="findtalent"
                                 >
                                   <div class="d-flex align-items-center gap-3">
                                     <div class="icons">
@@ -486,9 +487,6 @@
                                           >Employer</span
                                         >
                                       </h6>
-                                      <p class="m-0 text-md text-muted">
-                                        Looking for a skilled person.
-                                      </p>
                                     </div>
                                   </div>
                                 </label>
@@ -499,12 +497,13 @@
                                 <input
                                   type="radio"
                                   class="btn-check"
-                                  name="lokingfor"
-                                  id="findtalent"
+                                  name="role"
+                                  value="candidate"
+                                  id="findjob"
                                 />
                                 <label
                                   class="btn btn-md btn-outline-gray h-auto"
-                                  for="findtalent"
+                                  for="findjob"
                                 >
                                   <div class="d-flex align-items-center gap-3">
                                     <div class="icons">
@@ -538,9 +537,6 @@
                                           >Candidate</span
                                         >
                                       </h6>
-                                      <p class="m-0 text-md text-muted">
-                                        Looking for an opportunity.
-                                      </p>
                                     </div>
                                   </div>
                                 </label>
@@ -1411,18 +1407,18 @@
 
       hideAll();
 
-      $("input[name='lokingfor']").on("change", function () {
+      $("input[name='role']").on("change", function () {
         let id = $(this).attr("id");
 
         $roleBox.addClass("fade-out");
 
         hideAll();
 
-        if (id === "findjob") {
+        if (id === "findtalent") {
           $emp.addClass("active");
         }
 
-        if (id === "findtalent") {
+        if (id === "findjob") {
           $cand.addClass("active");
         }
       });
