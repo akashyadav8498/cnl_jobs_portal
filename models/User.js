@@ -15,6 +15,14 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     unique: true
   }
+  ,
+  password: {
+    type: DataTypes.STRING
+  }
+  ,
+  mobile: {
+    type: DataTypes.STRING
+  }
 }, {
   tableName: "users",
   timestamps: true
