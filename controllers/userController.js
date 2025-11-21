@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 exports.getUsers = async (req, res) => {
   try {
@@ -11,8 +12,13 @@ exports.getUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
-    res.json({ status: "created", data: user });
+    const { password, ...rest } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      ...rest,
+      password: hashedPassword,
+    });
+    res.redirect("/api/users/employerDashboard");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
