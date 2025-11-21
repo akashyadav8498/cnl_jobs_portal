@@ -1,5 +1,5 @@
 /*
-* Theme Name: CodesNLogic - Job Board & Freelancing Template
+* Theme Name: Job Stock - Job Board & Freelancing Template
 * Author: Themez Hub
 * Version: 2.3
 * Last Change: 12 Dec 2024
@@ -56,7 +56,7 @@
 	--secondcolor:#c83000;
 	--headingcolor:#1b2021;
 	--heading-2:#c83000;
-	--orangecolor:#ff3d00;
+	--greencolor:#ff3d00;
 	--redcolor:#e91e1e;
 	--navcolor:#30363f;
 	--darkheadercolor:#8e97a4;
@@ -210,7 +210,7 @@ i.req {
     height: 100%;
     border-radius: 50%;
     margin-left: -3px;
-    background-color:var(--orangecolor);
+    background-color:var(--greencolor);
 }
 .irs--flat .irs-handle.state_hover>i:first-child, .irs--flat .irs-handle:hover>i:first-child {
     background-color:var(--darkcolor);
@@ -1364,8 +1364,8 @@ div[data-overlay] p{
 .text-red {
   color:var(--redcolor) !important;
 }
-.text-orange {
-  color:var(--orangecolor) !important;
+.text-green {
+  color:var(--greencolor) !important;
 }
 .text-secondcolor {
   color:var(--secondcolor) !important;
@@ -1402,10 +1402,10 @@ div[data-overlay] p{
     background-color:color-mix(in srgb, var(--redcolor), transparent 90%);
     border-color:color-mix(in srgb, var(--redcolor), transparent 80%);
 }
-.alert-orange {
-    color:var(--orangecolor);
-    background-color:color-mix(in srgb, var(--orangecolor), transparent 90%);
-    border-color:color-mix(in srgb, var(--orangecolor), transparent 80%);
+.alert-green {
+    color:var(--greencolor);
+    background-color:color-mix(in srgb, var(--greencolor), transparent 90%);
+    border-color:color-mix(in srgb, var(--greencolor), transparent 80%);
 }
 .alert-light {
     color:color-mix(in srgb, var(--darkcolor), transparent 50%);
@@ -1426,8 +1426,8 @@ div[data-overlay] p{
 .bg-main {
   background-color:var(--maincolor) !important;
 }
-.bg-orange {
-  background-color:var(--orangecolor) !important;
+.bg-green {
+  background-color:var(--greencolor) !important;
 }
 .bg-red {
   background-color:var(--redcolor) !important;
@@ -1453,8 +1453,8 @@ div[data-overlay] p{
 .bg-light-main {
   background-color:color-mix(in srgb, var(--maincolor), transparent 90%) !important;
 }
-.bg-light-orange {
-  background-color:color-mix(in srgb, var(--orangecolor), transparent 90%) !important;
+.bg-light-green {
+  background-color:color-mix(in srgb, var(--greencolor), transparent 90%) !important;
 }
 .bg-light-red {
   background-color:color-mix(in srgb, var(--redcolor), transparent 90%) !important;
@@ -1525,7 +1525,7 @@ ul.colored-list li:before {
 .label-orange {
   background-color:#e95f33;
 }
-.label-seeorange {
+.label-seegreen {
   background-color:#0a5f59;
 }
 .label-dark {
@@ -1569,7 +1569,7 @@ ul.colored-list li:before {
   background-color:rgba(233, 95, 51, 0.12);
   color:#e95f33;
 }
-.label-light-seeorange {
+.label-light-seegreen {
   background-color:rgba(10, 95, 89, 0.12);
   color:#0a5f59;
 }
@@ -1657,8 +1657,8 @@ table.table tr th {
 .badge-main {
   background-color:var(--maincolor);
 }
-.badge-orange {
-  background-color:var(--orangecolor);
+.badge-green {
+  background-color:var(--greencolor);
 }
 .badge-danger {
   background-color:#a70a29;
@@ -1775,34 +1775,34 @@ table.table tr th {
 	color:#ffffff !important;
 }
 
-.btn-orange{
-	background:var(--orangecolor);
-	border-color:var(--orangecolor);
+.btn-green{
+	background:var(--greencolor);
+	border-color:var(--greencolor);
 	color:#ffffff;
 }
-.btn-orange:hover, .btn-orange:focus, .btn-orange:active, .btn-orange:focus-visible{
-	background:color-mix(in srgb, var(--orangecolor), transparent 15%) !important;
-	border-color:color-mix(in srgb, var(--orangecolor), transparent 15%) !important;
+.btn-green:hover, .btn-green:focus, .btn-green:active, .btn-green:focus-visible{
+	background:color-mix(in srgb, var(--greencolor), transparent 15%) !important;
+	border-color:color-mix(in srgb, var(--greencolor), transparent 15%) !important;
 	color:#ffffff !important;
 }
-.btn-outline-orange{
+.btn-outline-green{
 	background:transparent;
-	border-color:var(--orangecolor);
-	color:var(--orangecolor);
+	border-color:var(--greencolor);
+	color:var(--greencolor);
 }
-.btn-outline-orange:hover, .btn-outline-orange:focus, .btn-outline-orange:active, .btn-outline-orange:focus-visible{
-	background:var(--orangecolor) !important;
-	border-color:var(--orangecolor) !important;
+.btn-outline-green:hover, .btn-outline-green:focus, .btn-outline-green:active, .btn-outline-green:focus-visible{
+	background:var(--greencolor) !important;
+	border-color:var(--greencolor) !important;
 	color:#ffffff !important;
 }
-.btn-light-orange{
-	background:color-mix(in srgb, var(--orangecolor), transparent 90%);
-	border-color:color-mix(in srgb, var(--orangecolor), transparent 85%);
-	color:var(--orangecolor);
+.btn-light-green{
+	background:color-mix(in srgb, var(--greencolor), transparent 90%);
+	border-color:color-mix(in srgb, var(--greencolor), transparent 85%);
+	color:var(--greencolor);
 }
-.btn-light-orange:hover, .btn-light-orange:focus, .btn-light-orange:active .btn-light-orange:focus-visible{
-	background:var(--orangecolor) !important;
-	border-color:var(--orangecolor) !important;
+.btn-light-green:hover, .btn-light-green:focus, .btn-light-green:active .btn-light-green:focus-visible{
+	background:var(--greencolor) !important;
+	border-color:var(--greencolor) !important;
 	color:#ffffff !important;
 }
 
@@ -2411,9 +2411,9 @@ nav a:hover {
     position: absolute;
     width: 24px;
     height: 2px;
-    background-color: var(--orangecolor);
+    background-color: var(--greencolor);
     border-radius: 10px;
-    box-shadow: 0 .5em 0 0 var(--maincolor), 0 1em 0 0 var(--orangecolor);
+    box-shadow: 0 .5em 0 0 var(--maincolor), 0 1em 0 0 var(--greencolor);
 }
 
 .navigation-portrait .nav-toggle {
@@ -10881,7 +10881,7 @@ ul#themecolors li a{
 	font-size:0;
 	border:3px solid rgba(255,255,255,1);
 }
-a.orange-theme{background:var(--maincolor)!important;}
+a.green-theme{background:var(--maincolor)!important;}
 a.blue-theme{background:var(--maincolor)!important;}
 a.red-theme{background:#c33129!important;}
 a.yellow-theme{background:#f59c30!important;}
