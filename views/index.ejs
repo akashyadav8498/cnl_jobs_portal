@@ -1,11 +1,3380 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css" />
-</head>
-<body>
-  <h1>Welcome from ejs!</h1>
-  <script src="/js/app.js"></script>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CNL Placement Services</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+
+    <!-- Custom CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet" />
+
+    <!-- Colors CSS -->
+    <link href="assets/css/colors.css" rel="stylesheet" />
+
+    <!--============================ Splide Slider ===============================-->
+    <!-- CSS & JS Links -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
+<script>
+/* ===========================================================
+   Hire Talents & Experts → Convert Grid into Splide Slider
+   =========================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  /* ---------------------------------------------------------
+     1) Identify the grid row that contains all candidate cards
+     --------------------------------------------------------- */
+  var gridRow = document.querySelector(
+    ".gray-simple .container > .row + .row.justify-content-center.gx-4.gy-4"
+  );
+  if (!gridRow) return;
+
+  /* ---------------------------------------------------------
+     2) Create Splide structure dynamically
+     --------------------------------------------------------- */
+  var splideRoot = document.createElement("div");
+  splideRoot.className = "splide splide-hire-experts";
+  splideRoot.style.position = "relative";
+  splideRoot.style.overflow = "visible"; // ensure arrows clickable
+
+  var track = document.createElement("div");
+  track.className = "splide__track";
+
+  var list = document.createElement("ul");
+  list.className = "splide__list";
+
+  // Move each Bootstrap column → Splide slide
+  var cols = Array.from(gridRow.children);
+  cols.forEach(function (col) {
+    var li = document.createElement("li");
+    li.className = "splide__slide";
+
+    // Clean bootstrap classes so Splide controls width
+    col.className = col.className.replace(/\bcol-[^\s]+\b/g, "").trim();
+
+    li.innerHTML = col.outerHTML;
+    list.appendChild(li);
+  });
+
+  // append track + list
+  track.appendChild(list);
+  splideRoot.appendChild(track);
+
+  /* ---------------------------------------------------------
+     3) Create custom NEXT / PREV buttons
+     --------------------------------------------------------- */
+  var prevBtn = document.createElement("button");
+  prevBtn.className = "splide-hire-prev";
+  prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+
+  var nextBtn = document.createElement("button");
+  nextBtn.className = "splide-hire-next";
+  nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+
+  // append buttons
+  splideRoot.appendChild(prevBtn);
+  splideRoot.appendChild(nextBtn);
+
+  /* ---------------------------------------------------------
+     4) Replace the old grid with Splide slider
+     --------------------------------------------------------- */
+  gridRow.insertAdjacentElement("beforebegin", splideRoot);
+  gridRow.remove();
+
+  /* ---------------------------------------------------------
+     5) Add CSS styling for arrows + spacing
+     --------------------------------------------------------- */
+  var style = document.createElement("style");
+  style.innerHTML = `
+    .splide-hire-experts .splide__slide { padding: 0 12px; }
+    .splide-hire-experts .splide-hire-prev,
+    .splide-hire-experts .splide-hire-next {
+      position: absolute;
+      top: 45%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid #eee;
+      background: white;
+      color: #ff3d00;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+      transition: 0.25s;
+    }
+    .splide-hire-experts .splide-hire-prev:hover,
+    .splide-hire-experts .splide-hire-next:hover {
+      background: #ff3d00;
+      color: #fff;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .splide-hire-experts .splide-hire-prev { left: -20px; }
+    .splide-hire-experts .splide-hire-next { right: -20px; }
+  `;
+  document.head.appendChild(style);
+
+  /* ---------------------------------------------------------
+     6) Initialize Splide
+     --------------------------------------------------------- */
+  var splide = new Splide(".splide-hire-experts", {
+    perPage: 4,
+    perMove: 1,
+    gap: "24px",
+    pagination: false,
+    arrows: false,
+    speed: 1400,
+    easing: "cubic-bezier(.15,.85,.25,1)",
+
+    type: "loop",
+    autoplay: true,
+    interval: 2800,
+    pauseOnHover: false,
+    pauseOnFocus: false,
+
+    drag: true,
+    flickPower: 120,
+    flickVelocityThreshold: 0.25,
+    keyboard: "global",
+
+    wheel: false, // custom scroll added below
+
+    breakpoints: {
+      1200: { perPage: 3 },
+      992: { perPage: 2 },
+      576: { perPage: 1 },
+    },
+  });
+
+  splide.mount();
+
+  /* ---------------------------------------------------------
+     7) Fix arrows NOT clickable — bind correctly to THIS slider
+     --------------------------------------------------------- */
+  var prev = document.querySelector(".splide-hire-experts .splide-hire-prev");
+  var next = document.querySelector(".splide-hire-experts .splide-hire-next");
+
+  if (prev) prev.addEventListener("click", function (e) {
+    e.stopPropagation();
+    splide.go("<");
+  });
+
+  if (next) next.addEventListener("click", function (e) {
+    e.stopPropagation();
+    splide.go(">");
+  });
+
+  /* ---------------------------------------------------------
+     8) Custom mouse-wheel scroll (same as job slider)
+     --------------------------------------------------------- */
+  (function addSmartWheelScroll() {
+    var el = document.querySelector(".splide-hire-experts");
+    if (!el) return;
+
+    var lastWheel = 0;
+    var wheelDelay = 220;
+    var acc = 0;
+    var accThreshold = 40;
+
+    function getPerPage() {
+      return (typeof splide.options.perPage === "number") ? splide.options.perPage : 1;
+    }
+
+    el.addEventListener("wheel", function (evt) {
+      if (Math.abs(evt.deltaY) < Math.abs(evt.deltaX)) return;
+      if (evt.ctrlKey || evt.altKey || evt.metaKey) return;
+
+      var now = Date.now();
+      var delta = evt.deltaY;
+
+      if (Math.abs(delta) < 20) {
+        acc += delta;
+        if (Math.abs(acc) < accThreshold) return;
+        delta = acc;
+        acc = 0;
+      } else {
+        acc = 0;
+      }
+
+      var perPage = getPerPage();
+      var maxIndex = Math.max(0, splide.length - perPage);
+      var idx = splide.index;
+
+      if (delta < 0 && idx === 0) return;
+      if (delta > 0 && idx >= maxIndex) return;
+
+      evt.preventDefault();
+      if (now - lastWheel < wheelDelay) return;
+      lastWheel = now;
+
+      if (delta > 0) splide.go(">");
+      else splide.go("<");
+    }, { passive: false });
+  })();
+});
+</script>
+
+
+    <style>
+      /* === Custom CSS Featured Jobs === */
+      /* --- Arrow Buttons --- */
+      .splide-custom-prev,
+      .splide-custom-next {
+        position: absolute;
+        top: 45%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid #eee;
+        background: white;
+        color: #ff3d00;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+        transition: 0.25s ease;
+      }
+      .splide-custom-prev:hover,
+      .splide-custom-next:hover {
+        background: #ff3d00;
+        color: #fff;
+        transform: translateY(-50%) scale(1.08);
+      }
+      .splide-custom-prev {
+        left: -20px;
+      }
+      .splide-custom-next {
+        right: -20px;
+      }
+      /* --- Ensure slide content doesn't shrink --- */
+      .splide__slide {
+        height: auto;
+      }
+
+      /* === Custom CSS Explore Categories === */
+
+      /* --- Enable marquee mode --- */
+      .marquee-mode .splide__list {
+        display: flex;
+        animation: marqueeScroll 8s linear infinite;
+      }
+      /* Pause on hover */
+      .marquee-mode:hover .splide__list {
+        animation-play-state: paused;
+      }
+      /* Duplicate slides automatically (visually) */
+      .marquee-mode .splide__slide {
+        flex: 0 0 auto;
+      }
+      /* Smooth continuous movement */
+      @keyframes marqueeScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ==============================  Preloader  ================================= -->
+    <div id="preloader">
+      <div class="preloader"><span></span><span></span></div>
+    </div>
+
+    <!-- ============================  Main Wrapper Start =========================== -->
+    <div id="main-wrapper">
+     
+   <%- include('navbar') %>
+
+
+      <!-- ============================ Hero Banner ================================== -->
+      <!-- Start Hero Banner -->
+      <div class="image-cover hero-header bg-light">
+        <div class="container">
+          <div class="row justify-content-between align-items-center">
+            <!-- ==== Content Area ==== -->
+            <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 pe-xl-5 pe-lg-4">
+              <h6
+                class="text-main bg-light-main py-2 pe-3 ps-2 rounded-5 fw-medium d-inline-flex align-items-center mb-3"
+              >
+                <!-- Optional Button -->
+                <span class="bg-main label rounded-pill me-2">Optional</span
+                >Hire with hourly basis
+              </h6>
+              <!-- Main Headings -->
+              <h1 class="mb-4">
+                Your Complete <span style="color: #ff3d00">Hiring</span> &
+                <span style="color: #ff3d00">Job</span> Search Solution.
+              </h1>
+              <p class="fs-5 text-dark">
+                Finding the perfect job and candidates isn’t easy, but we make
+                it easier for you. Because we place people, not just promises.
+              </p>
+
+              <!-- Candidates Rating-->
+              <div class="vesm-rsv-box-wrap">
+                <div class="vesm-rsv-box-head">
+                  <div class="vesm-rsv-txt"><span>14k reviews on</span></div>
+                  <div class="vesm-rsv-star">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+                <div class="vesm-rsv-box-caption">
+                  <div class="vesm-rsv-elcox">
+                    <div class="vesm-rsv-elcox-01">
+                      <span class="vshm-arrows"
+                        ><i class="fa-solid fa-share"></i
+                      ></span>
+                      <h5 class="reviews-ctr">4.9</h5>
+                    </div>
+                  </div>
+                  <div class="vesm-rsv-elcox-02">
+                    <ul>
+                      <li>
+                        <figure>
+                          <img
+                            src="assets/img/reviews_1.png"
+                            class="img-fluid"
+                            alt=""
+                          />
+                        </figure>
+                      </li>
+                      <li>
+                        <figure>
+                          <img
+                            src="assets/img/reviews_2.png"
+                            class="img-fluid"
+                            alt=""
+                          />
+                        </figure>
+                      </li>
+                      <li>
+                        <figure>
+                          <img
+                            src="assets/img/reviews_3.png"
+                            class="img-fluid"
+                            alt=""
+                          />
+                        </figure>
+                      </li>
+                      <li>
+                        <figure>
+                          <img
+                            src="assets/img/reviews_4.png"
+                            class="img-fluid"
+                            alt=""
+                          />
+                        </figure>
+                      </li>
+                      <li><div class="img-coun">12k</div></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- Search Bar-->
+              <div class="simple-search-wrap mb-5">
+                <div class="hero-search-2">
+                  <div class="full-search-2 mt-5">
+                    <div class="hero-search-content border rounded-3">
+                      <div class="row classic-search-box m-0 gx-2">
+                        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
+                          <div class="form-group briod">
+                            <div class="input-with-icon">
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Skills, Designations, Keyword"
+                              />
+                              <i
+                                class="fa-solid fa-magnifying-glass text-muted"
+                              ></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                          <div class="form-group">
+                            <div class="input-with-icon">
+                              <select class="form-control">
+                                <option value="1">Job Category</option>
+                                <option value="2">Accounting & Finance</option>
+                                <option value="3">Automotive Jobs</option>
+                                <option value="4">Business Services</option>
+                                <option value="5">Education Training</option>
+                                <option value="6">Software Application</option>
+                                <option value="7">Restaurant & Food</option>
+                                <option value="8">Healthcare</option>
+                                <option value="9">Transportation</option>
+                                <option value="10">Telecommunications</option>
+                              </select>
+                              <i class="fa-solid fa-briefcase text-muted"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+                          <div class="fliox-search-wiop">
+                            <div class="form-group">
+                              <button
+                                type="submit"
+                                class="btn btn-main full-width"
+                              >
+                                Find Job
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ==== Images Area ==== -->
+            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
+              <div class="row g-4 position-relative">
+                <div
+                  class="position-absolute bg-dot main start-0 top-0 w-25 h-25 opacity-50"
+                ></div>
+                <div class="col-6">
+                  <div class="mb-4 position-relative z-1">
+                    <img
+                      src="assets/img/h_img_r0.png"
+                      class="img-fluid circle"
+                      alt=""
+                    />
+                  </div>
+                  <div class="position-relative z-1">
+                    <img
+                      src="assets/img/h_img_e1.png"
+                      class="img-fluid rounded-5"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-4 position-relative z-1">
+                    <img
+                      src="assets/img/h_img_e2.png"
+                      class="img-fluid rounded-5"
+                      alt=""
+                    />
+                  </div>
+                  <div class="position-relative z-1">
+                    <img
+                      src="assets/img/h_img_r1.png"
+                      class="img-fluid circle"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="position-absolute bg-dot yellow end-0 bottom-0 w-25 h-25 opacity-50"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Hero Banner -->
+      <!-- ============================ Hero Banner ================================== -->
+
+      <!-- ============================ Select Your City  ============================ -->
+      <!-- Start Select City -->
+      <section>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-10 text-center">
+              <div class="sec-heading center">
+                <h2>
+                  Explore Thousands of Jobs in <br /><span
+                    style="color: #ff3d00"
+                    >Delhi NCR</span
+                  >
+                </h2>
+                <p>
+                  Discover fresh opportunities across top companies in Delhi
+                  NCR. Find roles that match your skills, passion, and ambition.
+                  Start your journey toward a better career today.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-xl-3 g-lg-3 g-4">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="jbs-location-infortment">
+                <div class="jbs-location-infortment-thumb p-3">
+                  <a href="job-search.html" class="jobstock-location-figure">
+                    <img
+                      src="assets/img/Ghaziabad_1.png"
+                      class="img-fluid rounded"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="jbs-location-infortment-content">
+                  <h4>Ghaziabad</h4>
+                  <span class="resy-98 fw-medium text-main">307+ Jobs</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="jbs-location-infortment">
+                <div class="jbs-location-infortment-thumb p-3">
+                  <a href="job-search.html" class="jobstock-location-figure">
+                    <img
+                      src="assets/img/Noida.png"
+                      class="img-fluid rounded"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="jbs-location-infortment-content">
+                  <h4>Noida</h4>
+                  <span class="resy-98 fw-medium text-main">102+ Jobs</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="jbs-location-infortment">
+                <div class="jbs-location-infortment-thumb p-3">
+                  <a href="job-search.html" class="jobstock-location-figure">
+                    <img
+                      src="assets/img/Delhi.png"
+                      class="img-fluid rounded"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="jbs-location-infortment-content">
+                  <h4>Delhi</h4>
+                  <span class="resy-98 fw-medium text-main">200+ Jobs</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="jbs-location-infortment">
+                <div class="jbs-location-infortment-thumb p-3">
+                  <a href="job-search.html" class="jobstock-location-figure">
+                    <img
+                      src="assets/img/Gurugram.png"
+                      class="img-fluid rounded"
+                      alt=""
+                    />
+                  </a>
+                </div>
+                <div class="jbs-location-infortment-content">
+                  <h4>Gurugram</h4>
+                  <span class="resy-98 fw-medium text-main">150+ Jobs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Select Ciy -->
+      <!-- ============================ Select Your City  ============================= -->
+      <div class="clearfix"></div>
+
+      <!-- ============================ Upload Resume Start ========================== -->
+      <section
+        class="pb-5 bg-cover"
+        style="
+          background: #ff3d00 url(assets/img/footer-bg-light.png) no-repeat;
+        "
+      >
+        <div class="container">
+          <div class="row justify-content-between">
+            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 order-sm-2">
+              <div class="position-relative">
+                <div class="footlio-img">
+                  <img
+                    src="assets/img/upload-resume.png"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="col-xl-7 col-lg-6 col-md-12 col-sm-12 align-self-center order-sm-1"
+            >
+              <div class="footlio-caalaction-caption">
+                <div class="footlio-caalaction-text">
+                  <span class="text-main bg-white rounded py-1 px-3"
+                    >Find Jobs</span
+                  >
+                  <h2 class="text-light mt-3 mb-4 lh-base">
+                    Get your dream jobs just by<br />uploading your CV
+                  </h2>
+                </div>
+                <div class="footlio-caalaction-link mt-4">
+                  <a href="upload-cv.html" class="btn btn-main fw-medium px-4"
+                    ><i class="fa-solid fa-cloud-arrow-up me-2"></i>Upload CV</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ============================ Upload Resume End ============================ -->
+
+      <!-- ============================ Featured Jobs Slider ========================= -->
+      <section class="featured-jobs-section py-5">
+        <div class="container">
+          <!-- Heading -->
+          <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-10 text-center">
+              <div class="sec-heading center">
+                <h2>Latest & Top Job Openings</h2>
+                <p class="text-dark">
+                  Discover Exciting New Opportunities and High-Demand Positions
+                  Available Now in Top Industries and Companies
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Start Splide Slider -->
+          <div id="jobSplide" class="splide">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <!-- =========== Job 1 =========== -->
+                <li class="splide__slide">
+                  <div class="jbs-grid-layout border">
+                    <div class="right-tags-capt">
+                      <span class="urgent">Urgent</span>
+                    </div>
+                    <div class="jbs-grid-emp-head">
+                      <div class="jbs-grid-emp-content">
+                        <div class="jbs-grid-emp-thumb">
+                          <a href="job-detail.html">
+                            <figure>
+                              <img
+                                src="https://placehold.co/250x250"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </a>
+                        </div>
+                        <div class="jbs-grid-job-caption">
+                          <div class="jbs-job-employer-wrap">
+                            <span>MRK Vista Solutions P Ltd</span>
+                          </div>
+                          <div class="jbs-job-title-wrap">
+                            <h4>
+                              <a href="job-detail.html" class="jbs-job-title"
+                                >Jr. PHP Developer</a
+                              >
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-description">
+                      <p>
+                        Consistently create well-designed, tested code using
+                        best practices for website development, including
+                        mobile...
+                      </p>
+                    </div>
+                    <div class="jbs-grid-job-edrs">
+                      <div class="jbs-grid-job-edrs-group">
+                        <span
+                          ><i class="fa-solid fa-location-dot me-1"></i
+                          >London</span
+                        >
+                        <span
+                          ><i class="fa-regular fa-clock me-1"></i>Full
+                          Time</span
+                        >
+                        <div class="jbs-sng-blux">
+                          <div class="jbs-grid-package-title smalls">
+                            <h5>$80K - 90K<span>\Year</span></h5>
+                          </div>
+                        </div>
+                        <span
+                          ><i class="fa-solid fa-calendar-days me-1"></i>1 Hours
+                          ago</span
+                        >
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-apply-btns">
+                      <div class="jbs-btn-groups">
+                        <a
+                          href="job-detail.html"
+                          class="btn btn-md btn-gray px-4"
+                          >View Detail</a
+                        >
+                        <a
+                          href="JavaScript:Void(0);"
+                          class="btn btn-md btn-main px-4"
+                          >Quick Apply</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- =========== Job 2 =========== -->
+                <li class="splide__slide">
+                  <div class="jbs-grid-layout border">
+                    <div class="right-tags-capt">
+                      <span class="urgent">Urgent</span>
+                    </div>
+                    <div class="jbs-grid-emp-head">
+                      <div class="jbs-grid-emp-content">
+                        <div class="jbs-grid-emp-thumb">
+                          <a href="job-detail.html">
+                            <figure>
+                              <img
+                                src="https://placehold.co/250x250"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </a>
+                        </div>
+                        <div class="jbs-grid-job-caption">
+                          <div class="jbs-job-employer-wrap">
+                            <span>Teleraft-E-Solutions P Ltd</span>
+                          </div>
+                          <div class="jbs-job-title-wrap">
+                            <h4>
+                              <a href="job-detail.html" class="jbs-job-title"
+                                >Exp. Project Manager</a
+                              >
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-description">
+                      <p>
+                        Consistently create well-designed, tested code using
+                        best practices for website development, including
+                        mobile...
+                      </p>
+                    </div>
+                    <div class="jbs-grid-job-edrs">
+                      <div class="jbs-grid-job-edrs-group">
+                        <span
+                          ><i class="fa-solid fa-location-dot me-1"></i
+                          >USA</span
+                        >
+                        <span
+                          ><i class="fa-regular fa-clock me-1"></i>Part
+                          Time</span
+                        >
+                        <span
+                          ><i class="fa-solid fa-calendar-days me-1"></i>10
+                          Hours ago</span
+                        >
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-apply-btns">
+                      <div class="jbs-btn-groups">
+                        <div class="jbs-sng-blux">
+                          <div class="jbs-grid-package-title smalls">
+                            <h5>$90K - 100K<span>\Year</span></h5>
+                          </div>
+                        </div>
+                        <div class="jbs-sng-blux">
+                          <a href="#" class="btn btn-md btn-main px-4"
+                            >Quick Apply</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- =========== Job 3 =========== -->
+                <li class="splide__slide">
+                  <div class="jbs-grid-layout border">
+                    <div class="right-tags-capt">
+                      <span class="featured-text">Featured</span>
+                      <span class="urgent">Urgent</span>
+                    </div>
+                    <div class="jbs-grid-emp-head">
+                      <div class="jbs-grid-emp-content">
+                        <div class="jbs-grid-emp-thumb">
+                          <a href="job-detail.html">
+                            <figure>
+                              <img
+                                src="https://placehold.co/250x250"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </a>
+                        </div>
+                        <div class="jbs-grid-job-caption">
+                          <div class="jbs-job-employer-wrap">
+                            <span>Shopify</span>
+                          </div>
+                          <div class="jbs-job-title-wrap">
+                            <h4>
+                              <a href="job-detail.html" class="jbs-job-title"
+                                >Sr. WordPress Developer</a
+                              >
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-description">
+                      <p>
+                        Consistently create well-designed, tested code using
+                        best practices for website development, including
+                        mobile...
+                      </p>
+                    </div>
+                    <div class="jbs-grid-job-edrs">
+                      <div class="jbs-grid-job-edrs-group">
+                        <span
+                          ><i class="fa-solid fa-location-dot me-1"></i
+                          >Canada</span
+                        >
+                        <span
+                          ><i class="fa-regular fa-clock me-1"></i
+                          >Internship</span
+                        >
+                        <span
+                          ><i class="fa-solid fa-calendar-days me-1"></i>1 Day
+                          ago</span
+                        >
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-apply-btns">
+                      <div class="jbs-btn-groups">
+                        <div class="jbs-sng-blux">
+                          <div class="jbs-grid-package-title smalls">
+                            <h5>$75K - 90K<span>\Year</span></h5>
+                          </div>
+                        </div>
+                        <div class="jbs-sng-blux">
+                          <a href="#" class="btn btn-md btn-main px-4"
+                            >Quick Apply</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- =========== Job 4 =========== -->
+                <li class="splide__slide">
+                  <div class="jbs-grid-layout border">
+                    <div class="right-tags-capt">
+                      <span class="featured-text">Featured</span>
+                    </div>
+                    <div class="jbs-grid-emp-head">
+                      <div class="jbs-grid-emp-content">
+                        <div class="jbs-grid-emp-thumb">
+                          <a href="job-detail.html">
+                            <figure>
+                              <img
+                                src="https://placehold.co/250x250"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </a>
+                        </div>
+                        <div class="jbs-grid-job-caption">
+                          <div class="jbs-job-employer-wrap">
+                            <span>Dreezoo</span>
+                          </div>
+                          <div class="jbs-job-title-wrap">
+                            <h4>
+                              <a href="job-detail.html" class="jbs-job-title"
+                                >Jr. Laravel Developer</a
+                              >
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-description">
+                      <p>
+                        Consistently create well-designed, tested code using
+                        best practices for website development, including
+                        mobile...
+                      </p>
+                    </div>
+                    <div class="jbs-grid-job-edrs">
+                      <div class="jbs-grid-job-edrs-group">
+                        <span
+                          ><i class="fa-solid fa-location-dot me-1"></i
+                          >Canada</span
+                        >
+                        <span
+                          ><i class="fa-regular fa-clock me-1"></i>Full
+                          Time</span
+                        >
+                        <span
+                          ><i class="fa-solid fa-calendar-days me-1"></i>1 Day
+                          ago</span
+                        >
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-apply-btns">
+                      <div class="jbs-btn-groups">
+                        <div class="jbs-sng-blux">
+                          <div class="jbs-grid-package-title smalls">
+                            <h5>$65K - 80K<span>\Year</span></h5>
+                          </div>
+                        </div>
+                        <div class="jbs-sng-blux">
+                          <a href="#" class="btn btn-md btn-main px-4"
+                            >Quick Apply</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- =========== Job 5 =========== -->
+                <li class="splide__slide">
+                  <div class="jbs-grid-layout border">
+                    <div class="right-tags-capt">
+                      <span class="featured-text">Featured</span>
+                      <span class="urgent">Urgent</span>
+                    </div>
+                    <div class="jbs-grid-emp-head">
+                      <div class="jbs-grid-emp-content">
+                        <div class="jbs-grid-emp-thumb">
+                          <a href="job-detail.html">
+                            <figure>
+                              <img
+                                src="https://placehold.co/250x250"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </a>
+                        </div>
+                        <div class="jbs-grid-job-caption">
+                          <div class="jbs-job-employer-wrap">
+                            <span>Tripadvisor</span>
+                          </div>
+                          <div class="jbs-job-title-wrap">
+                            <h4>
+                              <a href="job-detail.html" class="jbs-job-title"
+                                >Jr. PHP Developer</a
+                              >
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-description">
+                      <p>
+                        Consistently create well-designed, tested code using
+                        best practices for website development, including
+                        mobile...
+                      </p>
+                    </div>
+                    <div class="jbs-grid-job-edrs">
+                      <div class="jbs-grid-job-edrs-group">
+                        <span
+                          ><i class="fa-solid fa-location-dot me-1"></i
+                          >London</span
+                        >
+                        <span
+                          ><i class="fa-regular fa-clock me-1"></i>Full
+                          Time</span
+                        >
+                        <span
+                          ><i class="fa-solid fa-calendar-days me-1"></i>1 Hours
+                          ago</span
+                        >
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-apply-btns">
+                      <div class="jbs-btn-groups">
+                        <div class="jbs-sng-blux">
+                          <div class="jbs-grid-package-title smalls">
+                            <h5>$80K - 90K<span>\Year</span></h5>
+                          </div>
+                        </div>
+                        <div class="jbs-sng-blux">
+                          <a href="#" class="btn btn-md btn-main px-4"
+                            >Quick Apply</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- =========== Job 6 =========== -->
+                <li class="splide__slide">
+                  <div class="jbs-grid-layout border">
+                    <div class="right-tags-capt">
+                      <span class="featured-text">Featured</span>
+                    </div>
+                    <div class="jbs-grid-emp-head">
+                      <div class="jbs-grid-emp-content">
+                        <div class="jbs-grid-emp-thumb">
+                          <a href="job-detail.html">
+                            <figure>
+                              <img
+                                src="https://placehold.co/250x250"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </a>
+                        </div>
+                        <div class="jbs-grid-job-caption">
+                          <div class="jbs-job-employer-wrap">
+                            <span>Pinterest</span>
+                          </div>
+                          <div class="jbs-job-title-wrap">
+                            <h4>
+                              <a href="job-detail.html" class="jbs-job-title"
+                                >Exp. Project Manager</a
+                              >
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-description">
+                      <p>
+                        Consistently create well-designed, tested code using
+                        best practices for website development, including
+                        mobile...
+                      </p>
+                    </div>
+                    <div class="jbs-grid-job-edrs">
+                      <div class="jbs-grid-job-edrs-group">
+                        <span
+                          ><i class="fa-solid fa-location-dot me-1"></i
+                          >USA</span
+                        >
+                        <span
+                          ><i class="fa-regular fa-clock me-1"></i>Part
+                          Time</span
+                        >
+                        <span
+                          ><i class="fa-solid fa-calendar-days me-1"></i>10
+                          Hours ago</span
+                        >
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-apply-btns">
+                      <div class="jbs-btn-groups">
+                        <div class="jbs-sng-blux">
+                          <div class="jbs-grid-package-title smalls">
+                            <h5>$90K - 100K<span>\Year</span></h5>
+                          </div>
+                        </div>
+                        <div class="jbs-sng-blux">
+                          <a href="#" class="btn btn-md btn-main px-4"
+                            >Quick Apply</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- =========== Job 7 =========== -->
+                <li class="splide__slide">
+                  <div class="jbs-grid-layout border">
+                    <div class="right-tags-capt">
+                      <span class="featured-text">Featured</span>
+                      <span class="urgent">Urgent</span>
+                    </div>
+                    <div class="jbs-grid-emp-head">
+                      <div class="jbs-grid-emp-content">
+                        <div class="jbs-grid-emp-thumb">
+                          <a href="job-detail.html">
+                            <figure>
+                              <img
+                                src="https://placehold.co/250x250"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </a>
+                        </div>
+                        <div class="jbs-grid-job-caption">
+                          <div class="jbs-job-employer-wrap">
+                            <span>Shopify</span>
+                          </div>
+                          <div class="jbs-job-title-wrap">
+                            <h4>
+                              <a href="job-detail.html" class="jbs-job-title"
+                                >Sr. WordPress Developer</a
+                              >
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-description">
+                      <p>
+                        Consistently create well-designed, tested code using
+                        best practices for website development, including
+                        mobile...
+                      </p>
+                    </div>
+                    <div class="jbs-grid-job-edrs">
+                      <div class="jbs-grid-job-edrs-group">
+                        <span
+                          ><i class="fa-solid fa-location-dot me-1"></i
+                          >Canada</span
+                        >
+                        <span
+                          ><i class="fa-regular fa-clock me-1"></i
+                          >Internship</span
+                        >
+                        <span
+                          ><i class="fa-solid fa-calendar-days me-1"></i>1 Day
+                          ago</span
+                        >
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-apply-btns">
+                      <div class="jbs-btn-groups">
+                        <div class="jbs-sng-blux">
+                          <div class="jbs-grid-package-title smalls">
+                            <h5>$75K - 90K<span>\Year</span></h5>
+                          </div>
+                        </div>
+                        <div class="jbs-sng-blux">
+                          <a href="#" class="btn btn-md btn-main px-4"
+                            >Quick Apply</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- =========== Job 8 =========== -->
+                <li class="splide__slide">
+                  <div class="jbs-grid-layout border">
+                    <div class="right-tags-capt">
+                      <span class="featured-text">Featured</span>
+                    </div>
+                    <div class="jbs-grid-emp-head">
+                      <div class="jbs-grid-emp-content">
+                        <div class="jbs-grid-emp-thumb">
+                          <a href="job-detail.html">
+                            <figure>
+                              <img
+                                src="https://placehold.co/250x250"
+                                class="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </a>
+                        </div>
+                        <div class="jbs-grid-job-caption">
+                          <div class="jbs-job-employer-wrap">
+                            <span>Dreezoo</span>
+                          </div>
+                          <div class="jbs-job-title-wrap">
+                            <h4>
+                              <a href="job-detail.html" class="jbs-job-title"
+                                >Jr. Laravel Developer</a
+                              >
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-description">
+                      <p>
+                        Consistently create well-designed, tested code using
+                        best practices for website development, including
+                        mobile...
+                      </p>
+                    </div>
+                    <div class="jbs-grid-job-edrs">
+                      <div class="jbs-grid-job-edrs-group">
+                        <span
+                          ><i class="fa-solid fa-location-dot me-1"></i
+                          >Canada</span
+                        >
+                        <span
+                          ><i class="fa-regular fa-clock me-1"></i>Full
+                          Time</span
+                        >
+                        <span
+                          ><i class="fa-solid fa-calendar-days me-1"></i>1 Day
+                          ago</span
+                        >
+                      </div>
+                    </div>
+                    <div class="jbs-grid-job-apply-btns">
+                      <div class="jbs-btn-groups">
+                        <div class="jbs-sng-blux">
+                          <div class="jbs-grid-package-title smalls">
+                            <h5>$65K - 80K<span>\Year</span></h5>
+                          </div>
+                        </div>
+                        <div class="jbs-sng-blux">
+                          <a href="#" class="btn btn-md btn-main px-4"
+                            >Quick Apply</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- CUSTOM NAV BUTTONS -->
+            <button class="splide-custom-prev">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="splide-custom-next">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="row justify-content-center pt-5">
+            <div class="col-xl-6 col-lg-7 col-md-10 text-center">
+              <a
+                href="JavaScript:Void(0);"
+                class="btn btn-md btn-outline-main px-4"
+                >Browse All Jobs</a
+              >
+            </div>
+          </div>
+
+          <!-- End Splide Slider -->
+        </div>
+      </section>
+      <!-- ============================ Featured Jobs Slider =========================== -->
+
+
+<!-- ============================ Hire Experts Start ================================== -->
+			<section class="gray-simple">
+				<div class="container">
+				
+					<div class="row justify-content-center">
+						<div class="col-xl-6 col-lg-7 col-md-10 text-center">
+							<div class="sec-heading center">
+								<h2>Hire Talents & Experts</h2>
+								<p class="text-dark">Build your team with proven professionals.Connect with professionals who deliver results. Hire smarter. Work faster. Grow bigger.</p>
+							</div>
+						</div>
+					</div>
+				
+					<div class="row justify-content-center gx-4 gy-4">
+					
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="jbs-grid-usrs-block">
+								<div class="jbs-grid-usrs-thumb">
+									<div class="jbs-grid-yuo">
+										<a href="candidate-detail.html"><figure><img src="assets/img/candi_1.png" class="img-fluid circle" alt=""></figure></a>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-caption">
+									<div class="jbs-kioyer">
+										<div class="jbs-kioyer-groups">
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star"></span>
+											<span class="aal-reveis">4.6</span>
+										</div>
+									</div>
+									<div class="jbs-tiosk">
+										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Kr. Shaurya Preet</a></h4>
+										<div class="jbs-tiosk-subtitle"><span>Sr. Web Designer</span></div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-info">
+									<div class="jbs-info-ico-style bold">
+										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$70/hr</div>
+										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-contact">
+									<div class="jbs-btn-groups">
+										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="jbs-grid-usrs-block">
+								<div class="jbs-grid-usrs-thumb">
+									<div class="jbs-grid-yuo">
+										<a href="candidate-detail.html"><figure><img src="assets/img/candi_2.png" class="img-fluid circle" alt=""></figure></a>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-caption">
+									<div class="jbs-kioyer">
+										<div class="jbs-kioyer-groups">
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star"></span>
+											<span class="aal-reveis">4.6</span>
+										</div>
+									</div>
+									<div class="jbs-tiosk">
+										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Leila T. Lindsey</a></h4>
+										<div class="jbs-tiosk-subtitle"><span>Magento Expert</span></div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-info">
+									<div class="jbs-info-ico-style bold">
+										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$25/hr</div>
+										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-contact">
+									<div class="jbs-btn-groups">
+										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="jbs-grid-usrs-block">
+								<div class="jbs-grid-usrs-thumb">
+									<div class="jbs-grid-yuo">
+										<a href="candidate-detail.html"><figure><img src="assets/img/candi_3.png" class="img-fluid circle" alt=""></figure></a>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-caption">
+									<div class="jbs-kioyer">
+										<div class="jbs-kioyer-groups">
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star"></span>
+											<span class="aal-reveis">4.6</span>
+										</div>
+									</div>
+									<div class="jbs-tiosk">
+										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Amie L. Brown</a></h4>
+										<div class="jbs-tiosk-subtitle"><span>WordPress Developer</span></div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-info">
+									<div class="jbs-info-ico-style bold">
+										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$40/hr</div>
+										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-contact">
+									<div class="jbs-btn-groups">
+										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="jbs-grid-usrs-block">
+								<div class="jbs-grid-usrs-thumb">
+									<div class="jbs-grid-yuo">
+										<a href="candidate-detail.html"><figure><img src="assets/img/candi_4.png" class="img-fluid circle" alt=""></figure></a>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-caption">
+									<div class="jbs-kioyer">
+										<div class="jbs-kioyer-groups">
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star"></span>
+											<span class="aal-reveis">4.6</span>
+										</div>
+									</div>
+									<div class="jbs-tiosk">
+										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Darrel T. Turner</a></h4>
+										<div class="jbs-tiosk-subtitle"><span>Jr. SEO Expert</span></div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-info">
+									<div class="jbs-info-ico-style bold">
+										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$40/hr</div>
+										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-contact">
+									<div class="jbs-btn-groups">
+										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="jbs-grid-usrs-block">
+								<div class="jbs-grid-usrs-thumb">
+									<div class="jbs-grid-yuo">
+										<a href="candidate-detail.html"><figure><img src="assets/img/candi_5.png" class="img-fluid circle" alt=""></figure></a>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-caption">
+									<div class="jbs-kioyer">
+										<div class="jbs-kioyer-groups">
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star"></span>
+											<span class="aal-reveis">4.6</span>
+										</div>
+									</div>
+									<div class="jbs-tiosk">
+										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Michael B. Arellano</a></h4>
+										<div class="jbs-tiosk-subtitle"><span>Front Designer</span></div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-info">
+									<div class="jbs-info-ico-style bold">
+										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$50/hr</div>
+										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-contact">
+									<div class="jbs-btn-groups">
+										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="jbs-grid-usrs-block">
+								<div class="jbs-grid-usrs-thumb">
+									<div class="jbs-grid-yuo">
+										<a href="candidate-detail.html"><figure><img src="assets/img/candi_6.png" class="img-fluid circle" alt=""></figure></a>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-caption">
+									<div class="jbs-kioyer">
+										<div class="jbs-kioyer-groups">
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star"></span>
+											<span class="aal-reveis">4.6</span>
+										</div>
+									</div>
+									<div class="jbs-tiosk">
+										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Kum K. Sellers</a></h4>
+										<div class="jbs-tiosk-subtitle"><span>PHP Developer</span></div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-info">
+									<div class="jbs-info-ico-style bold">
+										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$45/hr</div>
+										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-contact">
+									<div class="jbs-btn-groups">
+										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="jbs-grid-usrs-block">
+								<div class="jbs-grid-usrs-thumb">
+									<div class="jbs-grid-yuo">
+										<a href="candidate-detail.html"><figure><img src="assets/img/candi_7.png" class="img-fluid circle" alt=""></figure></a>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-caption">
+									<div class="jbs-kioyer">
+										<div class="jbs-kioyer-groups">
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star"></span>
+											<span class="aal-reveis">4.6</span>
+										</div>
+									</div>
+									<div class="jbs-tiosk">
+										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Debbie W. Wilson</a></h4>
+										<div class="jbs-tiosk-subtitle"><span>App Developer</span></div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-info">
+									<div class="jbs-info-ico-style bold">
+										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$70/hr</div>
+										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-contact">
+									<div class="jbs-btn-groups">
+										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="jbs-grid-usrs-block">
+								<div class="jbs-grid-usrs-thumb">
+									<div class="jbs-grid-yuo">
+										<a href="candidate-detail.html"><figure><img src="assets/img/candi_8.png" class="img-fluid circle" alt=""></figure></a>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-caption">
+									<div class="jbs-kioyer">
+										<div class="jbs-kioyer-groups">
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star active"></span>
+											<span class="fa-solid fa-star"></span>
+											<span class="aal-reveis">4.6</span>
+										</div>
+									</div>
+									<div class="jbs-tiosk">
+										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Peggy J. Arnold</a></h4>
+										<div class="jbs-tiosk-subtitle"><span>Content Writer</span></div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-info">
+									<div class="jbs-info-ico-style bold">
+										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$55/hr</div>
+										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
+									</div>
+								</div>
+								<div class="jbs-grid-usrs-contact">
+									<div class="jbs-btn-groups">
+										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>		
+			</section>
+			<!-- ============================ Hire Experts End ================================== -->
+
+
+
+      <!-- ======================= Explore Categories Slider =========================== -->
+      <!-- Start Category Marquee Slider -->
+      <section class="bg-dark-orange">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-10 text-center">
+              <div class="sec-heading category-heading-main center">
+                <h2>Explore The Category You Belong</h2>
+                <p>Discover a wide range of categories crafted for every skill and interest.
+Find what suits you best and step into opportunities made just for you.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- UNIQUE ID -->
+          <div id="categoryMarqueeSplide" class="splide marquee-mode">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <!-- === YOUR CATEGORY CARDS AS SLIDES === -->
+                <li class="splide__slide">
+                  <div class="category-box">
+                    <div class="category-desc d-inline-flex">
+                      <div class="category-icon">
+                        <i class="fa-solid fa-file-invoice text-main"></i>
+                        <i class="fa-solid fa-file-invoice abs-icon"></i>
+                      </div>
+                      <div class="category-detail category-desc-text">
+                        <h4 class="fs-5">
+                          <a href="browse-jobs-grid.html"
+                            >Accounting & Finance</a
+                          >
+                        </h4>
+                        <p>Active Jobs <span class="block">24</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- === YOUR CATEGORY CARDS AS SLIDES === -->
+                <li class="splide__slide">
+                  <div class="category-box">
+                    <div class="category-desc d-inline-flex">
+                      <div class="category-icon">
+                        <i class="fa-solid fa-file-invoice text-main"></i>
+                        <i class="fa-solid fa-file-invoice abs-icon"></i>
+                      </div>
+                      <div class="category-detail category-desc-text">
+                        <h4 class="fs-5">
+                          <a href="browse-jobs-grid.html">Automotive Jobs</a>
+                        </h4>
+                        <p>Active Jobs <span class="block">12</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- === YOUR CATEGORY CARDS AS SLIDES === -->
+                <li class="splide__slide">
+                  <div class="category-box">
+                    <div class="category-desc d-inline-flex">
+                      <div class="category-icon">
+                        <i class="fa-solid fa-file-invoice text-main"></i>
+                        <i class="fa-solid fa-file-invoice abs-icon"></i>
+                      </div>
+                      <div class="category-detail category-desc-text">
+                        <h4 class="fs-5">
+                          <a href="browse-jobs-grid.html"> Business & Tech</a>
+                        </h4>
+                        <p>Active Jobs <span class="block">8</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- === YOUR CATEGORY CARDS AS SLIDES === -->
+                <li class="splide__slide">
+                  <div class="category-box">
+                    <div class="category-desc d-inline-flex">
+                      <div class="category-icon">
+                        <i class="fa-solid fa-file-invoice text-main"></i>
+                        <i class="fa-solid fa-file-invoice abs-icon"></i>
+                      </div>
+                      <div class="category-detail category-desc-text">
+                        <h4 class="fs-5">
+                          <a href="browse-jobs-grid.html">Education Training</a>
+                        </h4>
+                        <p>Active Jobs <span class="block">20</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- === YOUR CATEGORY CARDS AS SLIDES === -->
+                <li class="splide__slide">
+                  <div class="category-box">
+                    <div class="category-desc d-inline-flex">
+                      <div class="category-icon">
+                        <i class="fa-solid fa-file-invoice text-main"></i>
+                        <i class="fa-solid fa-file-invoice abs-icon"></i>
+                      </div>
+                      <div class="category-detail category-desc-text">
+                        <h4 class="fs-5">
+                          <a href="browse-jobs-grid.html">Healthcare</a>
+                        </h4>
+                        <p>Active Jobs <span class="block">86</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- === YOUR CATEGORY CARDS AS SLIDES === -->
+                <li class="splide__slide">
+                  <div class="category-box">
+                    <div class="category-desc d-inline-flex">
+                      <div class="category-icon">
+                        <i class="fa-solid fa-file-invoice text-main"></i>
+                        <i class="fa-solid fa-file-invoice abs-icon"></i>
+                      </div>
+                      <div class="category-detail category-desc-text">
+                        <h4 class="fs-5">
+                          <a href="browse-jobs-grid.html">Restaurant & Food</a>
+                        </h4>
+                        <p>Active Jobs <span class="block">122</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- === YOUR CATEGORY CARDS AS SLIDES === -->
+                <li class="splide__slide">
+                  <div class="category-box">
+                    <div class="category-desc d-inline-flex">
+                      <div class="category-icon">
+                        <i class="fa-solid fa-file-invoice text-main"></i>
+                        <i class="fa-solid fa-file-invoice abs-icon"></i>
+                      </div>
+                      <div class="category-detail category-desc-text">
+                        <h4 class="fs-5">
+                          <a href="browse-jobs-grid.html">Telecommunications</a>
+                        </h4>
+                        <p>Active Jobs <span class="block">98</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row justify-content-center pt-5">
+            <div class="col-xl-6 col-lg-7 col-md-10 text-center">
+              <a
+                href="JavaScript:Void(0);"
+                class="btn btn-md btn-gray-category px-4"
+                >Browse All Categories</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ======================= Explore Categories Slider ============================ -->
+
+      <!-- ============================ Why Choose Us Start ================================== -->
+      <section class="pb-4">
+        <div class="container">
+          <div class="row align-items-center justify-content-between">
+            <div class="col-xl-5 col-lg-5 col-md-12 col-12">
+              <div class="side-thumber-wrap mb-md-0 mb-4">
+                <div class="side-effect"></div>
+                <div class="side-thumber-img pe-4 pb-4 position-relative">
+                  <div
+                    class="bg-dot yellow w-25 h-25 position-absolute start-0 top-0"
+                  ></div>
+                  <div
+                    class="bg-dot success w-25 h-25 position-absolute end-0 bottom-0"
+                  ></div>
+                  <figure>
+                    <img
+                      src="https://placehold.co/850x1100"
+                      class="img-fluid rounded-top-pill rounded-bottom-4 z-1 position-relative"
+                      alt=""
+                    />
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-5 col-lg-6 col-md-12 col-12">
+              <div class="choose-us-head">
+                <div class="choose-us-wriops mb-2">
+                  <span class="fw-medium label-light-warning px-3 py-2 rounded"
+                    >Advanced Features</span
+                  >
+                </div>
+                <div class="choose-title">
+                  <h2 class="lh-base">Trusted & Popular<br />Job Portal</h2>
+                  <p>
+                    At vero eos et accusamus et iusto odio dignissimos ducimus
+                    qui blanditiis praesentium voluptatum deleniti atque
+                    corrupti quos dolores
+                  </p>
+                </div>
+                <div class="jobstock-icon-box-list mt-4">
+                  <ul>
+                    <li>
+                      <div class="vib-list-wrap21">
+                        <div class="vib-list-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div class="vib-list-caption">
+                          <h5>#1 Quality Job</h5>
+                          <p>
+                            At vero eos et accusamus et iusto odio dignissimos
+                            ducimus qui blanditiis praesentium voluptatum
+                            deleniti atque corrupti quos dolores
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="vib-list-wrap21">
+                        <div class="vib-list-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div class="vib-list-caption">
+                          <h5>Top Companies</h5>
+                          <p>
+                            At vero eos et accusamus et iusto odio dignissimos
+                            ducimus qui blanditiis praesentium voluptatum
+                            deleniti atque corrupti quos dolores
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="vib-list-wrap21">
+                        <div class="vib-list-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div class="vib-list-caption">
+                          <h5>International Jobs</h5>
+                          <p>
+                            At vero eos et accusamus et iusto odio dignissimos
+                            ducimus qui blanditiis praesentium voluptatum
+                            deleniti atque corrupti quos dolores
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="vib-list-wrap21">
+                        <div class="vib-list-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div class="vib-list-caption">
+                          <h5>No Extra Charges</h5>
+                          <p>
+                            At vero eos et accusamus et iusto odio dignissimos
+                            ducimus qui blanditiis praesentium voluptatum
+                            deleniti atque corrupti quos dolores
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="clearfix"></div>
+      <!-- ============================ Why Choose Us End ====================== -->
+
+      <!-- ============================ Why Choose Us Start ================================== -->
+      <section class="pt-0">
+        <div class="container">
+          <div class="row align-items-center justify-content-between">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-12">
+              <div class="p-lg-5 p-md-0 pt-md-5">
+                <!-- Heading -->
+                <div class="mb-4 mb-sm-7">
+                  <span class="fw-medium label-light-success px-3 py-2 rounded"
+                    >Our Showcase</span
+                  >
+                  <h2 class="mt-2 lh-base">
+                    Best Job Search platform<br />Experience for you
+                  </h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  </p>
+                </div>
+                <!-- End Heading -->
+
+                <div class="features-groupss my-4">
+                  <ul class="row gx-3 gy-4 p-0">
+                    <li class="fw-medium col-xl-6 col-lg-6 col-6">
+                      <span
+                        class="square--30 circle d-inline-flex align-items-center justify-content-center text-success bg-light-success me-2"
+                        ><i class="fa-solid fa-check"></i></span
+                      >Corporate Business jobs
+                    </li>
+                    <li class="fw-medium col-xl-6 col-lg-6 col-6">
+                      <span
+                        class="square--30 circle d-inline-flex align-items-center justify-content-center text-success bg-light-success me-2"
+                        ><i class="fa-solid fa-check"></i></span
+                      >Company Showcase
+                    </li>
+                    <li class="fw-medium col-xl-6 col-lg-6 col-6">
+                      <span
+                        class="square--30 circle d-inline-flex align-items-center justify-content-center text-success bg-light-success me-2"
+                        ><i class="fa-solid fa-check"></i></span
+                      >Creative Services
+                    </li>
+                    <li class="fw-medium col-xl-6 col-lg-6 col-6">
+                      <span
+                        class="square--30 circle d-inline-flex align-items-center justify-content-center text-success bg-light-success me-2"
+                        ><i class="fa-solid fa-check"></i></span
+                      >Easy To Upload Resume
+                    </li>
+                    <li class="fw-medium col-xl-6 col-lg-6 col-6">
+                      <span
+                        class="square--30 circle d-inline-flex align-items-center justify-content-center text-success bg-light-success me-2"
+                        ><i class="fa-solid fa-check"></i></span
+                      >Online E-commerce
+                    </li>
+                    <li class="fw-medium col-xl-6 col-lg-6 col-6">
+                      <span
+                        class="square--30 circle d-inline-flex align-items-center justify-content-center text-success bg-light-success me-2"
+                        ><i class="fa-solid fa-check"></i></span
+                      >Hire Expert Candidates
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-6">
+                    <a class="btn btn-main fw-medium px-4" href="#"
+                      >Explore More Jobs</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-5 col-lg-5 col-md-12 col-12">
+              <div class="side-thumber-wrap mt-md-0 mt-4">
+                <div class="side-effect"></div>
+                <div class="side-thumber-img position-relative">
+                  <div
+                    class="square--80 circle bg-white shadow position-absolute start-0 top-0 mt-5 ms-5 animate-bounce"
+                  >
+                    <img
+                      src="https://placehold.co/250x250"
+                      class="img-fluid"
+                      width="40"
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    class="square--80 circle bg-white shadow position-absolute end-0 top-0 mt-5 me-5 animate-bounce"
+                  >
+                    <img
+                      src="https://placehold.co/250x250"
+                      class="img-fluid"
+                      width="40"
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    class="square--80 circle bg-white shadow position-absolute start-50 bottom-0 mb-4 animate-bounce"
+                  >
+                    <img
+                      src="https://placehold.co/250x250"
+                      class="img-fluid"
+                      width="40"
+                      alt=""
+                    />
+                  </div>
+                  <figure>
+                    <img
+                      src="assets/img/pay-2.png"
+                      class="img-fluid rounded"
+                      alt=""
+                    />
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="clearfix"></div>
+      <!-- ============================ Why Choose Us End ====================== -->
+
+      <!-- ============================ Explore Top Companies Start ================================== -->
+			<section class="gray-simple">
+				<div class="container">
+				
+					<div class="row justify-content-center">
+						<div class="col-xl-6 col-lg-7 col-md-10 text-center">
+							<div class="sec-heading center">
+								<h2>Explore Top Companies</h2>
+								<p class="text-dark">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores</p>
+							</div>
+						</div>
+					</div>
+				
+					<div class="row justify-content-center gx-xl-3 gx-3 gy-4">
+					
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="emp-grid-blocs">
+								
+								<div class="emp-grid-thumbs">
+									<a href="employer-detail.html"><figure><img src="assets/img/l-4.png" class="img-fluid" alt=""></figure></a>	
+								</div>
+								
+								<div class="emp-grid-captions">
+									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Software & Consultancy</span></div>
+									<div class="emplors-job-title-wrap mb-1">
+										<h4><a href="employer-detail.html" class="emplors-job-title">Swap Technology</a></h4>
+									</div>
+									<div class="emplors-job-mrch-lists">
+										<div class="single-mrch-lists">
+											<span><i class="fa-solid fa-location-dot me-1"></i>California, USA</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-grid-footrs">
+									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">06 Open position</span></div>
+								</div>
+								
+							</div>	
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="emp-grid-blocs">
+								
+								<div class="emp-grid-thumbs">
+									<a href="employer-detail.html"><figure><img src="assets/img/l-5.png" class="img-fluid" alt=""></figure></a>	
+								</div>
+								
+								<div class="emp-grid-captions">
+									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Photo Edditing Tools</span></div>
+									<div class="emplors-job-title-wrap mb-1">
+										<h4><a href="employer-detail.html" class="emplors-job-title">Photoshop</a></h4>
+									</div>
+									<div class="emplors-job-mrch-lists">
+										<div class="single-mrch-lists">
+											<span><i class="fa-solid fa-location-dot me-1"></i>New York, USA</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-grid-footrs">
+									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">16 Open position</span></div>
+								</div>
+								
+							</div>
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="emp-grid-blocs">
+								
+								<div class="emp-grid-thumbs">
+									<a href="employer-detail.html"><figure><img src="assets/img/l-6.png" class="img-fluid" alt=""></figure></a>	
+								</div>
+								
+								<div class="emp-grid-captions">
+									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Web Browser & Tech</span></div>
+									<div class="emplors-job-title-wrap mb-1">
+										<h4><a href="employer-detail.html" class="emplors-job-title">Firefox</a></h4>
+									</div>
+									<div class="emplors-job-mrch-lists">
+										<div class="single-mrch-lists">
+											<span><i class="fa-solid fa-location-dot me-1"></i>Denver, USA</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-grid-footrs">
+									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">03 Open position</span></div>
+								</div>
+								
+							</div>	
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="emp-grid-blocs">
+								
+								<div class="emp-grid-thumbs">
+									<a href="employer-detail.html"><figure><img src="assets/img/l-7.png" class="img-fluid" alt=""></figure></a>	
+								</div>
+								
+								<div class="emp-grid-captions">
+									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Business Directory</span></div>
+									<div class="emplors-job-title-wrap mb-1">
+										<h4><a href="employer-detail.html" class="emplors-job-title">Airbnb</a></h4>
+									</div>
+									<div class="emplors-job-mrch-lists">
+										<div class="single-mrch-lists">
+											<span><i class="fa-solid fa-location-dot me-1"></i>London, UK</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-grid-footrs">
+									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">08 Open position</span></div>
+								</div>
+								
+							</div>	
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="emp-grid-blocs">
+								
+								<div class="emp-grid-thumbs">
+									<a href="employer-detail.html"><figure><img src="assets/img/l-8.png" class="img-fluid" alt=""></figure></a>	
+								</div>
+								
+								<div class="emp-grid-captions">
+									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Message & Video Reelas</span></div>
+									<div class="emplors-job-title-wrap mb-1">
+										<h4><a href="employer-detail.html" class="emplors-job-title">Snapchat</a></h4>
+									</div>
+									<div class="emplors-job-mrch-lists">
+										<div class="single-mrch-lists">
+											<span><i class="fa-solid fa-location-dot me-1"></i>London, UK</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-grid-footrs">
+									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">07 Open position</span></div>
+								</div>
+								
+							</div>	
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="emp-grid-blocs">
+								
+								<div class="emp-grid-thumbs">
+									<a href="employer-detail.html"><figure><img src="assets/img/l-9.png" class="img-fluid" alt=""></figure></a>	
+								</div>
+								
+								<div class="emp-grid-captions">
+									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Portfolio Showcase</span></div>
+									<div class="emplors-job-title-wrap mb-1">
+										<h4><a href="employer-detail.html" class="emplors-job-title">Dribbble Inc</a></h4>
+									</div>
+									<div class="emplors-job-mrch-lists">
+										<div class="single-mrch-lists">
+											<span><i class="fa-solid fa-location-dot me-1"></i>New York, USA</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-grid-footrs">
+									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">05 Open position</span></div>
+								</div>
+								
+							</div>	
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="emp-grid-blocs">
+								
+								<div class="emp-grid-thumbs">
+									<a href="employer-detail.html"><figure><img src="assets/img/l-10.png" class="img-fluid" alt=""></figure></a>	
+								</div>
+								
+								<div class="emp-grid-captions">
+									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Chat & Video Calling</span></div>
+									<div class="emplors-job-title-wrap mb-1">
+										<h4><a href="employer-detail.html" class="emplors-job-title">Skype</a></h4>
+									</div>
+									<div class="emplors-job-mrch-lists">
+										<div class="single-mrch-lists">
+											<span><i class="fa-solid fa-location-dot me-1"></i>Canada, USA</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-grid-footrs">
+									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">10 Open position</span></div>
+								</div>
+								
+							</div>	
+						</div>
+						
+						<!-- Single Item -->
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+							<div class="emp-grid-blocs">
+								
+								<div class="emp-grid-thumbs">
+									<a href="employer-detail.html"><figure><img src="assets/img/l-11.png" class="img-fluid" alt=""></figure></a>	
+								</div>
+								
+								<div class="emp-grid-captions">
+									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Software & Consultancy</span></div>
+									<div class="emplors-job-title-wrap mb-1">
+										<h4><a href="employer-detail.html" class="emplors-job-title">Google Inc</a></h4>
+									</div>
+									<div class="emplors-job-mrch-lists">
+										<div class="single-mrch-lists">
+											<span><i class="fa-solid fa-location-dot me-1"></i>London, UK</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="emp-grid-footrs">
+									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">06 Open position</span></div>
+								</div>
+								
+							</div>	
+						</div>						
+						
+					</div>
+					
+				</div>		
+			</section>
+			<!-- ============================ Explore Top Companies End ================================== -->
+
+      <!-- ============================ Good Reviews By Customers ================================== -->
+      <section>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-10 text-center">
+              <div class="sec-heading center">
+                <h2>Good Reviews By Customers</h2>
+                <p>
+                  At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                  blanditiis praesentium voluptatum deleniti atque corrupti quos
+                  dolores
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row justify-content-center gx-4 gy-4">
+            <!-- Single Review -->
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="jobstock-reviews-box">
+                <div class="jobstock-reviews-desc">
+                  <h6 class="review-title-yui">"The best useful website"</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim.
+                  </p>
+                </div>
+                <div class="jobstock-reviews-flex">
+                  <div class="jobstock-reviews-thumb">
+                    <div class="jobstock-reviews-figure">
+                      <img
+                        src="https://placehold.co/500x500"
+                        class="img-fluid circle"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="jobstock-reviews-caption">
+                    <div class="jobstock-reviews-title">
+                      <h4>Lucia E. Nugent</h4>
+                    </div>
+                    <div class="jobstock-reviews-designation">
+                      <span>CEO of Climber</span>
+                    </div>
+                    <div class="jobstock-reviews-rates">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star deactive"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Review -->
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="jobstock-reviews-box">
+                <div class="jobstock-reviews-desc">
+                  <h6 class="review-title-yui">"Ranking is the #1"</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim.
+                  </p>
+                </div>
+                <div class="jobstock-reviews-flex">
+                  <div class="jobstock-reviews-thumb">
+                    <div class="jobstock-reviews-figure">
+                      <img
+                        src="https://placehold.co/500x500"
+                        class="img-fluid circle"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="jobstock-reviews-caption">
+                    <div class="jobstock-reviews-title">
+                      <h4>Brenda R. Smith</h4>
+                    </div>
+                    <div class="jobstock-reviews-designation">
+                      <span>Founder of Yeloower</span>
+                    </div>
+                    <div class="jobstock-reviews-rates">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Review -->
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="jobstock-reviews-box">
+                <div class="jobstock-reviews-desc">
+                  <h6 class="review-title-yui">
+                    "The website is eco friendly"
+                  </h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim.
+                  </p>
+                </div>
+                <div class="jobstock-reviews-flex">
+                  <div class="jobstock-reviews-thumb">
+                    <div class="jobstock-reviews-figure">
+                      <img
+                        src="https://placehold.co/500x500"
+                        class="img-fluid circle"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="jobstock-reviews-caption">
+                    <div class="jobstock-reviews-title">
+                      <h4>Brian B. Wilkerson</h4>
+                    </div>
+                    <div class="jobstock-reviews-designation">
+                      <span>CEO of Mark Soft</span>
+                    </div>
+                    <div class="jobstock-reviews-rates">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Review -->
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="jobstock-reviews-box">
+                <div class="jobstock-reviews-desc">
+                  <h6 class="review-title-yui">
+                    "100% save and secure website"
+                  </h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim.
+                  </p>
+                </div>
+                <div class="jobstock-reviews-flex">
+                  <div class="jobstock-reviews-thumb">
+                    <div class="jobstock-reviews-figure">
+                      <img
+                        src="https://placehold.co/500x500"
+                        class="img-fluid circle"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="jobstock-reviews-caption">
+                    <div class="jobstock-reviews-title">
+                      <h4>Miguel L. Benbow</h4>
+                    </div>
+                    <div class="jobstock-reviews-designation">
+                      <span>Founder of Mitche LTD</span>
+                    </div>
+                    <div class="jobstock-reviews-rates">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star deactive"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Review -->
+            <div class="col-xl-4 col-lg-4 col-md-6">
+              <div class="jobstock-reviews-box">
+                <div class="jobstock-reviews-desc">
+                  <h6 class="review-title-yui">
+                    "Very developer friendly website"
+                  </h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim.
+                  </p>
+                </div>
+                <div class="jobstock-reviews-flex">
+                  <div class="jobstock-reviews-thumb">
+                    <div class="jobstock-reviews-figure">
+                      <img
+                        src="https://placehold.co/500x500"
+                        class="img-fluid circle"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="jobstock-reviews-caption">
+                    <div class="jobstock-reviews-title">
+                      <h4>Hilda A. Sheppard</h4>
+                    </div>
+                    <div class="jobstock-reviews-designation">
+                      <span>CEO of Doodle</span>
+                    </div>
+                    <div class="jobstock-reviews-rates">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ============================ Good Reviews By Customers ================================== -->
+
+      <!-- ============================ Call To Action ================================== -->
+      <section
+        class="bg-cover call-action-container dark bg-second"
+        style="background: url(assets/img/footer-bg-dark.png) no-repeat"
+      >
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-10 col-md-12 col-sm-12">
+              <div class="call-action-wrap">
+                <div class="call-action-caption">
+                  <h2 class="text-light">Are You Already Working With Us?</h2>
+                  <p class="fs-6 text-light">
+                    At vero eos et accusamus et iusto odio dignissimos ducimus
+                    qui blanditiis praesentium voluptatum deleniti atque
+                    corrupti quos dolores et quas molestias
+                  </p>
+                </div>
+                <div class="call-action-form">
+                  <form>
+                    <div class="newsltr-form">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Your email"
+                      />
+                      <button type="button" class="btn btn-subscribe">
+                        Subscribe
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ============================ Call To Action End ================================== -->
+
+      <!-- ============================ Footer Start ================================== -->
+      <%- include('footer') %>
+      <!-- ============================ Footer End ================================== -->
+
+      <!-- Log In Modal -->
+      <div
+        class="modal fade"
+        id="candidate_login"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="loginmodal"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-centered login-pop-form"
+          role="document"
+        >
+          <div class="modal-content" id="loginmodal">
+            <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
+              ><i class="fas fa-close"></i
+            ></span>
+            <div class="modal-header">
+              <div class="mdl-thumb">
+                <img
+                  src="assets/img/ico.png"
+                  class="img-fluid"
+                  width="70"
+                  alt=""
+                />
+              </div>
+              <div class="mdl-title">
+                <h4 class="modal-header-title">Hello, Again</h4>
+              </div>
+            </div>
+            <div class="modal-body">
+              <div class="modal-login-form">
+                <form>
+                  <div class="form-floating mb-4">
+                    <input
+                      type="email"
+                      class="form-control"
+                      placeholder="name@example.com"
+                    />
+                    <label>User Name</label>
+                  </div>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="password"
+                      class="form-control"
+                      placeholder="Password"
+                    />
+                    <label>Password</label>
+                  </div>
+
+                  <div class="form-group">
+                    <button
+                      type="submit"
+                      class="btn btn-main full-width font--bold btn-lg"
+                    >
+                      Log In
+                    </button>
+                  </div>
+
+                  <div class="modal-flex-item mb-3">
+                    <div class="modal-flex-first">
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="savepassword"
+                          value="option1"
+                        />
+                        <label class="form-check-label" for="savepassword"
+                          >Save Password</label
+                        >
+                      </div>
+                    </div>
+                    <div class="modal-flex-last">
+                      <a href="JavaScript:Void(0);">Forget Password?</a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="social-login">
+                <ul>
+                  <li>
+                    <a href="JavaScript:Void(0);" class="btn connect-fb"
+                      ><i class="fa-brands fa-facebook"></i>Facebook</a
+                    >
+                  </li>
+                  <li>
+                    <a href="JavaScript:Void(0);" class="btn connect-google"
+                      ><i class="fa-brands fa-google"></i>Google+</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <p>
+                Don't have an account yet?<a
+                  href="signup.html"
+                  class="text-main font--bold ms-1"
+                  >Sign Up</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Modal -->
+
+      <!-- Filter Modal -->
+      <div
+        class="modal fade"
+        id="filter"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="filtermodal"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-centered filter-popup"
+          role="document"
+        >
+          <div class="modal-content" id="filtermodal">
+            <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
+              ><i class="fas fa-close"></i
+            ></span>
+            <div class="modal-header">
+              <h4 class="modal-header-sub-title">Start Your Filter</h4>
+            </div>
+            <div class="modal-body p-0">
+              <div class="filter-content">
+                <div class="full-tabs-group">
+                  <div class="single-tabs-group">
+                    <div class="single-tabs-group-header">
+                      <h5>Job Match Score</h5>
+                    </div>
+
+                    <div class="single-tabs-group-content">
+                      <div class="d-flex flex-wrap">
+                        <div class="sing-btn-groups">
+                          <input type="checkbox" class="btn-check" id="msix" />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="msix"
+                            >6.0</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="msixfive"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="msixfive"
+                            >6.5</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="mseven"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="mseven"
+                            >7.0</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="msevenfive"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="msevenfive"
+                            >7.5</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="meight"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="meight"
+                            >8.0</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="meightfive"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="meightfive"
+                            >8.5</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input type="checkbox" class="btn-check" id="mnine" />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="mnine"
+                            >9.0</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="mninefive"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="mninefive"
+                            >9.5</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input type="checkbox" class="btn-check" id="mten" />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="mten"
+                            >10</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="single-tabs-group">
+                    <div class="single-tabs-group-header">
+                      <h5>Job Value Score</h5>
+                    </div>
+
+                    <div class="single-tabs-group-content">
+                      <div class="d-flex flex-wrap">
+                        <div class="sing-btn-groups">
+                          <input type="checkbox" class="btn-check" id="vsix" />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="vsix"
+                            >6.0</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="vsixfive"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="vsixfive"
+                            >6.5</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="vseven"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="vseven"
+                            >7.0</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="vsevenfive"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="vsevenfive"
+                            >7.5</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="veight"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="veight"
+                            >8.0</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="veightfive"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="veightfive"
+                            >8.5</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input type="checkbox" class="btn-check" id="vnine" />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="vnine"
+                            >9.0</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="vninefive"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="vninefive"
+                            >9.5</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input type="checkbox" class="btn-check" id="vten" />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="vten"
+                            >10</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="single-tabs-group">
+                    <div class="single-tabs-group-header">
+                      <h5>Place Of Work</h5>
+                    </div>
+
+                    <div class="single-tabs-group-content">
+                      <div class="d-flex flex-wrap">
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="anywhere"
+                            checked
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="anywhere"
+                            >Anywhere</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="onsite"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="onsite"
+                            >On Site</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="remote"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="remote"
+                            >Fully Remote</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="single-tabs-group">
+                    <div class="single-tabs-group-header">
+                      <h5>Type Of Contract</h5>
+                    </div>
+
+                    <div class="single-tabs-group-content">
+                      <div class="d-flex flex-wrap">
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="employee1"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="employee1"
+                            >Employee</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="frelancers1"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="frelancers1"
+                            >Freelancer</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="contractor1"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="contractor1"
+                            >Contractor</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="internship1"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="internship1"
+                            >Internship</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="single-tabs-group">
+                    <div class="single-tabs-group-header">
+                      <h5>Type Of Employment</h5>
+                    </div>
+
+                    <div class="single-tabs-group-content">
+                      <div class="d-flex flex-wrap">
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="fulltime"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="fulltime"
+                            >Full Time</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="parttime"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="parttime"
+                            >Part Time</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="freelance2"
+                            checked
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="freelance2"
+                            >Freelance</label
+                          >
+                        </div>
+                        <div class="sing-btn-groups">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="internship2"
+                          />
+                          <label
+                            class="btn btn-md btn-outline-main font--bold rounded-5"
+                            for="internship2"
+                            >Internship</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="single-tabs-group">
+                    <div class="single-tabs-group-header">
+                      <h5>Radius In Miles</h5>
+                    </div>
+
+                    <div class="single-tabs-group-content">
+                      <div class="rg-slider">
+                        <input
+                          type="text"
+                          class="js-range-slider"
+                          name="my_range"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="single-tabs-group">
+                    <div class="single-tabs-group-header">
+                      <h5>Explore Top Categories</h5>
+                    </div>
+
+                    <div class="single-tabs-group-content">
+                      <ul class="row p-0 m-0">
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-1"
+                              class="form-check-input"
+                              name="s-1"
+                              type="checkbox"
+                            />
+                            <label for="s-1" class="form-check-label"
+                              >IT Computers</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-2"
+                              class="form-check-input"
+                              name="s-2"
+                              type="checkbox"
+                            />
+                            <label for="s-2" class="form-check-label"
+                              >Web Design</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-3"
+                              class="form-check-input"
+                              name="s-3"
+                              type="checkbox"
+                            />
+                            <label for="s-3" class="form-check-label"
+                              >Web development</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-4"
+                              class="form-check-input"
+                              name="s-4"
+                              type="checkbox"
+                            />
+                            <label for="s-4" class="form-check-label"
+                              >SEO Services</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-5"
+                              class="form-check-input"
+                              name="s-5"
+                              type="checkbox"
+                            />
+                            <label for="s-5" class="form-check-label"
+                              >Financial Service</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-6"
+                              class="form-check-input"
+                              name="s-6"
+                              type="checkbox"
+                            />
+                            <label for="s-6" class="form-check-label"
+                              >Art, Design, Media</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-7"
+                              class="form-check-input"
+                              name="s-7"
+                              type="checkbox"
+                            />
+                            <label for="s-7" class="form-check-label"
+                              >Coach & Education</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-8"
+                              class="form-check-input"
+                              name="s-8"
+                              type="checkbox"
+                            />
+                            <label for="s-8" class="form-check-label"
+                              >Apps Developements</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-9"
+                              class="form-check-input"
+                              name="s-9"
+                              type="checkbox"
+                            />
+                            <label for="s-9" class="form-check-label"
+                              >IOS Development</label
+                            >
+                          </div>
+                        </li>
+                        <li class="col-lg-6 col-md-6 p-0">
+                          <div class="form-check form-check-inline">
+                            <input
+                              id="s-10"
+                              class="form-check-input"
+                              name="s-10"
+                              type="checkbox"
+                            />
+                            <label for="s-10" class="form-check-label"
+                              >Android Development</label
+                            >
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="single-tabs-group">
+                    <div class="single-tabs-group-header">
+                      <h5>Keywords</h5>
+                    </div>
+
+                    <div class="single-tabs-group-content">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Design, Java, Python, WordPress etc..."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="filt-buttons-updates">
+                <button type="button" class="btn btn-dark">Clear Filter</button>
+                <button type="button" class="btn btn-main">Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Modal -->
+
+      <a id="back2Top" class="top-scroll" title="Back to top" href="#"
+        ><i class="ti-arrow-up"></i
+      ></a>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/rangeslider.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/counterup.min.js"></script>
+    <script src="assets/js/include.js"></script>  
+    <script src="assets/js/custom.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+  </body>
+
+  <!-- ======================== Splide Slider Script ================== -->
+  <script>
+    /* ===== Script for Featured Jobs ===== */
+   
+document.addEventListener("DOMContentLoaded", function () {
+  var splide = new Splide("#jobSplide", {
+    perPage: 4,
+    perMove: 1,
+    gap: "24px",
+    pagination: false,
+    arrows: false,
+
+    /* --- SUPER SMOOTH SLIDE MOTION --- */
+    speed: 1400,
+    easing: "cubic-bezier(.15, .85, .25, 1)",
+
+    drag: true,
+    flickPower: 120,
+    flickVelocityThreshold: 0.25,
+    keyboard: "global",
+
+    /* --- AUTOPLAY --- */
+    type: "loop",
+    autoplay: true,
+    interval: 2800,
+    pauseOnHover: false,
+    pauseOnFocus: false,
+
+    /* Disable Splide's built-in wheel handler — we'll use a custom one. */
+    wheel: false,
+
+    breakpoints: {
+      1200: { perPage: 3 },
+      992: { perPage: 2 },
+      576: { perPage: 1 },
+    },
+  });
+
+  splide.mount();
+
+  // custom wheel handling so page scrolls when slider is at ends
+  (function addSmartWheelScroll() {
+    var el = document.querySelector("#jobSplide");
+    if (!el) return;
+
+    var lastWheel = 0;
+    var wheelDelay = 220; // ms debounce between slide moves (tweak for sensitivity)
+    var acc = 0;          // accumulator for small touchpad deltas
+    var accThreshold = 40; // how much aggregated delta triggers a slide (tweak if too sensitive)
+
+    // helper to get current perPage (responsive)
+    function getPerPage() {
+      // splide.options.perPage may be a number (or; Splide handles breakpoints internally),
+      // but to be safe, use splide.options.perPage which updates on resize in Splide v4.
+      return (typeof splide.options.perPage === "number") ? splide.options.perPage : 1;
+    }
+
+    el.addEventListener(
+      "wheel",
+      function (evt) {
+        // only handle vertical wheel
+        if (Math.abs(evt.deltaY) < Math.abs(evt.deltaX)) return;
+
+        // allow the browser to handle when ctrl/alt/meta pressed (user intent)
+        if (evt.ctrlKey || evt.altKey || evt.metaKey) return;
+
+        var now = Date.now();
+        var delta = evt.deltaY;
+
+        // if small delta (like gentle touchpad) accumulate before acting
+        if (Math.abs(delta) < 20) {
+          acc += delta;
+          // only act when accumulated passes threshold
+          if (Math.abs(acc) < accThreshold) {
+            // don't prevent default yet — allow small movement to scroll page if at ends
+            return;
+          }
+          // we've reached threshold — convert to one big delta and reset accumulator
+          delta = acc;
+          acc = 0;
+        } else {
+          // large delta (mouse wheel) -> reset accumulator
+          acc = 0;
+        }
+
+        // determine slider boundaries
+        var perPage = getPerPage();
+        var maxIndex = Math.max(0, splide.length - perPage);
+        var idx = splide.index;
+
+        // If user is trying to scroll UP and slider is at first slide -> allow page to scroll
+        if (delta < 0 && idx === 0) {
+          // do not preventDefault, let page scroll
+          return;
+        }
+
+        // If user is trying to scroll DOWN and slider is at last slide -> allow page to scroll
+        if (delta > 0 && idx >= maxIndex) {
+          return;
+        }
+
+        // Otherwise we want the wheel to control the slider: prevent page scroll
+        evt.preventDefault();
+
+        // simple debounce so we don't trigger too many splide.go calls for continuous wheel
+        if (now - lastWheel < wheelDelay) return;
+        lastWheel = now;
+
+        if (delta > 0) {
+          splide.go(">");
+        } else {
+          splide.go("<");
+        }
+      },
+      { passive: false } // we call preventDefault, so must be non-passive
+    );
+  })();
+
+  // custom arrows
+  var prev = document.querySelector(".splide-custom-prev");
+  var next = document.querySelector(".splide-custom-next");
+  if (prev) prev.addEventListener("click", () => splide.go("<"));
+  if (next) next.addEventListener("click", () => splide.go(">"));
+});
+
+
+    /* ===== Script for Explore Categories ===== */
+    document.addEventListener("DOMContentLoaded", function () {
+      const list = document.querySelector(
+        "#categoryMarqueeSplide .splide__list"
+      );
+      list.innerHTML += list.innerHTML; // DUPLICATE SLIDES
+
+      var splide = new Splide("#categoryMarqueeSplide", {
+        type: "loop",
+        perPage: 6,
+        perMove: 1,
+        gap: "16px",
+        drag: true,
+        arrows: false,
+        pagination: false,
+        breakpoints: {
+          1200: { perPage: 5 },
+          992: { perPage: 4 },
+          768: { perPage: 3 },
+          576: { perPage: 2 },
+        },
+      });
+
+      splide.mount();
+    });
+  </script>
+  <!-- ======================== Splide Slider Script ================== -->
 </html>

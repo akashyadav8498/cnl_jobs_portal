@@ -52,6 +52,7 @@
     --darkgreycolor:#e7e7e7;
 	--lightcolor:#f8f8f8;
 	--maincolor:#ff3d00;
+    --darkorange: #b32b00;
 	--bghijack:#fff5ee;
 	--secondcolor:#c83000;
 	--headingcolor:#1b2021;
@@ -1435,8 +1436,12 @@ div[data-overlay] p{
 .bg-light {
   background-color:var(--lightcolor) !important;
 }
+
 .bg-dark {
   background-color:var(--darkcolor) !important;
+}
+.bg-dark-orange {
+  background-color:var(--darkorange) !important;
 }
 .bg-second {
   background-color:var(--secondcolor) !important;
@@ -1447,6 +1452,7 @@ div[data-overlay] p{
 .bg-white{
 	background-color:#ffffff !important;
 }
+
 .bg-body{
 	background-color:var(--bodybg) !important;
 }
@@ -1903,6 +1909,16 @@ table.table tr th {
 	border-color:var(--graycolor);
 	color:var(--darkcolor);
 }
+.btn-gray-category{
+	background:var(--graycolor);
+	border-color:var(--graycolor);
+	color:var(--darkcolor);
+}
+.btn-gray-category:hover, .btn-gray-category:focus,.btn-gray-category:active,.btn-gray-category:focus-visible{
+   background:#c7c7c7 !important;
+   border-color:var(--graycolor) !important;
+   color:var(--darkcolor) !important; 
+}
 .btn-gray:hover, .btn-gray:focus, .btn-gray:active, .btn-gray:focus-visible{
 	background:transparent !important;
 	border-color:var(--graycolor) !important;
@@ -2045,6 +2061,9 @@ table.table tr th {
 }
 
 /*---------- Global Settings: Section Heading Style ---------*/
+.category-heading-main h2,p{
+ color: #fff;
+}
 .sec-heading {
 	margin-bottom:2rem;
 }
@@ -2461,7 +2480,7 @@ nav a:hover {
     border-radius: 0.2rem;
     text-align: center;
     line-height: 1;
-    color: #ffffff;
+    
 }
 
 .navigation-portrait .nav-menus-wrapper-close-button {
@@ -4584,7 +4603,8 @@ ul.shorting-list li a:hover, ul.shorting-list li a:focus, ul.shorting-list li a.
 .jbs-grid-job-description p {
     margin: 0;
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.7;clearfix
+    color: #000000;
 }
 .jbs-grid-job-edrs {
     position: relative;
@@ -7155,71 +7175,143 @@ ul.shorting-list li a:hover, ul.shorting-list li a:focus, ul.shorting-list li a.
 	jobstock All Features Styles
 ----------------------------------------------*/
 /*-------------- Category Style --------------*/
+/* ---------- Fix: vertical centering, icon covers title+desc, and ellipsis ---------- */
+
+/* Let the card children stretch vertically (so inner blocks can match heights) */
 .category-box {
-    position: relative;
-    height: 200px;
-    background: #ffffff;
-    border-radius: 0.5rem;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    overflow: hidden;
-    box-shadow: 0 5px 25px 0 rgba(41,128,185,0.15);
-    -webkit-box-shadow: 0 5px 25px 0 rgba(41,128,185,0.15);
-    transition: 0.6s linear;
+  display: flex;              /* already set, but ensure it stays */
+  align-items: stretch;
+  background: #f2f2f2;       /* important: children can stretch to same height */
 }
-.category-box.light{
-	background:rgba(235, 239, 243,0.5);
-	box-shadow:none;
-	-webkit-box-shadow:none;
+
+/* The row that contains icon + text: make children stretch so icon can match text height */
+.category-desc {
+  display: flex !important;
+  align-items: stretch;       /* allow icon or text to stretch vertically */
+  gap: 0.9rem;
+  width: 100%;
+  min-width: 0;               /* allow flex children to shrink properly for ellipsis */
 }
-.category-box .category-desc .category-icon {
-    font-size: 40px;
-    margin-bottom:0px;
-    transition: 0.6s cubic-bezier(0.45, 0.01, 0.1, 1.49);
+
+/* Icon area: fixed width but stretch to the full height of the text block */
+.category-icon {
+  flex: 0 0 64px;             /* adjust width as desired */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;        /* makes the icon container match the parent's height */
+  border-radius: 0.6rem;
+  /* optional visual background to emphasize icon covers the block */
+  /* background: rgba(41,128,185,0.06); */
+  box-sizing: border-box;
+  padding: 0.25rem;           /* adjust to control how "big" icon looks inside the block */
 }
-.category-box .category-desc i {
-    font-size: 40px;
-    margin-bottom: 7px;
-    width: auto;
-    height: auto;
-    transition: 0.6s cubic-bezier(0.45, 0.01, 0.1, 1.49);
+
+/* Make the icon visually large and vertically centered */
+.category-icon i {
+  font-size: 34px;            /* try 34–40px depending on your taste */
+  line-height: 1;
+  display: block;
 }
+
+/* Keep the absolute icon for hover if you need it (no change) */
 .category-box .category-desc i.abs-icon {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    opacity: 0;
-    transition: all ease-in 0.4s;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  opacity: 0;
+  transition: all ease-in 0.4s;
 }
-.category-box .category-desc .category-detail h4 {
-    margin-bottom:12px;
-	font-weight:500;
+
+/* Text block: allow it to shrink and center content vertically */
+.category-desc-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;               /* CRITICAL: enables text-overflow inside a flex item */
 }
-.category-box .category-desc .category-detail p {
-    margin-bottom:0px;
-	font-size:14px;
-	font-weight:500;
+
+/* Title: single-line ellipsis (keeps layout stable in a row) */
+.category-desc-text h4 {
+  margin: 0 0 6px 0;
+  font-size: 16px !important;
+  font-weight: 500;
+  line-height: 1.15;
+  /* ensure the link inside truncates */
 }
-.category-box .category-desc .category-detail p.block {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 28px;
-    background: #f4f5f7;
-    padding: 0.1rem 1rem;
-    font-weight: 500;
-    font-size: 12px;
-    border-radius: 50px;
+
+.category-desc-text h4 a {
+  display: block;
+  white-space: nowrap;        /* single-line truncation - change to clamp if you want 2 lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+/* Paragraph styles */
+.category-desc-text p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #000000;
+}
+
+/* small pill in paragraph */
+.category-desc-text p .block {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  background: #ffb199;
+  padding: 0 0.6rem;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 50px;
+}
+
+/* Hover state for the absolute icon (unchanged behavior, refined position) */
 .category-box:hover i.abs-icon {
-    position: absolute;
-    bottom: 25px;
-    left: 25px;
-    opacity: 1;
-    color: #eff1f3;
+  bottom: 18px;
+  left: 25px;
+  opacity: 1;
+}
+
+/* small screens — reduce icon width so layout remains balanced */
+@media (max-width: 480px) {
+  .category-icon { flex: 0 0 48px; }
+  .category-icon i { font-size: 26px; }
+}
+
+
+/* Increase card width */
+#categoryMarqueeSplide .splide__slide {
+    width: 260px !important;
+}
+
+/* Slightly slimmer icon so text gets more room */
+.category-icon {
+    flex: 0 0 54px !important;
+}
+/* Light border to the category box */
+.category-box {
+    border: 1px solid #e5e7eb;     /* light gray border */
+    transition: 0.3s ease;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Hover effect: soft background + slightly darker border */
+.category-box:hover {
+    background: #d7d7d7;           /* very light bluish-gray */
+    border-color: #d0d7de;         /* a bit darker than normal */
+    box-shadow: 0 6px 20px rgba(41,128,185,0.12); /* soft glow */
+}
+.category-box:hover .category-icon i {
+    color: #333;        /* your theme blue */
 }
 
 /*--------------- Properties City List ------------------*/
@@ -7652,6 +7744,13 @@ ul.shorting-list li a:hover, ul.shorting-list li a:focus, ul.shorting-list li a.
 	background: #ffffff;
     border-radius: 0.6rem;
     border: 1px solid #e3e9ea;
+    transition: all 0.3s ease;  /* Smooth effect */
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08); /* Normal soft shadow */
+}
+
+.jbs-location-infortment:hover {
+    transform: translateY(-4px);  /* slight lift effect */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18); /* Beautiful darkened shadow */
 }
 .jbs-location-infortment-content {
     position: relative;
