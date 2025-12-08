@@ -1,6 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/ktindiaorg/jobes.codesnlogic.com/cnl_jobs_portal
-    - /bin/rm -rf $DEPLOYPATH/*
-    - /bin/cp -R * $DEPLOYPATH
