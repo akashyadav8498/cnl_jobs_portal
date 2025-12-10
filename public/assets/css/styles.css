@@ -1298,7 +1298,7 @@ div[data-overlay] p{
 }
 .square--40{
 	width:40px;
-	height:40px;
+	height:30px;
 	display:flex;
 	align-items:center;
 	justify-content:center;
@@ -8988,8 +8988,8 @@ span.remove-from-compare {
     flex: 1;
 }
 .dash-wrap-bloud-icon .bloud-icon{
-    width:70px;
-    height:70px;
+    width:60px;
+    height:60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9696,7 +9696,15 @@ span._user_status.busy {
     background: #ff9800;
 }
 
+.task-title span{
+    font-size: smaller;
+    line-height: 10px !important;
 
+}
+.task-icon {
+    background: #fff5ee !important;
+    border: 2px dotted #ddd;
+}
 /*---------- Bookmark Property -------*/
 
 /*----------------------------------------------

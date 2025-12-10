@@ -1,8 +1,8 @@
-const User = require("../models/User");
+const HrProfile = require("../models/HrProfile");
 
 exports.getUsers = async (req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await HrProfile.findAll();
     res.json({ status: "success", data: users });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -11,7 +11,7 @@ exports.getUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    const user = await HrProfile.create(req.body);
     res.json({ status: "created", data: user });
   } catch (err) {
     res.status(500).json({ message: err.message });

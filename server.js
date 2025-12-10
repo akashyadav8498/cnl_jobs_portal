@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const sequelize = require("./models/index");
 const userRoutes = require("./routes/userRoutes");
+const { User, HrProfile } = require("./models/relations");
 
 const app = express();
 app.use(express.json());
@@ -30,8 +31,38 @@ app.get('/blogs', (req, res) => {
 app.get('/signup', (req, res) => {
   res.render('signup');  
 });
-app.post('/employer-dashboard', (req, res) => {
-  res.render('employer-dashboard');  
+app.get('/employer-dashboard', (req, res) => {
+  res.render('emp_panel/employer-dashboard');  
+});
+app.get('/recruiter-profile', (req, res) => {
+  res.render('emp_panel/recruiter-profile');  
+});
+app.get('/company-profile', (req, res) => {
+  res.render('emp_panel/company-profile');  
+});
+app.get('/employer-jobs', (req, res) => {
+  res.render('emp_panel/employer-jobs');  
+});
+app.get('/employer-submit-jobs', (req, res) => {
+  res.render('emp_panel/employer-submit-jobs');  
+});
+app.get('/employer-applicants-jobs', (req, res) => {
+  res.render('emp_panel/employer-applicants-jobs');  
+});
+app.get('/employer-shortlist-candidates', (req, res) => {
+  res.render('emp_panel/employer-shortlist-candidates');  
+});
+app.get('/employer-package', (req, res) => {
+  res.render('emp_panel/employer-package');  
+});
+app.get('/employer-messages', (req, res) => {
+  res.render('emp_panel/employer-messages');  
+});
+app.get('/employer-change-password', (req, res) => {
+  res.render('emp_panel/employer-change-password');  
+});
+app.get('/employer-delete-account', (req, res) => {
+  res.render('emp_panel/employer-delete-account');  
 });
 
 
