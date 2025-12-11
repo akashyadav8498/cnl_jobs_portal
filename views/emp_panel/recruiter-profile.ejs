@@ -73,10 +73,7 @@
 
           <div class="dashboard-widg-bar d-block">
             <!-- =============================================== -->
-            <div
-              id="hrProfileDiv"
-              class="dashboard-profle-wrapper mb-4"
-              style="display: none">
+            <div class="dashboard-profle-wrapper mb-4">
               <div class="dash-prf-start">
                 <div class="profile-avatar position-ralative mb-3">
                   <svg>
@@ -117,27 +114,26 @@
                       <div
                         class="dash-prfs-title d-flex align-items-center justify-content-between">
                         <div class="avatar-title">
-                          <h4>Rohit Pandey</h4>
+                          <h4 id="hrName"></h4>
                         </div>
                         <div class="update-status">
-                          <span class="text-sm opacity-75"
-                            >Last Update: 08/12/2025</span
-                          >
+                          <span
+                            id="updatedAt"
+                            class="text-sm opacity-75"
+                            style="display: none"></span>
                         </div>
                       </div>
                       <div class="dash-prfs-subtitle">
                         <div class="jbs-job-mrch-lists mb-2">
                           <div class="single-mrch-lists">
-                            <span>Sr. HR Manager </span>
+                            <span id="hrDesignation">
+                              Designation goes here
+                            </span>
                           </div>
                         </div>
                         <div class="short-description">
-                          <p class="text-dark">
-                            Creative and detail-oriented Web Designer with a
-                            strong foundation in responsive design, HTML, CSS,
-                            and modern UI/UX principles. Experienced in
-                            designing visually appealing, user-friendly
-                            websites.
+                          <p class="text-dark" id="hrDescription">
+                            Description goes here
                           </p>
                         </div>
                       </div>
@@ -175,7 +171,9 @@
                                     </svg>
                                   </div>
                                   <div class="info-caps">
-                                    <span>8556068407</span>
+                                    <span id="hrContact">
+                                      Contact number goes here
+                                    </span>
                                   </div>
                                 </div>
                                 <!-- Verify Mobile -->
@@ -220,7 +218,7 @@
                                     </svg>
                                   </div>
                                   <div class="info-caps">
-                                    <span>themezhub@gmail.com</span>
+                                    <span id="hrMail"> Email goes here </span>
                                   </div>
                                 </div>
                                 <!-- Verify Email -->
@@ -755,8 +753,8 @@
         fetch("/api/user/getUserDetails")
           .then((res) => res.json())
           .then((data) => {
-            console.log("Users:", data);
             const userDetails = data.userDetails.hrProfile;
+            $("#hrName").text(userDetails.u_name);
             $("#name").val(userDetails.u_name);
             $("#designation").val(userDetails.designation);
             $("#experience").val(userDetails.experience);
