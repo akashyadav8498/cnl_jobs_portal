@@ -105,39 +105,25 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const userData = req.body;
-
     const hrProfile = await HrProfile.update(
       {
         u_name: userData.name,
-        gender: userData.gender,
         designation: userData.designation,
-        experience: userData.experience,
-        contact: parseInt(userData.contact),
-        city: userData.city,
-        state: userData.state,
-        city: userData.city,
+        contact: userData.contact,
         description: userData.description,
         updatedAt: new Date(),
       },
       { where: { user_id: req.session.userId } }
     );
 
-    if (!hrProfile) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
     return res.json({
       success: true,
-      message: "Login Succesfully",
+      message: "Profile updated successfully!",
     });
   } catch (err) {
-    console.error("Error fetching user:", err);
     return res.status(500).json({
       success: false,
-      message: "Server error",
+      message: "Profile details could not be updated. Please try again.",
     });
   }
 };
