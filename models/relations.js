@@ -1,11 +1,9 @@
 const User = require("./User");
 const HrProfile = require("./HrProfile");
-
-// Parent: User
-// Child: HrProfile
+const CompanyProfile = require("./CompanyProfile");
 
 User.hasOne(HrProfile, {
-  foreignKey: "user_id",   // column in hr_profile table
+  foreignKey: "user_id",  
   as: "hrProfile"
 });
 
@@ -14,4 +12,14 @@ HrProfile.belongsTo(User, {
   as: "user"
 });
 
-module.exports = { User, HrProfile };
+HrProfile.hasOne(CompanyProfile, {
+  foreignKey: "hr_profile_id",  
+  as: "companyProfile"
+});
+
+CompanyProfile.belongsTo(HrProfile, {
+  foreignKey: "hr_profile_id",
+  as: "hrProfile"
+});
+
+module.exports = { User, HrProfile, CompanyProfile };

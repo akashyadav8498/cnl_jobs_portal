@@ -1,0 +1,104 @@
+<div class="dashboard-nav">
+  <div class="dash-user-blocks pt-5">
+    <div class="jbs-grid-usrs-thumb">
+      <div class="jbs-grid-yuo">
+        <a href="candidate-detail.html"
+          ><figure>
+            <img
+              src="https://placehold.co/250x250"
+              class="img-fluid circle"
+              alt=""
+            /></figure
+        ></a>
+      </div>
+    </div>
+    <div class="jbs-grid-usrs-caption mb-3">
+      <div class="jbs-kioyer">
+        <span class="label text-light bg-main">05 Openings</span>
+      </div>
+      <div class="jbs-tiosk">
+        <h4 class="jbs-tiosk-title">
+          <a href="/company-profile"><%=session.company%></a>
+        </h4>
+        <div class="jbs-tiosk-subtitle">
+          <span
+            ><i class="fa-solid fa-location-dot me-2"></i
+            ><%=session.location%></span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard-inner">
+    <ul>
+      <li class="<%= currentPath === '/employer-dashboard' ? 'active' : '' %>">
+        <a href="/employer-dashboard">
+          <i class="fa-solid fa-gauge-high me-2"></i>Dashboard
+        </a>
+      </li>
+
+      <li class="<%= currentPath === '/recruiter-profile' ? 'active' : '' %>">
+        <a href="/recruiter-profile">
+          <i class="fa-regular fa-user me-2"></i>HR/Admin Profile
+        </a>
+      </li>
+
+      <li class="<%= currentPath === '/company-profile' ? 'active' : '' %>">
+        <a href="/company-profile">
+          <i class="fas fa-building me-2"></i>Company Profile
+        </a>
+      </li>
+
+      <li class="<%= currentPath === '/employer-jobs' ? 'active' : '' %>">
+        <a href="/employer-jobs">
+          <i class="fa-solid fa-business-time me-2"></i>Job Listings
+        </a>
+      </li>
+
+      <li
+        class="<%= currentPath === '/employer-applicants-jobs' ? 'active' : '' %>"
+      >
+        <a href="/employer-applicants-jobs">
+          <i class="fa-solid fa-user-group me-2"></i>Applicants
+        </a>
+      </li>
+
+      <li
+        class="<%= currentPath === '/employer-shortlist-candidates' ? 'active' : '' %>"
+      >
+        <a href="/employer-shortlist-candidates">
+          <i class="fa-solid fa-user-clock me-2"></i>Shortlisted Candidates
+        </a>
+      </li>
+
+      <li class="<%= currentPath === '/employer-package' ? 'active' : '' %>">
+        <a href="/employer-package">
+          <i class="fa-solid fa-wallet me-2"></i>Subscription Plan
+        </a>
+      </li>
+
+      <li class="<%= currentPath === '/employer-messages' ? 'active' : '' %>">
+        <a href="/employer-messages">
+          <i class="fa-solid fa-comments me-2"></i>Messages
+        </a>
+      </li>
+
+      <li
+        class="<%= currentPath === '/employer-change-password' ? 'active' : '' %>"
+      >
+        <a href="/employer-change-password">
+          <i class="fa-solid fa-unlock-keyhole me-2"></i>Change Password
+        </a>
+      </li>
+
+      <li
+        class="<%= currentPath === '/employer-delete-account' ? 'active' : '' %>"
+      >
+        <a href="/employer-delete-account">
+          <i class="fa-solid fa-trash-can me-2"></i>Delete Account
+        </a>
+      </li>
+      <li> <a href="/" ><i class="fa-solid fa-power-off me-2"></i>Log Out</a > </li>
+    </ul>
+  </div>
+</div>

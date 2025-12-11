@@ -79,28 +79,32 @@
       ></span>
       <div class="modal-header">
         <div class="mdl-thumb">
-          <img src="assets/img/ico.png" class="img-fluid" width="70" alt="" />
-        </div>
-        <div class="mdl-title">
-          <h4 class="modal-header-title">Hello, Again</h4>
+          <img
+            src="assets/img/favicon.png"
+            class="img-fluid"
+            width="70"
+            alt=""
+          />
         </div>
       </div>
       <div class="modal-body">
         <div class="modal-login-form">
-          <form>
+          <form id="login_form">
             <div class="form-floating mb-4">
               <input
                 type="email"
                 class="form-control"
+                name="email"
                 placeholder="name@example.com"
               />
-              <label>User Name</label>
+              <label>Email</label>
             </div>
 
             <div class="form-floating mb-4">
               <input
                 type="password"
                 class="form-control"
+                name="password"
                 placeholder="Password"
               />
               <label>Password</label>
@@ -114,6 +118,11 @@
                 Log In
               </button>
             </div>
+            <div
+              id="loginError"
+              class="text-danger mt-2"
+              style="display: none"
+            ></div>
 
             <div class="modal-flex-item mb-3">
               <div class="modal-flex-first">
@@ -163,3 +172,42 @@
   </div>
 </div>
 <!-- End Modal -->
+
+<script>
+  document
+    .getElementById("login_form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+      const errorBox = document.getElementById("loginError");
+
+      const payload = {
+        email: formData.get("email"),
+        password: formData.get("password"),
+      };
+
+      try {
+        const response = await fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // 👈 important
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          errorBox.style.display = "block";
+          errorBox.innerText = result.message;
+        } else {
+          window.location.href = "/employer-dashboard";
+        }
+      } catch (err) {
+        errorBox.style.display = "block";
+        errorBox.innerText = "Server error. Please try again.";
+      }
+    });
+</script>

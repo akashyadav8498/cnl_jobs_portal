@@ -86,6 +86,13 @@
 .form-group {
     margin-bottom: 15px;
 }
+textarea::placeholder {
+  color: #cecece !important;
+  font-style: italic;
+}
+
+
+
 .preloader {
   width: 50px;
   height: 50px;
@@ -325,7 +332,7 @@ p {
 	background:#f7d0cb;
 }
 .bg-2{
-	background:#dde9ed;
+	background:#e0dede;
 }
 .tbl {
     display: table;

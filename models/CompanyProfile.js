@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./index");
 
-const User = sequelize.define("User", {
+const CompanyProfile = sequelize.define("CompanyProfile", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -9,18 +9,18 @@ const User = sequelize.define("User", {
     allowNull: false
   },
 
-  email: {
+  hr_profile_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+
+  name: {
     type: DataTypes.STRING(50),
     allowNull: true
   },
 
-  password: {
-    type: DataTypes.STRING(255),
-    allowNull: true
-  },
-
-  u_type: {
-    type: DataTypes.STRING(20),
+  location: {
+    type: DataTypes.STRING(50),
     allowNull: true
   },
 
@@ -35,8 +35,8 @@ const User = sequelize.define("User", {
   }
 
 }, {
-  tableName: "user",
+  tableName: "company_profile",
   timestamps: true
 });
 
-module.exports = User;
+module.exports = CompanyProfile;

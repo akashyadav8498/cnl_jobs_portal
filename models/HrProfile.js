@@ -14,6 +14,11 @@ const HrProfile = sequelize.define("HrProfile", {
     allowNull: false
   },
 
+   u_name: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+
   title: {
     type: DataTypes.STRING(20),
     allowNull: true

@@ -88,7 +88,8 @@
                   <div
                     id="section-wrapper"
                     class="position-relative"
-                    style="min-height: 600px">
+                    style="min-height: 600px"
+                  >
                     <!-- ==== Radio Buttons Start ==== -->
                     <div
                       id="role-select-box"
@@ -96,11 +97,13 @@
                         background-color: white;
                         padding: 10px 10px 20px 25px;
                         border-radius: 10px;
-                      ">
+                      "
+                    >
                       <!--  radio buttons heading -->
                       <div class="form-heads d-block mb-2">
                         <div
-                          class="d-flex align-items-center justify-content-start gap-3">
+                          class="d-flex align-items-center justify-content-start gap-3"
+                        >
                           <div class="head-caps">
                             <h4>How do we recognize you?</h4>
                           </div>
@@ -116,10 +119,12 @@
                                 class="btn-check"
                                 name="role"
                                 value="employer"
-                                id="findtalent" />
+                                id="findtalent"
+                              />
                               <label
                                 class="btn btn-md btn-outline-gray h-auto"
-                                for="findtalent">
+                                for="findtalent"
+                              >
                                 <div class="d-flex align-items-center gap-3">
                                   <div class="icons">
                                     <svg
@@ -127,14 +132,17 @@
                                       height="44"
                                       viewBox="0 0 24 24"
                                       fill="none"
-                                      xmlns="http://www.w3.org/2000/svg">
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
                                       <path
                                         opacity="0.3"
                                         d="M20 15H4C2.9 15 2 14.1 2 13V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V13C22 14.1 21.1 15 20 15ZM13 12H11C10.5 12 10 12.4 10 13V16C10 16.5 10.4 17 11 17H13C13.6 17 14 16.6 14 16V13C14 12.4 13.6 12 13 12Z"
-                                        fill="#ff3d00" />
+                                        fill="#ff3d00"
+                                      />
                                       <path
                                         d="M14 6V5H10V6H8V5C8 3.9 8.9 3 10 3H14C15.1 3 16 3.9 16 5V6H14ZM20 15H14V16C14 16.6 13.5 17 13 17H11C10.5 17 10 16.6 10 16V15H4C3.6 15 3.3 14.9 3 14.7V18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V14.7C20.7 14.9 20.4 15 20 15Z"
-                                        fill="#ff3d00" />
+                                        fill="#ff3d00"
+                                      />
                                     </svg>
                                   </div>
                                   <div class="btn-caps text-start">
@@ -161,10 +169,12 @@
                                 class="btn-check"
                                 name="role"
                                 value="candidate"
-                                id="findjob" />
+                                id="findjob"
+                              />
                               <label
                                 class="btn btn-md btn-outline-gray h-auto"
-                                for="findjob">
+                                for="findjob"
+                              >
                                 <div class="d-flex align-items-center gap-3">
                                   <div class="icons">
                                     <svg
@@ -172,14 +182,17 @@
                                       height="44"
                                       viewBox="0 0 24 24"
                                       fill="none"
-                                      xmlns="http://www.w3.org/2000/svg">
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
                                       <path
                                         opacity="0.3"
                                         d="M22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2C17.5 2 22 6.5 22 12ZM12 7C10.3 7 9 8.3 9 10C9 11.7 10.3 13 12 13C13.7 13 15 11.7 15 10C15 8.3 13.7 7 12 7Z"
-                                        fill="#ff3d00" />
+                                        fill="#ff3d00"
+                                      />
                                       <path
                                         d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z"
-                                        fill="#ff3d00" />
+                                        fill="#ff3d00"
+                                      />
                                     </svg>
                                   </div>
                                   <div class="btn-caps text-start">
@@ -208,8 +221,10 @@
                     <form
                       id="employer_form"
                       method="post"
-                      action="/employer-dashboard"
-                      class="p-md-4">
+                      action="http://localhost:4000/api/user/register"
+                      class="p-md-4"
+                    >
+                      <input type="hidden" name="u_type" value="employer" />
                       <div
                         id="form-employer"
                         class="form-fade"
@@ -218,10 +233,12 @@
                           padding: 20px 50px 50px 50px;
                           border-radius: 10px;
                           margin-top: -40px;
-                        ">
+                        "
+                      >
                         <!-- employer form headings ==== -->
                         <div
-                          class="d-flex align-items-center justify-content-start gap-3">
+                          class="d-flex align-items-center justify-content-start gap-3"
+                        >
                           <div class="head-caps">
                             <h4>
                               <span style="font-weight: 100">Welcome</span
@@ -230,14 +247,16 @@
                                   font-weight: 900;
                                   text-transform: uppercase;
                                   color: #ff3d00;
-                                ">
-                                Employer</span>                              
+                                "
+                              >
+                                Employer</span
+                              >
                             </h4>
                           </div>
                         </div>
                         <div class="form-float d-flex flex-column gap-1">
                           <!-- ============== Social Login Part ============ -->
-                           <!--
+                          <!--
                           <div class="social-signup d-flex flex-row gap-3 mt-4">
                             <a
                               href="#"
@@ -280,7 +299,7 @@
                             </div>
                           </div>
                           -->
-                         <!-- ============== Social Login Part  ============ -->
+                          <!-- ============== Social Login Part  ============ -->
                           <div class="form-group mb-0">
                             <label class="fw-medium fs-6 text-dark"
                               >Full Name</label
@@ -288,7 +307,9 @@
                             <input
                               type="text"
                               class="form-control"
-                              placeholder="Enter your full name?" />
+                              name="u_name"
+                              placeholder="Enter your full name?"
+                            />
                           </div>
 
                           <div class="form-group mb-0">
@@ -300,7 +321,9 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="Tell us your Email ID" />
+                              name="email"
+                              placeholder="Tell us your Email ID"
+                            />
                             <!-- <span class="text-sm opacity-75"
                             >We'll send relevant jobs and updates to this
                             email</span
@@ -317,24 +340,29 @@
                             <input
                               type="text"
                               class="form-control"
-                              placeholder="Enter Organization Name" />
+                              name="c_name"
+                              placeholder="Enter Organization Name"
+                            />
                           </div>
 
                           <label class="fw-medium fs-6 text-dark"
                             >Location<i class="text-danger text-md">*</i></label
                           >
-                          <div class="nice-select form-control" tabindex="0">
-                            <span class="current">Select Location</span>
-                            <ul class="list">
-                              <li data-value="1" class="option">Gurugram</li>
-                              <li data-value="2" class="option">Ghaziabad</li>
-                              <li data-value="3" class="option">Delhi</li>
-                              <li data-value="4" class="option">Noida</li>
-                              <li data-value="5" class="option">
+                          <div tabindex="0">
+                            <select
+                              name="location"
+                              class="nice-select form-control"
+                            >
+                              <option value="">Select Location</option>
+                              <option value="Gurugram">Gurugram</option>
+                              <option value="Ghaziabad">Ghaziabad</option>
+                              <option value="Delhi">Delhi</option>
+                              <option value="Noida">Noida</option>
+                              <option value="Greater Noida">
                                 Greater Noida
-                              </li>
-                              <li data-value="6" class="option">Faridabad</li>
-                            </ul>
+                              </option>
+                              <option value="Faridabad">Faridabad</option>
+                            </select>
                           </div>
 
                           <div class="form-group mb-0">
@@ -343,7 +371,8 @@
                                 class="form-check-input"
                                 type="checkbox"
                                 id="promotions"
-                                value="option1" />
+                                value="option1"
+                              />
                               <label class="form-check-label" for="promotions"
                                 >Send me important updates & promotions via SMS
                                 & email</label
@@ -353,21 +382,24 @@
 
                           <div class="form-group mb-0">
                             <p class="confirmTex">
-                              By clicking Register, you agree to the<a
-                                href="#"
-                                class="text-main">
-                                Terms and Conditions
-                              </a>
-                              &amp;<a href="#" class="text-main">
-                                Privacy Policy
-                              </a>
+                              By clicking Register, you agree to the
+                              <a href="#" class="text-main"
+                                >Terms and Conditions</a
+                              >
+                              &amp;
+                              <a href="#" class="text-main">Privacy Policy</a>
                               of CNL Placement.
                             </p>
+
                             <button
                               type="submit"
-                              class="btn btn-main full-width">
+                              class="btn btn-main full-width"
+                            >
                               Register
                             </button>
+
+                            <!-- Error message (for failures, no redirect) -->
+                            <div id="register-error" class="mt-3"></div>
                           </div>
                         </div>
                       </div>
@@ -378,7 +410,8 @@
                       id="candidate-form"
                       method="post"
                       action="/candidate-dashboard"
-                      class="p-md-4">
+                      class="p-md-4"
+                    >
                       <div
                         id="form-candidate"
                         class="form-fade"
@@ -387,10 +420,12 @@
                           padding: 20px 50px 50px 50px;
                           border-radius: 10px;
                           margin-top: -70px;
-                        ">
+                        "
+                      >
                         <!-- candidate form headings ==== -->
                         <div
-                          class="d-flex align-items-center justify-content-start gap-3">
+                          class="d-flex align-items-center justify-content-start gap-3"
+                        >
                           <div class="head-caps">
                             <h4>
                               <span style="font-weight: 100">Welcome</span
@@ -399,7 +434,8 @@
                                   font-weight: 900;
                                   text-transform: uppercase;
                                   color: #ff3d00;
-                                ">
+                                "
+                              >
                                 Candidate</span
                               >
                               <span style="font-weight: 100"
@@ -412,38 +448,45 @@
                           <div class="social-signup d-flex flex-row gap-3 mt-4">
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
+                            >
                               <img
                                 src="assets/img/google.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Facebook Signup" />
+                                alt="Facebook Signup"
+                              />
                             </a>
 
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
+                            >
                               <img
                                 src="assets/img/facebook.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Google Signup" />
+                                alt="Google Signup"
+                              />
                             </a>
                             <a
                               href="#"
-                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center">
+                              class="btn btn-gray rounded-pill w-100 d-flex align-items-center justify-content-center"
+                            >
                               <img
                                 src="assets/img/linkedin.png"
                                 class="img-fluid me-2"
                                 width="30"
-                                alt="Google Signup" />
+                                alt="Google Signup"
+                              />
                             </a>
                           </div>
 
                           <div class="devider position-relative d-block">
                             <hr class="mb-4 mt-4" />
                             <div
-                              class="position-absolute top-50 start-50 translate-middle">
+                              class="position-absolute top-50 start-50 translate-middle"
+                            >
                               <span
                                 class="square--30 circle bg-white text-muted"
                                 >OR</span
@@ -458,7 +501,8 @@
                             <input
                               type="text"
                               class="form-control"
-                              placeholder="Enter your full name?" />
+                              placeholder="Enter your full name?"
+                            />
                           </div>
 
                           <div class="form-group mb-0">
@@ -470,7 +514,8 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="Tell us your Email ID" />
+                              placeholder="Tell us your Email ID"
+                            />
                             <!-- <span class="text-sm opacity-75"
                             >We'll send relevant jobs and updates to this
                             email</span
@@ -487,7 +532,8 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="(Minimum 8 characters)" />
+                              placeholder="(Minimum 8 characters)"
+                            />
                             <!-- <span class="text-sm opacity-75"
                             >This helps your account stay protected</span
                           >
@@ -503,7 +549,8 @@
                             <input
                               type="email"
                               class="form-control"
-                              placeholder="Enter your mobile number" />
+                              placeholder="Enter your mobile number"
+                            />
                             <!-- <span class="text-sm opacity-75"
                             >This helps your account stay protected</span
                           >
@@ -532,7 +579,8 @@
                                 class="form-check-input"
                                 type="checkbox"
                                 id="promotions"
-                                value="option1" />
+                                value="option1"
+                              />
                               <label class="form-check-label" for="promotions"
                                 >Send me important updates & promotions via SMS
                                 & email</label
@@ -544,7 +592,8 @@
                             <p class="confirmTex">
                               By clicking Register, you agree to the<a
                                 href="#"
-                                class="text-main">
+                                class="text-main"
+                              >
                                 Terms and Conditions
                               </a>
                               &amp;<a href="#" class="text-main">
@@ -554,7 +603,8 @@
                             </p>
                             <button
                               type="submit"
-                              class="btn btn-main full-width">
+                              class="btn btn-main full-width"
+                            >
                               Register
                             </button>
                           </div>
@@ -587,10 +637,12 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="loginmodal"
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div
           class="modal-dialog modal-dialog-centered login-pop-form"
-          role="document">
+          role="document"
+        >
           <div class="modal-content" id="loginmodal">
             <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
               ><i class="fas fa-close"></i
@@ -601,7 +653,8 @@
                   src="assets/img/ico.png"
                   class="img-fluid"
                   width="70"
-                  alt="" />
+                  alt=""
+                />
               </div>
               <div class="mdl-title">
                 <h4 class="modal-header-title">Hello, Again</h4>
@@ -614,7 +667,8 @@
                     <input
                       type="email"
                       class="form-control"
-                      placeholder="name@example.com" />
+                      placeholder="name@example.com"
+                    />
                     <label>User Name</label>
                   </div>
 
@@ -622,14 +676,16 @@
                     <input
                       type="password"
                       class="form-control"
-                      placeholder="Password" />
+                      placeholder="Password"
+                    />
                     <label>Password</label>
                   </div>
 
                   <div class="form-group">
                     <button
                       type="submit"
-                      class="btn btn-main full-width font--bold btn-lg">
+                      class="btn btn-main full-width font--bold btn-lg"
+                    >
                       Log In
                     </button>
                   </div>
@@ -641,7 +697,8 @@
                           class="form-check-input"
                           type="checkbox"
                           id="savepassword"
-                          value="option1" />
+                          value="option1"
+                        />
                         <label class="form-check-label" for="savepassword"
                           >Save Password</label
                         >
@@ -686,6 +743,38 @@
         ><i class="ti-arrow-up"></i
       ></a>
     </div>
+
+    <!-- succes modal -->
+
+    <!-- Registration Success Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-2">
+          <div class="modal-header bg-2">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+            <h4 class="modal-title text-success">Congratulations!</h4>
+          </div>
+
+          <div class="modal-body">
+            <p id="registerModalMessage" class="text-dark">
+              Your account has been created <strong>successfully</strong>.
+              Please check your mail to get your login credentials.
+            </p>
+            <p class="mb-0 text-dark">
+              You will be redirected to the homepage in
+              <strong><span id="registerModalTimer">10</span></strong>
+              seconds...
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
@@ -702,6 +791,8 @@
     <script src="assets/js/counterup.min.js"></script>
 
     <script src="assets/js/custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
@@ -735,5 +826,110 @@
         }
       });
     });
+
+    (function () {
+      const form = document.getElementById("employer_form");
+      const errorBox = document.getElementById("register-error");
+      const submitButton = form.querySelector("button[type='submit']");
+
+      // Modal elements
+      const modalEl = document.getElementById("registerModal");
+      const modalMessageEl = document.getElementById("registerModalMessage");
+      const modalTimerEl = document.getElementById("registerModalTimer");
+      const modalGoNowBtn = document.getElementById("registerModalGoNow");
+
+      let countdownInterval = null;
+      let redirectUrlGlobal = "/";
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault(); // stop normal submit
+
+        // clear old error
+        errorBox.innerHTML = "";
+        errorBox.className = "mt-3";
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Registering...";
+
+        try {
+          const formData = new FormData(form);
+          const obj = Object.fromEntries(formData.entries());
+
+          const response = await fetch(form.action, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(obj),
+          });
+
+          const data = await response.json().catch(() => ({}));
+
+          if (response.ok && data.status === "success") {
+            // ✅ SUCCESS: show modal with timer
+            const redirectUrl = data.redirectUrl || "/";
+            redirectUrlGlobal = redirectUrl;
+
+            // set message & initial timer
+            modalMessageEl.textContent =
+              data.message || "You have registered successfully.";
+            let seconds = 10;
+            modalTimerEl.textContent = seconds;
+
+            // show Bootstrap modal
+            const bsModal = new bootstrap.Modal(modalEl);
+            bsModal.show();
+
+            // clear any old interval
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(function () {
+              seconds--;
+              if (seconds <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = redirectUrl;
+              } else {
+                modalTimerEl.textContent = seconds;
+              }
+            }, 1000);
+
+            // optional: reset form fields
+            // form.reset();
+          } else {
+            // ❌ FAILURE: show error under button, no redirect
+            const errorMsg =
+              (data && data.message) ||
+              "Registration failed. Please check your details and try again.";
+
+            errorBox.innerHTML = errorMsg;
+            errorBox.classList.add("alert", "alert-danger");
+
+            submitButton.disabled = false;
+            submitButton.textContent = "Register";
+          }
+        } catch (err) {
+          console.error("Request error:", err);
+          errorBox.innerHTML =
+            "An error occurred while submitting the form. Please try again.";
+          errorBox.classList.add("alert", "alert-danger");
+
+          submitButton.disabled = false;
+          submitButton.textContent = "Register";
+        }
+      });
+
+      // "Go Now" button in modal: redirect immediately
+      modalGoNowBtn.addEventListener("click", function () {
+        if (countdownInterval) clearInterval(countdownInterval);
+        window.location.href = redirectUrlGlobal;
+      });
+
+      // If modal is closed manually, stop timer (optional)
+      modalEl.addEventListener("hidden.bs.modal", function () {
+        if (countdownInterval) clearInterval(countdownInterval);
+        submitButton.disabled = false;
+        submitButton.textContent = "Register";
+      });
+    })();
   </script>
 </html>
