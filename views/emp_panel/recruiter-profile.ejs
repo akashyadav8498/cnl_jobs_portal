@@ -126,15 +126,11 @@
                       <div class="dash-prfs-subtitle">
                         <div class="jbs-job-mrch-lists mb-2">
                           <div class="single-mrch-lists">
-                            <span id="hrDesignation">
-                              Designation 
-                            </span>
+                            <span id="hrDesignation"> </span>
                           </div>
                         </div>
                         <div class="short-description">
-                          <p class="text-dark" id="hrDescription">
-                            About yourself... 
-                          </p>
+                          <p class="text-dark" id="hrDescription"></p>
                         </div>
                       </div>
                     </div>
@@ -171,9 +167,7 @@
                                     </svg>
                                   </div>
                                   <div class="info-caps">
-                                    <span id="hrContact">
-                                      +91 9xxxxxxxx 
-                                    </span>
+                                    <span id="hrContact"> </span>
                                   </div>
                                 </div>
                                 <!-- Verify Mobile -->
@@ -218,7 +212,7 @@
                                     </svg>
                                   </div>
                                   <div class="info-caps">
-                                    <span id="hrMail"> Your email </span>
+                                    <span id="hrEmail"> </span>
                                   </div>
                                 </div>
                                 <!-- Verify Email -->
@@ -754,12 +748,40 @@
           .then((res) => res.json())
           .then((data) => {
             const userDetails = data.userDetails.hrProfile;
+
             $("#hrName").text(userDetails.u_name);
             $("#name").val(userDetails.u_name);
-            $("#designation").val(userDetails.designation);
-            $("#experience").val(userDetails.experience);
+
+            $("#hrDesignation").text(
+              stringIsEmpty(userDetails.designation) === true
+                ? "Designation"
+                : userDetails.designation
+            );
+            $("#designation").val(
+              stringIsEmpty(userDetails.designation) === true
+                ? ""
+                : userDetails.designation
+            );
+
+            $("#hrContact").text(
+              stringIsEmpty(userDetails.contact) === true
+                ? "+91 9xxxxxxxx"
+                : userDetails.contact
+            );
             $("#contact").val(userDetails.contact);
+
+            $("#hrEmail").text(
+              stringIsEmpty(data.userDetails.email) === true
+                ? "Your email"
+                : data.userDetails.email
+            );
             $("#email").val(data.userDetails.email);
+
+            $("#hrDescription").text(
+              stringIsEmpty(userDetails.description) === true
+                ? "About yourself..."
+                : userDetails.description
+            );
             $("#description").val(userDetails.description);
           })
           .catch((err) => console.error(err));
