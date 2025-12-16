@@ -117,7 +117,7 @@
                         class="dash-prfs-title d-flex align-items-center justify-content-between"
                       >
                         <div class="avatar-title">
-                          <h4>Adobe Eluctorious</h4>
+                          <h4><%=session.company%></h4>
                         </div>
                         <div class="update-status">
                           <span class="text-sm opacity-75"
@@ -133,7 +133,6 @@
                               <a href="#" class="text-main">@2010</a></span
                             >
                           </div>
-                       
                         </div>
                         <div class="short-description">
                           <p class="text-dark">
@@ -474,93 +473,78 @@
                       <div class="form-group">
                         <label>Company Category</label>
                         <div class="select-ops">
-                          <select>
-                            <option value="1">Web & Application</option>
-                            <option value="2">Banking Services</option>
-                            <option value="3">UI/UX Design</option>
-                            <option value="4">IOS/App Application</option>
-                            <option value="5">Education</option>
+                          <select name="job_category" class="form-control">
+                            <option value="">-- Select Job Category --</option>
+                            <option value="1">
+                              Information Technology (IT)
+                            </option>
+                            <option value="2">Software Development</option>
+                            <option value="3">
+                              Web & Application Development
+                            </option>
+                            <option value="4">UI / UX Design</option>
+                            <option value="5">
+                              Mobile App Development (Android / iOS)
+                            </option>
+                            <option value="6">Data Science & Analytics</option>
+                            <option value="7">Cyber Security</option>
+                            <option value="8">Networking & Telecom</option>
+                            <option value="9">
+                              Banking & Financial Services
+                            </option>
+                            <option value="10">Accounting & Taxation</option>
+                            <option value="11">Sales & Marketing</option>
+                            <option value="12">Digital Marketing</option>
+                            <option value="13">Human Resources (HR)</option>
+                            <option value="14">Customer Support / BPO</option>
+                            <option value="15">Education & Training</option>
+                            <option value="16">Healthcare & Medical</option>
+                            <option value="17">Pharmaceuticals</option>
+                            <option value="18">
+                              Engineering & Manufacturing
+                            </option>
+                            <option value="19">
+                              Construction & Real Estate
+                            </option>
+                            <option value="20">Logistics & Supply Chain</option>
+                            <option value="21">Retail & E-Commerce</option>
+                            <option value="22">Hospitality & Tourism</option>
+                            <option value="23">Media, Design & Creative</option>
+                            <option value="24">Legal & Compliance</option>
+                            <option value="25">
+                              Government / Public Sector
+                            </option>
+                            <option value="26">
+                              Security & Facility Management
+                            </option>
+                            <option value="27">
+                              Freelance / Contract Jobs
+                            </option>
+                            <option value="28">Work From Home / Remote</option>
                           </select>
                         </div>
                       </div>
                     </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-12">
+                    <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label>Address 1</label>
+                        <label>Plot No./ Building Name/ Street Name</label>
                         <input type="text" class="form-control" />
                       </div>
                     </div>
 
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label>Address 2</label>
-                        <input type="text" class="form-control" />
-                      </div>
-                    </div>
-
-                    <div class="col-xl-6 col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label>Country</label>
+                        <label>City/ State</label>
                         <div class="select-ops">
                           <select>
-                            <option value="1">India</option>
-                            <option value="2">United State</option>
-                            <option value="3">United kingdom</option>
-                            <option value="4">Austrailia</option>
-                            <option value="5">Russia</option>
+                            <option value="1">New Delhi/ Delhi</option>
+                            <option value="2">Faridabad/ Haryana</option>
+                            <option value="3">Ghaziabad/ UP</option>
+                            <option value="4">Greater Noida/ UP</option>
+                            <option value="5">Gurugram/ Haryana</option>
+                            <option value="5">Noida/ UP</option>
                           </select>
                         </div>
-                      </div>
-                    </div>
-
-                    <div class="col-xl-6 col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label>State</label>
-                        <div class="select-ops">
-                          <select>
-                            <option value="1">California</option>
-                            <option value="2">Denver</option>
-                            <option value="3">New York</option>
-                            <option value="4">Canada</option>
-                            <option value="5">Poland</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                     <div class="col-xl-6 col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label>City</label>
-                        <div class="select-ops">
-                          <select>
-                            <option value="1">California</option>
-                            <option value="2">Denver</option>
-                            <option value="3">New York</option>
-                            <option value="4">Canada</option>
-                            <option value="5">Poland</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-xl-6 col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label>Pin Code</label>
-                        <input type="text" class="form-control" />
-                      </div>
-                    </div>
-
-                    <div class="col-xl-6 col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label>Latitude</label>
-                        <input type="text" class="form-control" />
-                      </div>
-                    </div>
-
-                    <div class="col-xl-6 col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label>Longitude</label>
-                        <input type="text" class="form-control" />
                       </div>
                     </div>
 
@@ -579,10 +563,6 @@
               </div>
             </div>
             <!-- Card Row End -->
-
-           
-
-         
 
             <!-- Submit Busston -->
             <div class="row">
