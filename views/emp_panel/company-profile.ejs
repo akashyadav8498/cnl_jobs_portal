@@ -47,8 +47,7 @@
           href="#MobNav"
           role="button"
           aria-expanded="false"
-          aria-controls="MobNav"
-        >
+          aria-controls="MobNav">
           <i class="fas fa-bars mr-2"></i>Dashboard Navigation
         </a>
         <div class="collapse" id="MobNav"><%- include('emp-sidebar') %></div>
@@ -84,17 +83,14 @@
                       cy="70"
                       r="60"
                       stroke-dasharray="326.72"
-                      stroke-dashoffset="326.72"
-                    ></circle>
+                      stroke-dashoffset="326.72"></circle>
                   </svg>
                   <img
                     class="avatar"
                     src="https://placehold.co/250x250"
-                    alt="Avatar"
-                  />
+                    alt="Avatar" />
                   <div
-                    class="position-absolute bottom-0 start-50 translate-middle-x"
-                  >
+                    class="position-absolute bottom-0 start-50 translate-middle-x">
                     <span
                       class="badge badge-md bg-white text-main rounded-pill fw-medium shadow-sm px-3 py-2"
                       >85%</span
@@ -114,8 +110,7 @@
                   <div class="col-xl-8 col-lg-8">
                     <div class="dash-prfs-caption mb-4">
                       <div
-                        class="dash-prfs-title d-flex align-items-center justify-content-between"
-                      >
+                        class="dash-prfs-title d-flex align-items-center justify-content-between">
                         <div class="avatar-title">
                           <h4><%=session.company%></h4>
                         </div>
@@ -128,19 +123,16 @@
                       <div class="dash-prfs-subtitle">
                         <div class="jbs-job-mrch-lists mb-2">
                           <div class="single-mrch-lists">
-                            <span
-                              >Software & Application
-                              <a href="#" class="text-main">@2010</a></span
+                            <span id="companyCategory">
+                              <a href="#" class="text-main" id="companyYear"
+                                >@2010</a
+                              ></span
                             >
                           </div>
                         </div>
                         <div class="short-description">
-                          <p class="text-dark">
-                            Creative and detail-oriented Web Designer with a
-                            strong foundation in responsive design, HTML, CSS,
-                            and modern UI/UX principles. Experienced in
-                            designing visually appealing, user-friendly
-                            websites.
+                          <p class="text-dark" id="companyDescription">
+                            Company Description
                           </p>
                         </div>
                       </div>
@@ -157,53 +149,45 @@
                                   height="18"
                                   viewBox="0 0 24 24"
                                   fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
+                                  xmlns="http://www.w3.org/2000/svg">
                                   <path
                                     opacity="0.3"
                                     d="M18.0624 15.3453L13.1624 20.7453C12.5624 21.4453 11.5624 21.4453 10.9624 20.7453L6.06242 15.3453C4.56242 13.6453 3.76242 11.4453 4.06242 8.94534C4.56242 5.34534 7.46242 2.44534 11.0624 2.04534C15.8624 1.54534 19.9624 5.24534 19.9624 9.94534C20.0624 12.0453 19.2624 13.9453 18.0624 15.3453Z"
-                                    fill="#4f5e64"
-                                  />
+                                    fill="#4f5e64" />
                                   <path
                                     d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z"
-                                    fill="#4f5e64"
-                                  />
+                                    fill="#4f5e64" />
                                 </svg>
                               </div>
                               <div class="info-caps">
-                                <span>Noida, UP</span>
+                                <span><%=session.location%></span>
                               </div>
                             </div>
 
                             <!-- E-mail -->
                             <div class="d-flex align-items-center gap-2">
                               <div
-                                class="d-flex align-items-center justify-content-between gap-2 w-100"
-                              >
+                                class="d-flex align-items-center justify-content-between gap-2 w-100">
                                 <div
-                                  class="verify-content d-flex align-items-center gap-2"
-                                >
+                                  class="verify-content d-flex align-items-center gap-2">
                                   <div class="info-icon">
                                     <svg
                                       width="18"
                                       height="18"
                                       viewBox="0 0 24 24"
                                       fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
+                                      xmlns="http://www.w3.org/2000/svg">
                                       <path
                                         opacity="0.3"
                                         d="M21 18H3C2.4 18 2 17.6 2 17V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V17C22 17.6 21.6 18 21 18Z"
-                                        fill="#4f5e64"
-                                      />
+                                        fill="#4f5e64" />
                                       <path
                                         d="M11.4 13.5C11.8 13.8 12.3 13.8 12.6 13.5L21.6 6.30005C21.4 6.10005 21.2 6 20.9 6H2.99998C2.69998 6 2.49999 6.10005 2.29999 6.30005L11.4 13.5Z"
-                                        fill="#4f5e64"
-                                      />
+                                        fill="#4f5e64" />
                                     </svg>
                                   </div>
                                   <div class="info-caps">
-                                    <span>themezhub@gmail.com</span>
+                                    <span id="companyMail"></span>
                                   </div>
                                 </div>
                               </div>
@@ -221,63 +205,54 @@
                                   height="18"
                                   viewBox="0 0 24 24"
                                   fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
+                                  xmlns="http://www.w3.org/2000/svg">
                                   <path
                                     opacity="0.3"
                                     d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z"
-                                    fill="#4f5e64"
-                                  />
+                                    fill="#4f5e64" />
                                   <path
                                     d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z"
-                                    fill="#4f5e64"
-                                  />
+                                    fill="#4f5e64" />
                                   <path
                                     d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z"
-                                    fill="#4f5e64"
-                                  />
+                                    fill="#4f5e64" />
                                 </svg>
                               </div>
                               <div class="info-caps">
-                                <span>Established: 2010</span>
+                                <span id="established"></span>
                               </div>
                             </div>
 
                             <!-- Website -->
                             <div class="d-flex align-items-center gap-2">
                               <div
-                                class="d-flex align-items-center justify-content-between gap-2 w-100"
-                              >
+                                class="d-flex align-items-center justify-content-between gap-2 w-100">
                                 <div
-                                  class="verify-content d-flex align-items-center gap-2"
-                                >
+                                  class="verify-content d-flex align-items-center gap-2">
                                   <div class="info-icon">
                                     <svg
                                       width="18"
                                       height="18"
                                       viewBox="0 0 24 24"
                                       fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
+                                      xmlns="http://www.w3.org/2000/svg">
                                       <!-- Background circle -->
                                       <circle
                                         cx="12"
                                         cy="12"
                                         r="10"
                                         fill="#4f5e64"
-                                        opacity="0.3"
-                                      />
+                                        opacity="0.3" />
 
                                       <!-- Globe lines -->
                                       <path
                                         d="M12 2C7 2 3 6 3 12C3 18 7 22 12 22C17 22 21 18 21 12C21 6 17 2 12 2ZM17.8 8H15.7C15.3 6.8 14.7 5.7 13.9 4.9C15.5 5.4 16.9 6.5 17.8 8ZM12 4C12.9 4.8 13.6 6.1 14 8H10C10.4 6.1 11.1 4.8 12 4ZM9 12C9 11.3 9.1 10.6 9.2 10H14.8C14.9 10.6 15 11.3 15 12C15 12.7 14.9 13.4 14.8 14H9.2C9.1 13.4 9 12.7 9 12ZM12 20C11.1 19.2 10.4 17.9 10 16H14C13.6 17.9 12.9 19.2 12 20ZM13.9 19.1C14.7 18.3 15.3 17.2 15.7 16H17.8C16.9 17.5 15.5 18.6 13.9 19.1ZM15.9 14C16 13.4 16 12.7 16 12C16 11.3 16 10.6 15.9 10H19C19.3 10.6 19.5 11.3 19.5 12C19.5 12.7 19.3 13.4 19 14H15.9ZM8.1 10C8 10.6 8 11.3 8 12C8 12.7 8 13.4 8.1 14H5C4.7 13.4 4.5 12.7 4.5 12C4.5 11.3 4.7 10.6 5 10H8.1ZM6.2 8C7.1 6.5 8.5 5.4 10.1 4.9C9.3 5.7 8.7 6.8 8.3 8H6.2Z"
-                                        fill="#4f5e64"
-                                      />
+                                        fill="#4f5e64" />
                                     </svg>
                                   </div>
 
                                   <div class="info-caps">
-                                    <span>wwww.codesnlogic.com</span>
+                                    <span id="companyWebsite"></span>
                                   </div>
                                 </div>
                               </div>
@@ -292,15 +267,12 @@
                   <div class="col-xl-4 col-lg-4">
                     <div
                       class="card rpunded-3 py-4 px-2"
-                      style="background: #fff5ee"
-                    >
+                      style="background: #fff5ee">
                       <div
-                        class="completion-group d-flex flex-column gap-2 mb-3"
-                      >
+                        class="completion-group d-flex flex-column gap-2 mb-3">
                         <!-- Single -->
                         <div
-                          class="d-flex align-items-center justify-content-between gap-2"
-                        >
+                          class="d-flex align-items-center justify-content-between gap-2">
                           <div class="d-flex align-items-center gap-1">
                             <div class="task-icon square--30 circle bg-white">
                               <svg
@@ -308,17 +280,14 @@
                                 height="22"
                                 viewBox="0 0 24 24"
                                 fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path
                                   opacity="0.3"
                                   d="M21 18H3C2.4 18 2 17.6 2 17V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V17C22 17.6 21.6 18 21 18Z"
-                                  fill="#ff3d00"
-                                />
+                                  fill="#ff3d00" />
                                 <path
                                   d="M11.4 13.5C11.8 13.8 12.3 13.8 12.6 13.5L21.6 6.30005C21.4 6.10005 21.2 6 20.9 6H2.99998C2.69998 6 2.49999 6.10005 2.29999 6.30005L11.4 13.5Z"
-                                  fill="#ff3d00"
-                                />
+                                  fill="#ff3d00" />
                               </svg>
                             </div>
                             <div class="task-title">
@@ -336,8 +305,7 @@
 
                         <!-- Single -->
                         <div
-                          class="d-flex align-items-center justify-content-between gap-2"
-                        >
+                          class="d-flex align-items-center justify-content-between gap-2">
                           <div class="d-flex align-items-center gap-2">
                             <div class="task-icon square--30 circle bg-white">
                               <svg
@@ -345,25 +313,21 @@
                                 height="22"
                                 viewBox="0 0 24 24"
                                 fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path
                                   opacity="0.3"
                                   d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM15.5 14C15.5 13.4 14.6 13.5 14 13.5H9.5C8.9 13.5 8.5 13.4 8.5 14C8.5 14.6 8.9 14.5 9.5 14.5H14C14.6 14.5 15.5 14.6 15.5 14Z"
-                                  fill="#ff3d00"
-                                />
+                                  fill="#ff3d00" />
                                 <path
                                   d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z"
-                                  fill="#ff3d00"
-                                />
+                                  fill="#ff3d00" />
                                 <rect
                                   x="8"
                                   y="13"
                                   width="8"
                                   height="2"
                                   rx="1"
-                                  fill="#ff3d00"
-                                />
+                                  fill="#ff3d00" />
                               </svg>
                             </div>
                             <div class="task-title">
@@ -381,8 +345,7 @@
 
                         <!-- Single -->
                         <div
-                          class="d-flex align-items-center justify-content-between gap-2"
-                        >
+                          class="d-flex align-items-center justify-content-between gap-2">
                           <div class="d-flex align-items-center gap-2">
                             <div class="task-icon square--30 circle bg-white">
                               <svg
@@ -390,17 +353,14 @@
                                 height="22"
                                 viewBox="0 0 24 24"
                                 fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path
                                   opacity="0.3"
                                   d="M22 5V19C22 19.6 21.6 20 21 20H19.5L11.9 12.4C11.5 12 10.9 12 10.5 12.4L3 20C2.5 20 2 19.5 2 19V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5ZM7.5 7C6.7 7 6 7.7 6 8.5C6 9.3 6.7 10 7.5 10C8.3 10 9 9.3 9 8.5C9 7.7 8.3 7 7.5 7Z"
-                                  fill="#ff3d00"
-                                />
+                                  fill="#ff3d00" />
                                 <path
                                   d="M19.1 10C18.7 9.60001 18.1 9.60001 17.7 10L10.7 17H2V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V12.9L19.1 10Z"
-                                  fill="#ff3d00"
-                                />
+                                  fill="#ff3d00" />
                               </svg>
                             </div>
                             <div class="task-title">
@@ -429,43 +389,64 @@
               </div>
             </div>
 
-            <!-- Card Row -->
-            <div class="card">
-              <div class="card-header">
-                <h4>Update Details</h4>
-              </div>
-              <div class="card-body">
-                <form>
+            <form id="update_details">
+              <!-- Card Row -->
+              <div class="card">
+                <div class="card-header">
+                  <h4>Update Details</h4>
+                </div>
+                <div class="card-body">
                   <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label>Company Name</label>
-                        <input type="text" class="form-control" />
+                        <input
+                          id="name"
+                          name="name"
+                          value="<%=session.company%>"
+                          type="text"
+                          class="form-control" />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label>Founded Year</label>
-                        <input type="text" class="form-control" />
+                        <input
+                          type="text"
+                          id="founded_year"
+                          name="founded_year"
+                          class="form-control" />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label>Contact No.</label>
-                        <input type="text" class="form-control" />
+                        <input
+                          type="text"
+                          id="contact"
+                          name="contact"
+                          class="form-control" />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label>Email ID</label>
-                        <input type="text" class="form-control" />
+                        <input
+                          type="text"
+                          id="email"
+                          name="email"
+                          class="form-control" />
                       </div>
                     </div>
 
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label>Website</label>
-                        <input type="text" class="form-control" />
+                        <input
+                          type="text"
+                          id="website"
+                          name="website"
+                          class="form-control" />
                       </div>
                     </div>
 
@@ -473,55 +454,10 @@
                       <div class="form-group">
                         <label>Company Category</label>
                         <div class="select-ops">
-                          <select name="job_category" class="form-control">
-                            <option value="">-- Select Job Category --</option>
-                            <option value="1">
-                              Information Technology (IT)
-                            </option>
-                            <option value="2">Software Development</option>
-                            <option value="3">
-                              Web & Application Development
-                            </option>
-                            <option value="4">UI / UX Design</option>
-                            <option value="5">
-                              Mobile App Development (Android / iOS)
-                            </option>
-                            <option value="6">Data Science & Analytics</option>
-                            <option value="7">Cyber Security</option>
-                            <option value="8">Networking & Telecom</option>
-                            <option value="9">
-                              Banking & Financial Services
-                            </option>
-                            <option value="10">Accounting & Taxation</option>
-                            <option value="11">Sales & Marketing</option>
-                            <option value="12">Digital Marketing</option>
-                            <option value="13">Human Resources (HR)</option>
-                            <option value="14">Customer Support / BPO</option>
-                            <option value="15">Education & Training</option>
-                            <option value="16">Healthcare & Medical</option>
-                            <option value="17">Pharmaceuticals</option>
-                            <option value="18">
-                              Engineering & Manufacturing
-                            </option>
-                            <option value="19">
-                              Construction & Real Estate
-                            </option>
-                            <option value="20">Logistics & Supply Chain</option>
-                            <option value="21">Retail & E-Commerce</option>
-                            <option value="22">Hospitality & Tourism</option>
-                            <option value="23">Media, Design & Creative</option>
-                            <option value="24">Legal & Compliance</option>
-                            <option value="25">
-                              Government / Public Sector
-                            </option>
-                            <option value="26">
-                              Security & Facility Management
-                            </option>
-                            <option value="27">
-                              Freelance / Contract Jobs
-                            </option>
-                            <option value="28">Work From Home / Remote</option>
-                          </select>
+                          <select
+                            id="category_id"
+                            name="category_id"
+                            class="form-control"></select>
                         </div>
                       </div>
                     </div>
@@ -536,7 +472,7 @@
                       <div class="form-group">
                         <label>City/ State</label>
                         <div class="select-ops">
-                          <select>
+                          <select id="location" name="location">
                             <option value="1">New Delhi/ Delhi</option>
                             <option value="2">Faridabad/ Haryana</option>
                             <option value="3">Ghaziabad/ UP</option>
@@ -553,25 +489,25 @@
                         <label>About Company</label>
                         <textarea
                           id="description"
+                          name="description"
                           class="form-control ht-80"
-                          placeholder="Provide a short summary of your company’s identity, business journey, core strengths, and overall approach to delivering value. Highlight what sets your organization apart—such as innovation, service excellence, industry expertise, culture, customer focus, or long-term vision. (Limit: 1000 characters)"
-                        ></textarea>
+                          placeholder="Provide a short summary of your company’s identity, business journey, core strengths, and overall approach to delivering value. Highlight what sets your organization apart—such as innovation, service excellence, industry expertise, culture, customer focus, or long-term vision. (Limit: 1000 characters)"></textarea>
                       </div>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
-            </div>
-            <!-- Card Row End -->
+              <!-- Card Row End -->
 
-            <!-- Submit Busston -->
-            <div class="row">
-              <div class="col-lg-12 col-md-12">
-                <button type="submit" class="btn ft--medium btn-main px-5">
-                  Save Profile
-                </button>
+              <!-- Submit Busston -->
+              <div class="row">
+                <div class="col-lg-12 col-md-12">
+                  <button type="submit" class="btn ft--medium btn-main px-5">
+                    Save Profile
+                  </button>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
 
           <!-- footer -->
@@ -593,12 +529,10 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="messagemodal"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div
           class="modal-dialog modal-dialog-centered award-pop-form"
-          role="document"
-        >
+          role="document">
           <div class="modal-content" id="awardmodal">
             <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
               ><i class="fas fa-close"></i
@@ -649,8 +583,7 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="verifyemailmodal"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content" id="verifyemailmodal">
             <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
@@ -663,8 +596,7 @@
                     src="assets/img/verify-email-icon.svg"
                     class="img-fluid mx-auto"
                     width="140"
-                    alt="Image"
-                  />
+                    alt="Image" />
                 </div>
 
                 <div class="message-wrap text-center d-block mb-4">
@@ -708,8 +640,7 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="verifyphonemodal"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content" id="verifyphonemodal">
             <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
@@ -722,8 +653,7 @@
                     src="assets/img/mobile-verify-1.png"
                     class="img-fluid mx-auto"
                     width="140"
-                    alt="Image"
-                  />
+                    alt="Image" />
                 </div>
 
                 <div class="message-wrap text-center d-block mb-4">
@@ -739,11 +669,9 @@
                     <input
                       type="tel"
                       class="form-control ps-5 fs-6"
-                      placeholder="586 875 9523"
-                    />
+                      placeholder="586 875 9523" />
                     <div
-                      class="mobile-prefix position-absolute top-50 start-0 translate-middle-y ms-3"
-                    >
+                      class="mobile-prefix position-absolute top-50 start-0 translate-middle-y ms-3">
                       <span class="fw-medium">+91</span>
                     </div>
                   </div>
@@ -751,8 +679,7 @@
                     type="button"
                     class="btn btn-main px-5"
                     data-bs-target="#otpmodal"
-                    data-bs-toggle="modal"
-                  >
+                    data-bs-toggle="modal">
                     Continue<i class="bi bi-arrow-right ms-2"></i>
                   </button>
                 </div>
@@ -770,8 +697,7 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="otpmodalmodal"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content" id="otpmodalmodal">
             <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
@@ -784,8 +710,7 @@
                     src="assets/img/mobile-verify-2.png"
                     class="img-fluid mx-auto"
                     width="140"
-                    alt="Image"
-                  />
+                    alt="Image" />
                 </div>
 
                 <div class="message-wrap text-center d-block mb-4">
@@ -799,58 +724,50 @@
 
                 <div class="button-wrap text-center d-flex flex-column gap-2">
                   <div
-                    class="form-group mb-3 d-flex align-items-center justify-content-center gap-3"
-                  >
+                    class="form-group mb-3 d-flex align-items-center justify-content-center gap-3">
                     <input
                       type="text"
                       class="form-control fs-6 text-center"
                       maxlength="1"
                       oninput="moveToNext(this)"
                       autofocus
-                      placeholder="-"
-                    />
+                      placeholder="-" />
                     <input
                       type="text"
                       class="form-control fs-6 text-center"
                       maxlength="1"
                       oninput="moveToNext(this)"
-                      placeholder="-"
-                    />
+                      placeholder="-" />
                     <input
                       type="text"
                       class="form-control fs-6 text-center"
                       maxlength="1"
                       oninput="moveToNext(this)"
-                      placeholder="-"
-                    />
+                      placeholder="-" />
                     <input
                       type="text"
                       class="form-control fs-6 text-center"
                       maxlength="1"
                       oninput="moveToNext(this)"
-                      placeholder="-"
-                    />
+                      placeholder="-" />
                     <input
                       type="text"
                       class="form-control fs-6 text-center"
                       maxlength="1"
                       oninput="moveToNext(this)"
-                      placeholder="-"
-                    />
+                      placeholder="-" />
                     <input
                       type="text"
                       class="form-control fs-6 text-center"
                       maxlength="1"
                       oninput="moveToNext(this)"
-                      placeholder="-"
-                    />
+                      placeholder="-" />
                   </div>
                   <button
                     type="button"
                     class="btn btn-main px-5"
                     data-bs-target="#successmodal"
-                    data-bs-toggle="modal"
-                  >
+                    data-bs-toggle="modal">
                     Verify & Proceed
                   </button>
                   <p class="fw-normal">
@@ -874,8 +791,7 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="successmodalmodal"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content" id="successmodalmodal">
             <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
@@ -888,8 +804,7 @@
                     src="assets/img/successfully.png"
                     class="img-fluid mx-auto"
                     width="140"
-                    alt="Image"
-                  />
+                    alt="Image" />
                 </div>
 
                 <div class="message-wrap text-center d-block mb-4">
@@ -951,6 +866,107 @@
           }
         }
       }
+
+      function getCompanyCategories() {
+        fetch("/api/company/getCompanyCategories")
+          .then((res) => res.json())
+          .then((data) => {
+            const companyCategories = data.companyCategories;
+            const select = document.getElementById("category_id");
+
+            let options = '<option value="">-- Select Job Category --</option>';
+
+            companyCategories.forEach((category) => {
+              options +=
+                '<option value="' +
+                category.id +
+                '">' +
+                category.name +
+                "</option>";
+            });
+
+            select.innerHTML = options;
+
+            $("#category_id").niceSelect("destroy");
+            $("#category_id").niceSelect();
+          })
+          .catch((err) => console.error("Failed to load categories:", err));
+      }
+
+      function getCompanyDetails() {
+        fetch("/api/company/getCompanyDetails")
+          .then((res) => res.json())
+          .then((data) => {
+            const companyDetails = data.companyDetails;
+
+            $("#companyCategory").text(
+              stringIsEmpty(companyDetails.founded_year) === true
+                ? "Company Category"
+                : companyDetails.founded_year
+            );
+            $("#companyDescription").text(
+              stringIsEmpty(companyDetails.description) === true
+                ? "Company Description"
+                : companyDetails.description
+            );
+
+            $("#established").text(
+              stringIsEmpty(companyDetails.founded_year) === true
+                ? "Established: ----"
+                : "Established: " + companyDetails.founded_year
+            );
+
+            $("#companyMail").text(
+              stringIsEmpty(companyDetails.email) === true
+                ? "Company Email"
+                : companyDetails.email
+            );
+
+            $("#companyWebsite").text(
+              stringIsEmpty(companyDetails.website) === true
+                ? "Company Website"
+                : companyDetails.website
+            );
+
+            $("#founded_year").val(companyDetails.founded_year);
+            $("#contact").val(companyDetails.contact);
+            $("#email").val(companyDetails.email);
+            $("#website").val(companyDetails.website);
+            $("#description").val(companyDetails.description);
+          })
+          .catch((err) => console.error(err));
+      }
+
+      window.onload = function () {
+        getCompanyCategories();
+        getCompanyDetails();
+      };
+
+      document
+        .getElementById("update_details")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const form = e.target;
+          const formData = new FormData(form);
+
+          fetch("/api/company/updateCompanyDetails", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(Object.fromEntries(formData.entries())),
+          })
+            .then((res) => res.json())
+            .then((response) => {
+              if (response.success == true) {
+                $("#successMessage").text(response.message);
+                $("#successmodal").modal("show");
+                getUsers();
+              } else {
+                $("#errorMessage").text(response.message);
+                $("#errorMessage").css("display", "block");
+              }
+            });
+        });
     </script>
   </body>
 </html>

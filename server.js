@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const sequelize = require("./models/index");
 const userRoutes = require("./routes/userRoutes");
+const companyRoutes = require("./routes/companyRoutes");
 const { User, HrProfile, CompanyProfile } = require("./models/relations");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
@@ -157,7 +158,9 @@ app.post("/login", async (req, res) => {
     // ✅ SESSION SET HERE
     req.session.email = user.email;
     req.session.userId = user.id;
+    req.session.hrProfileId = user.hrProfile.id;
     req.session.name = user.hrProfile.u_name;
+    req.session.companyId = user.hrProfile.companyProfile.id;
     req.session.company = user.hrProfile.companyProfile.name;
     req.session.location = user.hrProfile.companyProfile.location;
     req.session.sidebarclass = "active";
@@ -178,6 +181,7 @@ app.post("/login", async (req, res) => {
 
 // Routes
 app.use("/api/user", userRoutes);
+app.use("/api/company", companyRoutes);
 
 // Sync DB (automatic tables creation)
 sequelize.sync().then(() => {
