@@ -6,6 +6,7 @@ const companyRoutes = require("./routes/companyRoutes");
 const { User, HrProfile, CompanyProfile } = require("./models/relations");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
+const { v4: uuidv4 } = require("uuid");
 
 const app = express();
 app.use(express.json());
@@ -192,4 +193,46 @@ const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} (${process.env.NODE_ENV})`);
+});
+
+const downloadTokens = new Map();
+
+app.get("/generate", (req, res) => {
+  const token = uuidv4();
+
+  // File should NOT be publicly accessible
+  const filePath = path.join(__dirname, "downloads", "offer_letter.pdf");
+
+  downloadTokens.set(token, {
+    filePath,
+    createdAt: Date.now(),
+  });
+
+  res.send({
+    downloadUrl: `https://jobs.codesnlogic.com/downloads/${token}`,
+  });
+});
+
+app.get("/downloads/:token", (req, res) => {
+  const token = req.params.token;
+  const data = downloadTokens.get(token);
+
+  if (!data) {
+    return res.status(403).send("Link expired or invalid");
+  }
+
+  // OPTIONAL: expiry (10 min)
+  if (Date.now() - data.createdAt > 10 * 60 * 1000) {
+    downloadTokens.delete(token);
+    return res.status(403).send("Link expired");
+  }
+
+  // One-time use
+  downloadTokens.delete(token);
+
+  res.download(data.filePath, (err) => {
+    if (err) {
+      res.status(500).send("Download failed");
+    }
+  });
 });

@@ -17,81 +17,79 @@
     <!-- CSS & JS Links -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css"
-    />
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
-<script>
-/* ===========================================================
+    <script>
+      /* ===========================================================
    Hire Talents & Experts → Convert Grid into Splide Slider
    =========================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
-
-  /* ---------------------------------------------------------
+      document.addEventListener("DOMContentLoaded", function () {
+        /* ---------------------------------------------------------
      1) Identify the grid row that contains all candidate cards
      --------------------------------------------------------- */
-  var gridRow = document.querySelector(
-    ".gray-simple .container > .row + .row.justify-content-center.gx-4.gy-4"
-  );
-  if (!gridRow) return;
+        var gridRow = document.querySelector(
+          ".gray-simple .container > .row + .row.justify-content-center.gx-4.gy-4"
+        );
+        if (!gridRow) return;
 
-  /* ---------------------------------------------------------
+        /* ---------------------------------------------------------
      2) Create Splide structure dynamically
      --------------------------------------------------------- */
-  var splideRoot = document.createElement("div");
-  splideRoot.className = "splide splide-hire-experts";
-  splideRoot.style.position = "relative";
-  splideRoot.style.overflow = "visible"; // ensure arrows clickable
+        var splideRoot = document.createElement("div");
+        splideRoot.className = "splide splide-hire-experts";
+        splideRoot.style.position = "relative";
+        splideRoot.style.overflow = "visible"; // ensure arrows clickable
 
-  var track = document.createElement("div");
-  track.className = "splide__track";
+        var track = document.createElement("div");
+        track.className = "splide__track";
 
-  var list = document.createElement("ul");
-  list.className = "splide__list";
+        var list = document.createElement("ul");
+        list.className = "splide__list";
 
-  // Move each Bootstrap column → Splide slide
-  var cols = Array.from(gridRow.children);
-  cols.forEach(function (col) {
-    var li = document.createElement("li");
-    li.className = "splide__slide";
+        // Move each Bootstrap column → Splide slide
+        var cols = Array.from(gridRow.children);
+        cols.forEach(function (col) {
+          var li = document.createElement("li");
+          li.className = "splide__slide";
 
-    // Clean bootstrap classes so Splide controls width
-    col.className = col.className.replace(/\bcol-[^\s]+\b/g, "").trim();
+          // Clean bootstrap classes so Splide controls width
+          col.className = col.className.replace(/\bcol-[^\s]+\b/g, "").trim();
 
-    li.innerHTML = col.outerHTML;
-    list.appendChild(li);
-  });
+          li.innerHTML = col.outerHTML;
+          list.appendChild(li);
+        });
 
-  // append track + list
-  track.appendChild(list);
-  splideRoot.appendChild(track);
+        // append track + list
+        track.appendChild(list);
+        splideRoot.appendChild(track);
 
-  /* ---------------------------------------------------------
+        /* ---------------------------------------------------------
      3) Create custom NEXT / PREV buttons
      --------------------------------------------------------- */
-  var prevBtn = document.createElement("button");
-  prevBtn.className = "splide-hire-prev";
-  prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+        var prevBtn = document.createElement("button");
+        prevBtn.className = "splide-hire-prev";
+        prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
 
-  var nextBtn = document.createElement("button");
-  nextBtn.className = "splide-hire-next";
-  nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+        var nextBtn = document.createElement("button");
+        nextBtn.className = "splide-hire-next";
+        nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
 
-  // append buttons
-  splideRoot.appendChild(prevBtn);
-  splideRoot.appendChild(nextBtn);
+        // append buttons
+        splideRoot.appendChild(prevBtn);
+        splideRoot.appendChild(nextBtn);
 
-  /* ---------------------------------------------------------
+        /* ---------------------------------------------------------
      4) Replace the old grid with Splide slider
      --------------------------------------------------------- */
-  gridRow.insertAdjacentElement("beforebegin", splideRoot);
-  gridRow.remove();
+        gridRow.insertAdjacentElement("beforebegin", splideRoot);
+        gridRow.remove();
 
-  /* ---------------------------------------------------------
+        /* ---------------------------------------------------------
      5) Add CSS styling for arrows + spacing
      --------------------------------------------------------- */
-  var style = document.createElement("style");
-  style.innerHTML = `
+        var style = document.createElement("style");
+        style.innerHTML = `
     .splide-hire-experts .splide__slide { padding: 0 12px; }
     .splide-hire-experts .splide-hire-prev,
     .splide-hire-experts .splide-hire-next {
@@ -122,108 +120,119 @@ document.addEventListener("DOMContentLoaded", function () {
     .splide-hire-experts .splide-hire-prev { left: -20px; }
     .splide-hire-experts .splide-hire-next { right: -20px; }
   `;
-  document.head.appendChild(style);
+        document.head.appendChild(style);
 
-  /* ---------------------------------------------------------
+        /* ---------------------------------------------------------
      6) Initialize Splide
      --------------------------------------------------------- */
-  var splide = new Splide(".splide-hire-experts", {
-    perPage: 4,
-    perMove: 1,
-    gap: "24px",
-    pagination: false,
-    arrows: false,
-    speed: 1400,
-    easing: "cubic-bezier(.15,.85,.25,1)",
+        var splide = new Splide(".splide-hire-experts", {
+          perPage: 4,
+          perMove: 1,
+          gap: "24px",
+          pagination: false,
+          arrows: false,
+          speed: 1400,
+          easing: "cubic-bezier(.15,.85,.25,1)",
 
-    type: "loop",
-    autoplay: true,
-    interval: 2800,
-    pauseOnHover: false,
-    pauseOnFocus: false,
+          type: "loop",
+          autoplay: true,
+          interval: 2800,
+          pauseOnHover: false,
+          pauseOnFocus: false,
 
-    drag: true,
-    flickPower: 120,
-    flickVelocityThreshold: 0.25,
-    keyboard: "global",
+          drag: true,
+          flickPower: 120,
+          flickVelocityThreshold: 0.25,
+          keyboard: "global",
 
-    wheel: false, // custom scroll added below
+          wheel: false, // custom scroll added below
 
-    breakpoints: {
-      1200: { perPage: 3 },
-      992: { perPage: 2 },
-      576: { perPage: 1 },
-    },
-  });
+          breakpoints: {
+            1200: { perPage: 3 },
+            992: { perPage: 2 },
+            576: { perPage: 1 },
+          },
+        });
 
-  splide.mount();
+        splide.mount();
 
-  /* ---------------------------------------------------------
+        /* ---------------------------------------------------------
      7) Fix arrows NOT clickable — bind correctly to THIS slider
      --------------------------------------------------------- */
-  var prev = document.querySelector(".splide-hire-experts .splide-hire-prev");
-  var next = document.querySelector(".splide-hire-experts .splide-hire-next");
+        var prev = document.querySelector(
+          ".splide-hire-experts .splide-hire-prev"
+        );
+        var next = document.querySelector(
+          ".splide-hire-experts .splide-hire-next"
+        );
 
-  if (prev) prev.addEventListener("click", function (e) {
-    e.stopPropagation();
-    splide.go("<");
-  });
+        if (prev)
+          prev.addEventListener("click", function (e) {
+            e.stopPropagation();
+            splide.go("<");
+          });
 
-  if (next) next.addEventListener("click", function (e) {
-    e.stopPropagation();
-    splide.go(">");
-  });
+        if (next)
+          next.addEventListener("click", function (e) {
+            e.stopPropagation();
+            splide.go(">");
+          });
 
-  /* ---------------------------------------------------------
+        /* ---------------------------------------------------------
      8) Custom mouse-wheel scroll (same as job slider)
      --------------------------------------------------------- */
-  (function addSmartWheelScroll() {
-    var el = document.querySelector(".splide-hire-experts");
-    if (!el) return;
+        (function addSmartWheelScroll() {
+          var el = document.querySelector(".splide-hire-experts");
+          if (!el) return;
 
-    var lastWheel = 0;
-    var wheelDelay = 220;
-    var acc = 0;
-    var accThreshold = 40;
+          var lastWheel = 0;
+          var wheelDelay = 220;
+          var acc = 0;
+          var accThreshold = 40;
 
-    function getPerPage() {
-      return (typeof splide.options.perPage === "number") ? splide.options.perPage : 1;
-    }
+          function getPerPage() {
+            return typeof splide.options.perPage === "number"
+              ? splide.options.perPage
+              : 1;
+          }
 
-    el.addEventListener("wheel", function (evt) {
-      if (Math.abs(evt.deltaY) < Math.abs(evt.deltaX)) return;
-      if (evt.ctrlKey || evt.altKey || evt.metaKey) return;
+          el.addEventListener(
+            "wheel",
+            function (evt) {
+              if (Math.abs(evt.deltaY) < Math.abs(evt.deltaX)) return;
+              if (evt.ctrlKey || evt.altKey || evt.metaKey) return;
 
-      var now = Date.now();
-      var delta = evt.deltaY;
+              var now = Date.now();
+              var delta = evt.deltaY;
 
-      if (Math.abs(delta) < 20) {
-        acc += delta;
-        if (Math.abs(acc) < accThreshold) return;
-        delta = acc;
-        acc = 0;
-      } else {
-        acc = 0;
-      }
+              if (Math.abs(delta) < 20) {
+                acc += delta;
+                if (Math.abs(acc) < accThreshold) return;
+                delta = acc;
+                acc = 0;
+              } else {
+                acc = 0;
+              }
 
-      var perPage = getPerPage();
-      var maxIndex = Math.max(0, splide.length - perPage);
-      var idx = splide.index;
+              var perPage = getPerPage();
+              var maxIndex = Math.max(0, splide.length - perPage);
+              var idx = splide.index;
 
-      if (delta < 0 && idx === 0) return;
-      if (delta > 0 && idx >= maxIndex) return;
+              if (delta < 0 && idx === 0) return;
+              if (delta > 0 && idx >= maxIndex) return;
 
-      evt.preventDefault();
-      if (now - lastWheel < wheelDelay) return;
-      lastWheel = now;
+              evt.preventDefault();
+              if (now - lastWheel < wheelDelay) return;
+              lastWheel = now;
 
-      if (delta > 0) splide.go(">");
-      else splide.go("<");
-    }, { passive: false });
-  })();
-});
-</script>
-
+              if (delta > 0) splide.go(">");
+              else splide.go("<");
+            },
+            { passive: false }
+          );
+        })();
+      });
+    </script>
 
     <style>
       /* === Custom CSS Featured Jobs === */
@@ -300,9 +309,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <!-- ============================  Main Wrapper Start =========================== -->
     <div id="main-wrapper">
-     
-   <%- include('navbar') %>
-
+      <%- include('navbar') %>
 
       <!-- ============================ Hero Banner ================================== -->
       <!-- Start Hero Banner -->
@@ -312,8 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <!-- ==== Content Area ==== -->
             <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 pe-xl-5 pe-lg-4">
               <h6
-                class="text-main bg-light-main py-2 pe-3 ps-2 rounded-5 fw-medium d-inline-flex align-items-center mb-3"
-              >
+                class="text-main bg-light-main py-2 pe-3 ps-2 rounded-5 fw-medium d-inline-flex align-items-center mb-3">
                 <!-- Optional Button -->
                 <span class="bg-main label rounded-pill me-2">Optional</span
                 >Hire with hourly basis
@@ -356,8 +362,7 @@ document.addEventListener("DOMContentLoaded", function () {
                           <img
                             src="assets/img/reviews_1.png"
                             class="img-fluid"
-                            alt=""
-                          />
+                            alt="" />
                         </figure>
                       </li>
                       <li>
@@ -365,8 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
                           <img
                             src="assets/img/reviews_2.png"
                             class="img-fluid"
-                            alt=""
-                          />
+                            alt="" />
                         </figure>
                       </li>
                       <li>
@@ -374,8 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
                           <img
                             src="assets/img/reviews_3.png"
                             class="img-fluid"
-                            alt=""
-                          />
+                            alt="" />
                         </figure>
                       </li>
                       <li>
@@ -383,8 +386,7 @@ document.addEventListener("DOMContentLoaded", function () {
                           <img
                             src="assets/img/reviews_4.png"
                             class="img-fluid"
-                            alt=""
-                          />
+                            alt="" />
                         </figure>
                       </li>
                       <li><div class="img-coun">12k</div></li>
@@ -404,11 +406,9 @@ document.addEventListener("DOMContentLoaded", function () {
                               <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Skills, Designations, Keyword"
-                              />
+                                placeholder="Skills, Designations, Keyword" />
                               <i
-                                class="fa-solid fa-magnifying-glass text-muted"
-                              ></i>
+                                class="fa-solid fa-magnifying-glass text-muted"></i>
                             </div>
                           </div>
                         </div>
@@ -436,8 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="form-group">
                               <button
                                 type="submit"
-                                class="btn btn-main full-width"
-                              >
+                                class="btn btn-main full-width">
                                 Find Job
                               </button>
                             </div>
@@ -453,22 +452,19 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
               <div class="row g-4 position-relative">
                 <div
-                  class="position-absolute bg-dot main start-0 top-0 w-25 h-25 opacity-50"
-                ></div>
+                  class="position-absolute bg-dot main start-0 top-0 w-25 h-25 opacity-50"></div>
                 <div class="col-6">
                   <div class="mb-4 position-relative z-1">
                     <img
                       src="assets/img/h_img_r0.png"
                       class="img-fluid circle"
-                      alt=""
-                    />
+                      alt="" />
                   </div>
                   <div class="position-relative z-1">
                     <img
                       src="assets/img/h_img_e1.png"
                       class="img-fluid rounded-5"
-                      alt=""
-                    />
+                      alt="" />
                   </div>
                 </div>
                 <div class="col-6">
@@ -476,20 +472,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img
                       src="assets/img/h_img_e2.png"
                       class="img-fluid rounded-5"
-                      alt=""
-                    />
+                      alt="" />
                   </div>
                   <div class="position-relative z-1">
                     <img
                       src="assets/img/h_img_r1.png"
                       class="img-fluid circle"
-                      alt=""
-                    />
+                      alt="" />
                   </div>
                 </div>
                 <div
-                  class="position-absolute bg-dot yellow end-0 bottom-0 w-25 h-25 opacity-50"
-                ></div>
+                  class="position-absolute bg-dot yellow end-0 bottom-0 w-25 h-25 opacity-50"></div>
               </div>
             </div>
           </div>
@@ -528,8 +521,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img
                       src="assets/img/Ghaziabad_1.png"
                       class="img-fluid rounded"
-                      alt=""
-                    />
+                      alt="" />
                   </a>
                 </div>
                 <div class="jbs-location-infortment-content">
@@ -546,8 +538,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img
                       src="assets/img/Noida.png"
                       class="img-fluid rounded"
-                      alt=""
-                    />
+                      alt="" />
                   </a>
                 </div>
                 <div class="jbs-location-infortment-content">
@@ -564,8 +555,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img
                       src="assets/img/Delhi.png"
                       class="img-fluid rounded"
-                      alt=""
-                    />
+                      alt="" />
                   </a>
                 </div>
                 <div class="jbs-location-infortment-content">
@@ -582,8 +572,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img
                       src="assets/img/Gurugram.png"
                       class="img-fluid rounded"
-                      alt=""
-                    />
+                      alt="" />
                   </a>
                 </div>
                 <div class="jbs-location-infortment-content">
@@ -604,8 +593,7 @@ document.addEventListener("DOMContentLoaded", function () {
         class="pb-5 bg-cover"
         style="
           background: #ff3d00 url(assets/img/footer-bg-light.png) no-repeat;
-        "
-      >
+        ">
         <div class="container">
           <div class="row justify-content-between">
             <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 order-sm-2">
@@ -614,15 +602,13 @@ document.addEventListener("DOMContentLoaded", function () {
                   <img
                     src="assets/img/upload-resume.png"
                     class="img-fluid"
-                    alt=""
-                  />
+                    alt="" />
                 </div>
               </div>
             </div>
 
             <div
-              class="col-xl-7 col-lg-6 col-md-12 col-sm-12 align-self-center order-sm-1"
-            >
+              class="col-xl-7 col-lg-6 col-md-12 col-sm-12 align-self-center order-sm-1">
               <div class="footlio-caalaction-caption">
                 <div class="footlio-caalaction-text">
                   <span class="text-main bg-white rounded py-1 px-3"
@@ -678,8 +664,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <img
                                 src="https://placehold.co/250x250"
                                 class="img-fluid"
-                                alt=""
-                              />
+                                alt="" />
                             </figure>
                           </a>
                         </div>
@@ -755,8 +740,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <img
                                 src="https://placehold.co/250x250"
                                 class="img-fluid"
-                                alt=""
-                              />
+                                alt="" />
                             </figure>
                           </a>
                         </div>
@@ -828,8 +812,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <img
                                 src="https://placehold.co/250x250"
                                 class="img-fluid"
-                                alt=""
-                              />
+                                alt="" />
                             </figure>
                           </a>
                         </div>
@@ -900,8 +883,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <img
                                 src="https://placehold.co/250x250"
                                 class="img-fluid"
-                                alt=""
-                              />
+                                alt="" />
                             </figure>
                           </a>
                         </div>
@@ -973,8 +955,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <img
                                 src="https://placehold.co/250x250"
                                 class="img-fluid"
-                                alt=""
-                              />
+                                alt="" />
                             </figure>
                           </a>
                         </div>
@@ -1045,8 +1026,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <img
                                 src="https://placehold.co/250x250"
                                 class="img-fluid"
-                                alt=""
-                              />
+                                alt="" />
                             </figure>
                           </a>
                         </div>
@@ -1118,8 +1098,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <img
                                 src="https://placehold.co/250x250"
                                 class="img-fluid"
-                                alt=""
-                              />
+                                alt="" />
                             </figure>
                           </a>
                         </div>
@@ -1190,8 +1169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                               <img
                                 src="https://placehold.co/250x250"
                                 class="img-fluid"
-                                alt=""
-                              />
+                                alt="" />
                             </figure>
                           </a>
                         </div>
@@ -1274,333 +1252,474 @@ document.addEventListener("DOMContentLoaded", function () {
       </section>
       <!-- ============================ Featured Jobs Slider =========================== -->
 
+      <!-- ============================ Hire Experts Start ================================== -->
+      <section class="gray-simple">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-10 text-center">
+              <div class="sec-heading center">
+                <h2>Hire Talents & Experts</h2>
+                <p class="text-dark">
+                  Build your team with proven professionals.Connect with
+                  professionals who deliver results. Hire smarter. Work faster.
+                  Grow bigger.
+                </p>
+              </div>
+            </div>
+          </div>
 
-<!-- ============================ Hire Experts Start ================================== -->
-			<section class="gray-simple">
-				<div class="container">
-				
-					<div class="row justify-content-center">
-						<div class="col-xl-6 col-lg-7 col-md-10 text-center">
-							<div class="sec-heading center">
-								<h2>Hire Talents & Experts</h2>
-								<p class="text-dark">Build your team with proven professionals.Connect with professionals who deliver results. Hire smarter. Work faster. Grow bigger.</p>
-							</div>
-						</div>
-					</div>
-				
-					<div class="row justify-content-center gx-4 gy-4">
-					
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-							<div class="jbs-grid-usrs-block">
-								<div class="jbs-grid-usrs-thumb">
-									<div class="jbs-grid-yuo">
-										<a href="candidate-detail.html"><figure><img src="assets/img/candi_1.png" class="img-fluid circle" alt=""></figure></a>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-caption">
-									<div class="jbs-kioyer">
-										<div class="jbs-kioyer-groups">
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star"></span>
-											<span class="aal-reveis">4.6</span>
-										</div>
-									</div>
-									<div class="jbs-tiosk">
-										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Kr. Shaurya Preet</a></h4>
-										<div class="jbs-tiosk-subtitle"><span>Sr. Web Designer</span></div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-info">
-									<div class="jbs-info-ico-style bold">
-										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$70/hr</div>
-										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-contact">
-									<div class="jbs-btn-groups">
-										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-							<div class="jbs-grid-usrs-block">
-								<div class="jbs-grid-usrs-thumb">
-									<div class="jbs-grid-yuo">
-										<a href="candidate-detail.html"><figure><img src="assets/img/candi_2.png" class="img-fluid circle" alt=""></figure></a>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-caption">
-									<div class="jbs-kioyer">
-										<div class="jbs-kioyer-groups">
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star"></span>
-											<span class="aal-reveis">4.6</span>
-										</div>
-									</div>
-									<div class="jbs-tiosk">
-										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Leila T. Lindsey</a></h4>
-										<div class="jbs-tiosk-subtitle"><span>Magento Expert</span></div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-info">
-									<div class="jbs-info-ico-style bold">
-										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$25/hr</div>
-										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-contact">
-									<div class="jbs-btn-groups">
-										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-							<div class="jbs-grid-usrs-block">
-								<div class="jbs-grid-usrs-thumb">
-									<div class="jbs-grid-yuo">
-										<a href="candidate-detail.html"><figure><img src="assets/img/candi_3.png" class="img-fluid circle" alt=""></figure></a>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-caption">
-									<div class="jbs-kioyer">
-										<div class="jbs-kioyer-groups">
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star"></span>
-											<span class="aal-reveis">4.6</span>
-										</div>
-									</div>
-									<div class="jbs-tiosk">
-										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Amie L. Brown</a></h4>
-										<div class="jbs-tiosk-subtitle"><span>WordPress Developer</span></div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-info">
-									<div class="jbs-info-ico-style bold">
-										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$40/hr</div>
-										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-contact">
-									<div class="jbs-btn-groups">
-										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-							<div class="jbs-grid-usrs-block">
-								<div class="jbs-grid-usrs-thumb">
-									<div class="jbs-grid-yuo">
-										<a href="candidate-detail.html"><figure><img src="assets/img/candi_4.png" class="img-fluid circle" alt=""></figure></a>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-caption">
-									<div class="jbs-kioyer">
-										<div class="jbs-kioyer-groups">
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star"></span>
-											<span class="aal-reveis">4.6</span>
-										</div>
-									</div>
-									<div class="jbs-tiosk">
-										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Darrel T. Turner</a></h4>
-										<div class="jbs-tiosk-subtitle"><span>Jr. SEO Expert</span></div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-info">
-									<div class="jbs-info-ico-style bold">
-										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$40/hr</div>
-										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-contact">
-									<div class="jbs-btn-groups">
-										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-							<div class="jbs-grid-usrs-block">
-								<div class="jbs-grid-usrs-thumb">
-									<div class="jbs-grid-yuo">
-										<a href="candidate-detail.html"><figure><img src="assets/img/candi_5.png" class="img-fluid circle" alt=""></figure></a>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-caption">
-									<div class="jbs-kioyer">
-										<div class="jbs-kioyer-groups">
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star"></span>
-											<span class="aal-reveis">4.6</span>
-										</div>
-									</div>
-									<div class="jbs-tiosk">
-										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Michael B. Arellano</a></h4>
-										<div class="jbs-tiosk-subtitle"><span>Front Designer</span></div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-info">
-									<div class="jbs-info-ico-style bold">
-										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$50/hr</div>
-										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-contact">
-									<div class="jbs-btn-groups">
-										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-							<div class="jbs-grid-usrs-block">
-								<div class="jbs-grid-usrs-thumb">
-									<div class="jbs-grid-yuo">
-										<a href="candidate-detail.html"><figure><img src="assets/img/candi_6.png" class="img-fluid circle" alt=""></figure></a>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-caption">
-									<div class="jbs-kioyer">
-										<div class="jbs-kioyer-groups">
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star"></span>
-											<span class="aal-reveis">4.6</span>
-										</div>
-									</div>
-									<div class="jbs-tiosk">
-										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Kum K. Sellers</a></h4>
-										<div class="jbs-tiosk-subtitle"><span>PHP Developer</span></div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-info">
-									<div class="jbs-info-ico-style bold">
-										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$45/hr</div>
-										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-contact">
-									<div class="jbs-btn-groups">
-										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-							<div class="jbs-grid-usrs-block">
-								<div class="jbs-grid-usrs-thumb">
-									<div class="jbs-grid-yuo">
-										<a href="candidate-detail.html"><figure><img src="assets/img/candi_7.png" class="img-fluid circle" alt=""></figure></a>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-caption">
-									<div class="jbs-kioyer">
-										<div class="jbs-kioyer-groups">
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star"></span>
-											<span class="aal-reveis">4.6</span>
-										</div>
-									</div>
-									<div class="jbs-tiosk">
-										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Debbie W. Wilson</a></h4>
-										<div class="jbs-tiosk-subtitle"><span>App Developer</span></div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-info">
-									<div class="jbs-info-ico-style bold">
-										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$70/hr</div>
-										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-contact">
-									<div class="jbs-btn-groups">
-										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-							<div class="jbs-grid-usrs-block">
-								<div class="jbs-grid-usrs-thumb">
-									<div class="jbs-grid-yuo">
-										<a href="candidate-detail.html"><figure><img src="assets/img/candi_8.png" class="img-fluid circle" alt=""></figure></a>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-caption">
-									<div class="jbs-kioyer">
-										<div class="jbs-kioyer-groups">
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star active"></span>
-											<span class="fa-solid fa-star"></span>
-											<span class="aal-reveis">4.6</span>
-										</div>
-									</div>
-									<div class="jbs-tiosk">
-										<h4 class="jbs-tiosk-title"><a href="candidate-detail.html">Peggy J. Arnold</a></h4>
-										<div class="jbs-tiosk-subtitle"><span>Content Writer</span></div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-info">
-									<div class="jbs-info-ico-style bold">
-										<div class="jbs-single-y1 style-2"><span><i class="fa-solid fa-sack-dollar"></i></span>$55/hr</div>
-										<div class="jbs-single-y1 style-3"><span><i class="fa-solid fa-coins"></i></span>5 Years exp.</div>
-									</div>
-								</div>
-								<div class="jbs-grid-usrs-contact">
-									<div class="jbs-btn-groups">
-										<a href="candidate-detail.html" class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4">View Detail</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-					</div>
-					
-				</div>		
-			</section>
-			<!-- ============================ Hire Experts End ================================== -->
+          <div class="row justify-content-center gx-4 gy-4">
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="jbs-grid-usrs-block">
+                <div class="jbs-grid-usrs-thumb">
+                  <div class="jbs-grid-yuo">
+                    <a href="candidate-detail.html"
+                      ><figure>
+                        <img
+                          src="assets/img/candi_1.png"
+                          class="img-fluid circle"
+                          alt="" /></figure
+                    ></a>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-caption">
+                  <div class="jbs-kioyer">
+                    <div class="jbs-kioyer-groups">
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star"></span>
+                      <span class="aal-reveis">4.6</span>
+                    </div>
+                  </div>
+                  <div class="jbs-tiosk">
+                    <h4 class="jbs-tiosk-title">
+                      <a href="candidate-detail.html">Kr. Shaurya Preet</a>
+                    </h4>
+                    <div class="jbs-tiosk-subtitle">
+                      <span>Sr. Web Designer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-info">
+                  <div class="jbs-info-ico-style bold">
+                    <div class="jbs-single-y1 style-2">
+                      <span><i class="fa-solid fa-sack-dollar"></i></span>$70/hr
+                    </div>
+                    <div class="jbs-single-y1 style-3">
+                      <span><i class="fa-solid fa-coins"></i></span>5 Years exp.
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-contact">
+                  <div class="jbs-btn-groups">
+                    <a
+                      href="candidate-detail.html"
+                      class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4"
+                      >View Detail</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="jbs-grid-usrs-block">
+                <div class="jbs-grid-usrs-thumb">
+                  <div class="jbs-grid-yuo">
+                    <a href="candidate-detail.html"
+                      ><figure>
+                        <img
+                          src="assets/img/candi_2.png"
+                          class="img-fluid circle"
+                          alt="" /></figure
+                    ></a>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-caption">
+                  <div class="jbs-kioyer">
+                    <div class="jbs-kioyer-groups">
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star"></span>
+                      <span class="aal-reveis">4.6</span>
+                    </div>
+                  </div>
+                  <div class="jbs-tiosk">
+                    <h4 class="jbs-tiosk-title">
+                      <a href="candidate-detail.html">Leila T. Lindsey</a>
+                    </h4>
+                    <div class="jbs-tiosk-subtitle">
+                      <span>Magento Expert</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-info">
+                  <div class="jbs-info-ico-style bold">
+                    <div class="jbs-single-y1 style-2">
+                      <span><i class="fa-solid fa-sack-dollar"></i></span>$25/hr
+                    </div>
+                    <div class="jbs-single-y1 style-3">
+                      <span><i class="fa-solid fa-coins"></i></span>5 Years exp.
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-contact">
+                  <div class="jbs-btn-groups">
+                    <a
+                      href="candidate-detail.html"
+                      class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4"
+                      >View Detail</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="jbs-grid-usrs-block">
+                <div class="jbs-grid-usrs-thumb">
+                  <div class="jbs-grid-yuo">
+                    <a href="candidate-detail.html"
+                      ><figure>
+                        <img
+                          src="assets/img/candi_3.png"
+                          class="img-fluid circle"
+                          alt="" /></figure
+                    ></a>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-caption">
+                  <div class="jbs-kioyer">
+                    <div class="jbs-kioyer-groups">
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star"></span>
+                      <span class="aal-reveis">4.6</span>
+                    </div>
+                  </div>
+                  <div class="jbs-tiosk">
+                    <h4 class="jbs-tiosk-title">
+                      <a href="candidate-detail.html">Amie L. Brown</a>
+                    </h4>
+                    <div class="jbs-tiosk-subtitle">
+                      <span>WordPress Developer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-info">
+                  <div class="jbs-info-ico-style bold">
+                    <div class="jbs-single-y1 style-2">
+                      <span><i class="fa-solid fa-sack-dollar"></i></span>$40/hr
+                    </div>
+                    <div class="jbs-single-y1 style-3">
+                      <span><i class="fa-solid fa-coins"></i></span>5 Years exp.
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-contact">
+                  <div class="jbs-btn-groups">
+                    <a
+                      href="candidate-detail.html"
+                      class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4"
+                      >View Detail</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="jbs-grid-usrs-block">
+                <div class="jbs-grid-usrs-thumb">
+                  <div class="jbs-grid-yuo">
+                    <a href="candidate-detail.html"
+                      ><figure>
+                        <img
+                          src="assets/img/candi_4.png"
+                          class="img-fluid circle"
+                          alt="" /></figure
+                    ></a>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-caption">
+                  <div class="jbs-kioyer">
+                    <div class="jbs-kioyer-groups">
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star"></span>
+                      <span class="aal-reveis">4.6</span>
+                    </div>
+                  </div>
+                  <div class="jbs-tiosk">
+                    <h4 class="jbs-tiosk-title">
+                      <a href="candidate-detail.html">Darrel T. Turner</a>
+                    </h4>
+                    <div class="jbs-tiosk-subtitle">
+                      <span>Jr. SEO Expert</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-info">
+                  <div class="jbs-info-ico-style bold">
+                    <div class="jbs-single-y1 style-2">
+                      <span><i class="fa-solid fa-sack-dollar"></i></span>$40/hr
+                    </div>
+                    <div class="jbs-single-y1 style-3">
+                      <span><i class="fa-solid fa-coins"></i></span>5 Years exp.
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-contact">
+                  <div class="jbs-btn-groups">
+                    <a
+                      href="candidate-detail.html"
+                      class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4"
+                      >View Detail</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="jbs-grid-usrs-block">
+                <div class="jbs-grid-usrs-thumb">
+                  <div class="jbs-grid-yuo">
+                    <a href="candidate-detail.html"
+                      ><figure>
+                        <img
+                          src="assets/img/candi_5.png"
+                          class="img-fluid circle"
+                          alt="" /></figure
+                    ></a>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-caption">
+                  <div class="jbs-kioyer">
+                    <div class="jbs-kioyer-groups">
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star"></span>
+                      <span class="aal-reveis">4.6</span>
+                    </div>
+                  </div>
+                  <div class="jbs-tiosk">
+                    <h4 class="jbs-tiosk-title">
+                      <a href="candidate-detail.html">Michael B. Arellano</a>
+                    </h4>
+                    <div class="jbs-tiosk-subtitle">
+                      <span>Front Designer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-info">
+                  <div class="jbs-info-ico-style bold">
+                    <div class="jbs-single-y1 style-2">
+                      <span><i class="fa-solid fa-sack-dollar"></i></span>$50/hr
+                    </div>
+                    <div class="jbs-single-y1 style-3">
+                      <span><i class="fa-solid fa-coins"></i></span>5 Years exp.
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-contact">
+                  <div class="jbs-btn-groups">
+                    <a
+                      href="candidate-detail.html"
+                      class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4"
+                      >View Detail</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="jbs-grid-usrs-block">
+                <div class="jbs-grid-usrs-thumb">
+                  <div class="jbs-grid-yuo">
+                    <a href="candidate-detail.html"
+                      ><figure>
+                        <img
+                          src="assets/img/candi_6.png"
+                          class="img-fluid circle"
+                          alt="" /></figure
+                    ></a>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-caption">
+                  <div class="jbs-kioyer">
+                    <div class="jbs-kioyer-groups">
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star"></span>
+                      <span class="aal-reveis">4.6</span>
+                    </div>
+                  </div>
+                  <div class="jbs-tiosk">
+                    <h4 class="jbs-tiosk-title">
+                      <a href="candidate-detail.html">Kum K. Sellers</a>
+                    </h4>
+                    <div class="jbs-tiosk-subtitle">
+                      <span>PHP Developer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-info">
+                  <div class="jbs-info-ico-style bold">
+                    <div class="jbs-single-y1 style-2">
+                      <span><i class="fa-solid fa-sack-dollar"></i></span>$45/hr
+                    </div>
+                    <div class="jbs-single-y1 style-3">
+                      <span><i class="fa-solid fa-coins"></i></span>5 Years exp.
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-contact">
+                  <div class="jbs-btn-groups">
+                    <a
+                      href="candidate-detail.html"
+                      class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4"
+                      >View Detail</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="jbs-grid-usrs-block">
+                <div class="jbs-grid-usrs-thumb">
+                  <div class="jbs-grid-yuo">
+                    <a href="candidate-detail.html"
+                      ><figure>
+                        <img
+                          src="assets/img/candi_7.png"
+                          class="img-fluid circle"
+                          alt="" /></figure
+                    ></a>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-caption">
+                  <div class="jbs-kioyer">
+                    <div class="jbs-kioyer-groups">
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star"></span>
+                      <span class="aal-reveis">4.6</span>
+                    </div>
+                  </div>
+                  <div class="jbs-tiosk">
+                    <h4 class="jbs-tiosk-title">
+                      <a href="candidate-detail.html">Debbie W. Wilson</a>
+                    </h4>
+                    <div class="jbs-tiosk-subtitle">
+                      <span>App Developer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-info">
+                  <div class="jbs-info-ico-style bold">
+                    <div class="jbs-single-y1 style-2">
+                      <span><i class="fa-solid fa-sack-dollar"></i></span>$70/hr
+                    </div>
+                    <div class="jbs-single-y1 style-3">
+                      <span><i class="fa-solid fa-coins"></i></span>5 Years exp.
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-contact">
+                  <div class="jbs-btn-groups">
+                    <a
+                      href="candidate-detail.html"
+                      class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4"
+                      >View Detail</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+              <div class="jbs-grid-usrs-block">
+                <div class="jbs-grid-usrs-thumb">
+                  <div class="jbs-grid-yuo">
+                    <a href="candidate-detail.html"
+                      ><figure>
+                        <img
+                          src="assets/img/candi_8.png"
+                          class="img-fluid circle"
+                          alt="" /></figure
+                    ></a>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-caption">
+                  <div class="jbs-kioyer">
+                    <div class="jbs-kioyer-groups">
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star active"></span>
+                      <span class="fa-solid fa-star"></span>
+                      <span class="aal-reveis">4.6</span>
+                    </div>
+                  </div>
+                  <div class="jbs-tiosk">
+                    <h4 class="jbs-tiosk-title">
+                      <a href="candidate-detail.html">Peggy J. Arnold</a>
+                    </h4>
+                    <div class="jbs-tiosk-subtitle">
+                      <span>Content Writer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-info">
+                  <div class="jbs-info-ico-style bold">
+                    <div class="jbs-single-y1 style-2">
+                      <span><i class="fa-solid fa-sack-dollar"></i></span>$55/hr
+                    </div>
+                    <div class="jbs-single-y1 style-3">
+                      <span><i class="fa-solid fa-coins"></i></span>5 Years exp.
+                    </div>
+                  </div>
+                </div>
+                <div class="jbs-grid-usrs-contact">
+                  <div class="jbs-btn-groups">
+                    <a
+                      href="candidate-detail.html"
+                      class="btn btn-md btn-outline-gray border-2 rounded-pill w-100 px-4"
+                      >View Detail</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ============================ Hire Experts End ================================== -->
 
       <!-- ======================= Explore Categories Slider =========================== -->
       <!-- Start Category Marquee Slider -->
@@ -1610,8 +1729,11 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="col-xl-6 col-lg-7 col-md-10 text-center">
               <div class="sec-heading category-heading-main center">
                 <h2>Explore The Category You Belong</h2>
-                <p>Discover a wide range of categories crafted for every skill and interest.
-Find what suits you best and step into opportunities made just for you.</p>
+                <p>
+                  Discover a wide range of categories crafted for every skill
+                  and interest. Find what suits you best and step into
+                  opportunities made just for you.
+                </p>
               </div>
             </div>
           </div>
@@ -1766,17 +1888,14 @@ Find what suits you best and step into opportunities made just for you.</p>
                 <div class="side-effect"></div>
                 <div class="side-thumber-img pe-4 pb-4 position-relative">
                   <div
-                    class="bg-dot yellow w-25 h-25 position-absolute start-0 top-0"
-                  ></div>
+                    class="bg-dot yellow w-25 h-25 position-absolute start-0 top-0"></div>
                   <div
-                    class="bg-dot success w-25 h-25 position-absolute end-0 bottom-0"
-                  ></div>
+                    class="bg-dot success w-25 h-25 position-absolute end-0 bottom-0"></div>
                   <figure>
                     <img
                       src="https://placehold.co/850x1100"
                       class="img-fluid rounded-top-pill rounded-bottom-4 z-1 position-relative"
-                      alt=""
-                    />
+                      alt="" />
                   </figure>
                 </div>
               </div>
@@ -1948,41 +2067,34 @@ Find what suits you best and step into opportunities made just for you.</p>
                 <div class="side-effect"></div>
                 <div class="side-thumber-img position-relative">
                   <div
-                    class="square--80 circle bg-white shadow position-absolute start-0 top-0 mt-5 ms-5 animate-bounce"
-                  >
+                    class="square--80 circle bg-white shadow position-absolute start-0 top-0 mt-5 ms-5 animate-bounce">
                     <img
                       src="https://placehold.co/250x250"
                       class="img-fluid"
                       width="40"
-                      alt=""
-                    />
+                      alt="" />
                   </div>
                   <div
-                    class="square--80 circle bg-white shadow position-absolute end-0 top-0 mt-5 me-5 animate-bounce"
-                  >
+                    class="square--80 circle bg-white shadow position-absolute end-0 top-0 mt-5 me-5 animate-bounce">
                     <img
                       src="https://placehold.co/250x250"
                       class="img-fluid"
                       width="40"
-                      alt=""
-                    />
+                      alt="" />
                   </div>
                   <div
-                    class="square--80 circle bg-white shadow position-absolute start-50 bottom-0 mb-4 animate-bounce"
-                  >
+                    class="square--80 circle bg-white shadow position-absolute start-50 bottom-0 mb-4 animate-bounce">
                     <img
                       src="https://placehold.co/250x250"
                       class="img-fluid"
                       width="40"
-                      alt=""
-                    />
+                      alt="" />
                   </div>
                   <figure>
                     <img
                       src="assets/img/pay-2.png"
                       class="img-fluid rounded"
-                      alt=""
-                    />
+                      alt="" />
                   </figure>
                 </div>
               </div>
@@ -1994,241 +2106,377 @@ Find what suits you best and step into opportunities made just for you.</p>
       <!-- ============================ Why Choose Us End ====================== -->
 
       <!-- ============================ Explore Top Companies Start ================================== -->
-			<section class="gray-simple">
-				<div class="container">
-				
-					<div class="row justify-content-center">
-						<div class="col-xl-6 col-lg-7 col-md-10 text-center">
-							<div class="sec-heading center">
-								<h2>Explore Top Companies</h2>
-								<p class="text-dark">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores</p>
-							</div>
-						</div>
-					</div>
-				
-					<div class="row justify-content-center gx-xl-3 gx-3 gy-4">
-					
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="emp-grid-blocs">
-								
-								<div class="emp-grid-thumbs">
-									<a href="employer-detail.html"><figure><img src="assets/img/l-4.png" class="img-fluid" alt=""></figure></a>	
-								</div>
-								
-								<div class="emp-grid-captions">
-									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Software & Consultancy</span></div>
-									<div class="emplors-job-title-wrap mb-1">
-										<h4><a href="employer-detail.html" class="emplors-job-title">Swap Technology</a></h4>
-									</div>
-									<div class="emplors-job-mrch-lists">
-										<div class="single-mrch-lists">
-											<span><i class="fa-solid fa-location-dot me-1"></i>California, USA</span>
-										</div>
-									</div>
-								</div>
-								
-								<div class="emp-grid-footrs">
-									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">06 Open position</span></div>
-								</div>
-								
-							</div>	
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="emp-grid-blocs">
-								
-								<div class="emp-grid-thumbs">
-									<a href="employer-detail.html"><figure><img src="assets/img/l-5.png" class="img-fluid" alt=""></figure></a>	
-								</div>
-								
-								<div class="emp-grid-captions">
-									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Photo Edditing Tools</span></div>
-									<div class="emplors-job-title-wrap mb-1">
-										<h4><a href="employer-detail.html" class="emplors-job-title">Photoshop</a></h4>
-									</div>
-									<div class="emplors-job-mrch-lists">
-										<div class="single-mrch-lists">
-											<span><i class="fa-solid fa-location-dot me-1"></i>New York, USA</span>
-										</div>
-									</div>
-								</div>
-								
-								<div class="emp-grid-footrs">
-									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">16 Open position</span></div>
-								</div>
-								
-							</div>
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="emp-grid-blocs">
-								
-								<div class="emp-grid-thumbs">
-									<a href="employer-detail.html"><figure><img src="assets/img/l-6.png" class="img-fluid" alt=""></figure></a>	
-								</div>
-								
-								<div class="emp-grid-captions">
-									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Web Browser & Tech</span></div>
-									<div class="emplors-job-title-wrap mb-1">
-										<h4><a href="employer-detail.html" class="emplors-job-title">Firefox</a></h4>
-									</div>
-									<div class="emplors-job-mrch-lists">
-										<div class="single-mrch-lists">
-											<span><i class="fa-solid fa-location-dot me-1"></i>Denver, USA</span>
-										</div>
-									</div>
-								</div>
-								
-								<div class="emp-grid-footrs">
-									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">03 Open position</span></div>
-								</div>
-								
-							</div>	
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="emp-grid-blocs">
-								
-								<div class="emp-grid-thumbs">
-									<a href="employer-detail.html"><figure><img src="assets/img/l-7.png" class="img-fluid" alt=""></figure></a>	
-								</div>
-								
-								<div class="emp-grid-captions">
-									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Business Directory</span></div>
-									<div class="emplors-job-title-wrap mb-1">
-										<h4><a href="employer-detail.html" class="emplors-job-title">Airbnb</a></h4>
-									</div>
-									<div class="emplors-job-mrch-lists">
-										<div class="single-mrch-lists">
-											<span><i class="fa-solid fa-location-dot me-1"></i>London, UK</span>
-										</div>
-									</div>
-								</div>
-								
-								<div class="emp-grid-footrs">
-									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">08 Open position</span></div>
-								</div>
-								
-							</div>	
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="emp-grid-blocs">
-								
-								<div class="emp-grid-thumbs">
-									<a href="employer-detail.html"><figure><img src="assets/img/l-8.png" class="img-fluid" alt=""></figure></a>	
-								</div>
-								
-								<div class="emp-grid-captions">
-									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Message & Video Reelas</span></div>
-									<div class="emplors-job-title-wrap mb-1">
-										<h4><a href="employer-detail.html" class="emplors-job-title">Snapchat</a></h4>
-									</div>
-									<div class="emplors-job-mrch-lists">
-										<div class="single-mrch-lists">
-											<span><i class="fa-solid fa-location-dot me-1"></i>London, UK</span>
-										</div>
-									</div>
-								</div>
-								
-								<div class="emp-grid-footrs">
-									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">07 Open position</span></div>
-								</div>
-								
-							</div>	
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="emp-grid-blocs">
-								
-								<div class="emp-grid-thumbs">
-									<a href="employer-detail.html"><figure><img src="assets/img/l-9.png" class="img-fluid" alt=""></figure></a>	
-								</div>
-								
-								<div class="emp-grid-captions">
-									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Portfolio Showcase</span></div>
-									<div class="emplors-job-title-wrap mb-1">
-										<h4><a href="employer-detail.html" class="emplors-job-title">Dribbble Inc</a></h4>
-									</div>
-									<div class="emplors-job-mrch-lists">
-										<div class="single-mrch-lists">
-											<span><i class="fa-solid fa-location-dot me-1"></i>New York, USA</span>
-										</div>
-									</div>
-								</div>
-								
-								<div class="emp-grid-footrs">
-									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">05 Open position</span></div>
-								</div>
-								
-							</div>	
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="emp-grid-blocs">
-								
-								<div class="emp-grid-thumbs">
-									<a href="employer-detail.html"><figure><img src="assets/img/l-10.png" class="img-fluid" alt=""></figure></a>	
-								</div>
-								
-								<div class="emp-grid-captions">
-									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Chat & Video Calling</span></div>
-									<div class="emplors-job-title-wrap mb-1">
-										<h4><a href="employer-detail.html" class="emplors-job-title">Skype</a></h4>
-									</div>
-									<div class="emplors-job-mrch-lists">
-										<div class="single-mrch-lists">
-											<span><i class="fa-solid fa-location-dot me-1"></i>Canada, USA</span>
-										</div>
-									</div>
-								</div>
-								
-								<div class="emp-grid-footrs">
-									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">10 Open position</span></div>
-								</div>
-								
-							</div>	
-						</div>
-						
-						<!-- Single Item -->
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="emp-grid-blocs">
-								
-								<div class="emp-grid-thumbs">
-									<a href="employer-detail.html"><figure><img src="assets/img/l-11.png" class="img-fluid" alt=""></figure></a>	
-								</div>
-								
-								<div class="emp-grid-captions">
-									<div class="emplors-job-types-wrap"><span class="text-sm-muted">Software & Consultancy</span></div>
-									<div class="emplors-job-title-wrap mb-1">
-										<h4><a href="employer-detail.html" class="emplors-job-title">Google Inc</a></h4>
-									</div>
-									<div class="emplors-job-mrch-lists">
-										<div class="single-mrch-lists">
-											<span><i class="fa-solid fa-location-dot me-1"></i>London, UK</span>
-										</div>
-									</div>
-								</div>
-								
-								<div class="emp-grid-footrs">
-									<div class="emp-flexio"><span class="label px-4 py-2 text-main bg-light-main">06 Open position</span></div>
-								</div>
-								
-							</div>	
-						</div>						
-						
-					</div>
-					
-				</div>		
-			</section>
-			<!-- ============================ Explore Top Companies End ================================== -->
+      <section class="gray-simple">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-10 text-center">
+              <div class="sec-heading center">
+                <h2>Explore Top Companies</h2>
+                <p class="text-dark">
+                  At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                  blanditiis praesentium voluptatum deleniti atque corrupti quos
+                  dolores
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row justify-content-center gx-xl-3 gx-3 gy-4">
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="emp-grid-blocs">
+                <div class="emp-grid-thumbs">
+                  <a href="employer-detail.html"
+                    ><figure>
+                      <img
+                        src="assets/img/l-4.png"
+                        class="img-fluid"
+                        alt="" /></figure
+                  ></a>
+                </div>
+
+                <div class="emp-grid-captions">
+                  <div class="emplors-job-types-wrap">
+                    <span class="text-sm-muted">Software & Consultancy</span>
+                  </div>
+                  <div class="emplors-job-title-wrap mb-1">
+                    <h4>
+                      <a href="employer-detail.html" class="emplors-job-title"
+                        >Swap Technology</a
+                      >
+                    </h4>
+                  </div>
+                  <div class="emplors-job-mrch-lists">
+                    <div class="single-mrch-lists">
+                      <span
+                        ><i class="fa-solid fa-location-dot me-1"></i
+                        >California, USA</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emp-grid-footrs">
+                  <div class="emp-flexio">
+                    <span class="label px-4 py-2 text-main bg-light-main"
+                      >06 Open position</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="emp-grid-blocs">
+                <div class="emp-grid-thumbs">
+                  <a href="employer-detail.html"
+                    ><figure>
+                      <img
+                        src="assets/img/l-5.png"
+                        class="img-fluid"
+                        alt="" /></figure
+                  ></a>
+                </div>
+
+                <div class="emp-grid-captions">
+                  <div class="emplors-job-types-wrap">
+                    <span class="text-sm-muted">Photo Edditing Tools</span>
+                  </div>
+                  <div class="emplors-job-title-wrap mb-1">
+                    <h4>
+                      <a href="employer-detail.html" class="emplors-job-title"
+                        >Photoshop</a
+                      >
+                    </h4>
+                  </div>
+                  <div class="emplors-job-mrch-lists">
+                    <div class="single-mrch-lists">
+                      <span
+                        ><i class="fa-solid fa-location-dot me-1"></i>New York,
+                        USA</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emp-grid-footrs">
+                  <div class="emp-flexio">
+                    <span class="label px-4 py-2 text-main bg-light-main"
+                      >16 Open position</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="emp-grid-blocs">
+                <div class="emp-grid-thumbs">
+                  <a href="employer-detail.html"
+                    ><figure>
+                      <img
+                        src="assets/img/l-6.png"
+                        class="img-fluid"
+                        alt="" /></figure
+                  ></a>
+                </div>
+
+                <div class="emp-grid-captions">
+                  <div class="emplors-job-types-wrap">
+                    <span class="text-sm-muted">Web Browser & Tech</span>
+                  </div>
+                  <div class="emplors-job-title-wrap mb-1">
+                    <h4>
+                      <a href="employer-detail.html" class="emplors-job-title"
+                        >Firefox</a
+                      >
+                    </h4>
+                  </div>
+                  <div class="emplors-job-mrch-lists">
+                    <div class="single-mrch-lists">
+                      <span
+                        ><i class="fa-solid fa-location-dot me-1"></i>Denver,
+                        USA</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emp-grid-footrs">
+                  <div class="emp-flexio">
+                    <span class="label px-4 py-2 text-main bg-light-main"
+                      >03 Open position</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="emp-grid-blocs">
+                <div class="emp-grid-thumbs">
+                  <a href="employer-detail.html"
+                    ><figure>
+                      <img
+                        src="assets/img/l-7.png"
+                        class="img-fluid"
+                        alt="" /></figure
+                  ></a>
+                </div>
+
+                <div class="emp-grid-captions">
+                  <div class="emplors-job-types-wrap">
+                    <span class="text-sm-muted">Business Directory</span>
+                  </div>
+                  <div class="emplors-job-title-wrap mb-1">
+                    <h4>
+                      <a href="employer-detail.html" class="emplors-job-title"
+                        >Airbnb</a
+                      >
+                    </h4>
+                  </div>
+                  <div class="emplors-job-mrch-lists">
+                    <div class="single-mrch-lists">
+                      <span
+                        ><i class="fa-solid fa-location-dot me-1"></i>London,
+                        UK</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emp-grid-footrs">
+                  <div class="emp-flexio">
+                    <span class="label px-4 py-2 text-main bg-light-main"
+                      >08 Open position</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="emp-grid-blocs">
+                <div class="emp-grid-thumbs">
+                  <a href="employer-detail.html"
+                    ><figure>
+                      <img
+                        src="assets/img/l-8.png"
+                        class="img-fluid"
+                        alt="" /></figure
+                  ></a>
+                </div>
+
+                <div class="emp-grid-captions">
+                  <div class="emplors-job-types-wrap">
+                    <span class="text-sm-muted">Message & Video Reelas</span>
+                  </div>
+                  <div class="emplors-job-title-wrap mb-1">
+                    <h4>
+                      <a href="employer-detail.html" class="emplors-job-title"
+                        >Snapchat</a
+                      >
+                    </h4>
+                  </div>
+                  <div class="emplors-job-mrch-lists">
+                    <div class="single-mrch-lists">
+                      <span
+                        ><i class="fa-solid fa-location-dot me-1"></i>London,
+                        UK</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emp-grid-footrs">
+                  <div class="emp-flexio">
+                    <span class="label px-4 py-2 text-main bg-light-main"
+                      >07 Open position</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="emp-grid-blocs">
+                <div class="emp-grid-thumbs">
+                  <a href="employer-detail.html"
+                    ><figure>
+                      <img
+                        src="assets/img/l-9.png"
+                        class="img-fluid"
+                        alt="" /></figure
+                  ></a>
+                </div>
+
+                <div class="emp-grid-captions">
+                  <div class="emplors-job-types-wrap">
+                    <span class="text-sm-muted">Portfolio Showcase</span>
+                  </div>
+                  <div class="emplors-job-title-wrap mb-1">
+                    <h4>
+                      <a href="employer-detail.html" class="emplors-job-title"
+                        >Dribbble Inc</a
+                      >
+                    </h4>
+                  </div>
+                  <div class="emplors-job-mrch-lists">
+                    <div class="single-mrch-lists">
+                      <span
+                        ><i class="fa-solid fa-location-dot me-1"></i>New York,
+                        USA</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emp-grid-footrs">
+                  <div class="emp-flexio">
+                    <span class="label px-4 py-2 text-main bg-light-main"
+                      >05 Open position</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="emp-grid-blocs">
+                <div class="emp-grid-thumbs">
+                  <a href="employer-detail.html"
+                    ><figure>
+                      <img
+                        src="assets/img/l-10.png"
+                        class="img-fluid"
+                        alt="" /></figure
+                  ></a>
+                </div>
+
+                <div class="emp-grid-captions">
+                  <div class="emplors-job-types-wrap">
+                    <span class="text-sm-muted">Chat & Video Calling</span>
+                  </div>
+                  <div class="emplors-job-title-wrap mb-1">
+                    <h4>
+                      <a href="employer-detail.html" class="emplors-job-title"
+                        >Skype</a
+                      >
+                    </h4>
+                  </div>
+                  <div class="emplors-job-mrch-lists">
+                    <div class="single-mrch-lists">
+                      <span
+                        ><i class="fa-solid fa-location-dot me-1"></i>Canada,
+                        USA</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emp-grid-footrs">
+                  <div class="emp-flexio">
+                    <span class="label px-4 py-2 text-main bg-light-main"
+                      >10 Open position</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="emp-grid-blocs">
+                <div class="emp-grid-thumbs">
+                  <a href="employer-detail.html"
+                    ><figure>
+                      <img
+                        src="assets/img/l-11.png"
+                        class="img-fluid"
+                        alt="" /></figure
+                  ></a>
+                </div>
+
+                <div class="emp-grid-captions">
+                  <div class="emplors-job-types-wrap">
+                    <span class="text-sm-muted">Software & Consultancy</span>
+                  </div>
+                  <div class="emplors-job-title-wrap mb-1">
+                    <h4>
+                      <a href="employer-detail.html" class="emplors-job-title"
+                        >Google Inc</a
+                      >
+                    </h4>
+                  </div>
+                  <div class="emplors-job-mrch-lists">
+                    <div class="single-mrch-lists">
+                      <span
+                        ><i class="fa-solid fa-location-dot me-1"></i>London,
+                        UK</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="emp-grid-footrs">
+                  <div class="emp-flexio">
+                    <span class="label px-4 py-2 text-main bg-light-main"
+                      >06 Open position</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ============================ Explore Top Companies End ================================== -->
 
       <!-- ============================ Good Reviews By Customers ================================== -->
       <section>
@@ -2264,8 +2512,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                       <img
                         src="https://placehold.co/500x500"
                         class="img-fluid circle"
-                        alt=""
-                      />
+                        alt="" />
                     </div>
                   </div>
                   <div class="jobstock-reviews-caption">
@@ -2304,8 +2551,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                       <img
                         src="https://placehold.co/500x500"
                         class="img-fluid circle"
-                        alt=""
-                      />
+                        alt="" />
                     </div>
                   </div>
                   <div class="jobstock-reviews-caption">
@@ -2346,8 +2592,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                       <img
                         src="https://placehold.co/500x500"
                         class="img-fluid circle"
-                        alt=""
-                      />
+                        alt="" />
                     </div>
                   </div>
                   <div class="jobstock-reviews-caption">
@@ -2388,8 +2633,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                       <img
                         src="https://placehold.co/500x500"
                         class="img-fluid circle"
-                        alt=""
-                      />
+                        alt="" />
                     </div>
                   </div>
                   <div class="jobstock-reviews-caption">
@@ -2430,8 +2674,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                       <img
                         src="https://placehold.co/500x500"
                         class="img-fluid circle"
-                        alt=""
-                      />
+                        alt="" />
                     </div>
                   </div>
                   <div class="jobstock-reviews-caption">
@@ -2460,8 +2703,7 @@ Find what suits you best and step into opportunities made just for you.</p>
       <!-- ============================ Call To Action ================================== -->
       <section
         class="bg-cover call-action-container dark bg-second"
-        style="background: url(assets/img/footer-bg-dark.png) no-repeat"
-      >
+        style="background: url(assets/img/footer-bg-dark.png) no-repeat">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-7 col-lg-10 col-md-12 col-sm-12">
@@ -2480,8 +2722,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                       <input
                         type="text"
                         class="form-control"
-                        placeholder="Enter Your email"
-                      />
+                        placeholder="Enter Your email" />
                       <button type="button" class="btn btn-subscribe">
                         Subscribe
                       </button>
@@ -2506,12 +2747,10 @@ Find what suits you best and step into opportunities made just for you.</p>
         tabindex="-1"
         role="dialog"
         aria-labelledby="filtermodal"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div
           class="modal-dialog modal-dialog-centered filter-popup"
-          role="document"
-        >
+          role="document">
           <div class="modal-content" id="filtermodal">
             <span class="mod-close" data-bs-dismiss="modal" aria-hidden="true"
               ><i class="fas fa-close"></i
@@ -2541,8 +2780,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="msixfive"
-                          />
+                            id="msixfive" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="msixfive"
@@ -2553,8 +2791,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="mseven"
-                          />
+                            id="mseven" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="mseven"
@@ -2565,8 +2802,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="msevenfive"
-                          />
+                            id="msevenfive" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="msevenfive"
@@ -2577,8 +2813,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="meight"
-                          />
+                            id="meight" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="meight"
@@ -2589,8 +2824,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="meightfive"
-                          />
+                            id="meightfive" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="meightfive"
@@ -2609,8 +2843,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="mninefive"
-                          />
+                            id="mninefive" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="mninefive"
@@ -2648,8 +2881,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="vsixfive"
-                          />
+                            id="vsixfive" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="vsixfive"
@@ -2660,8 +2892,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="vseven"
-                          />
+                            id="vseven" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="vseven"
@@ -2672,8 +2903,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="vsevenfive"
-                          />
+                            id="vsevenfive" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="vsevenfive"
@@ -2684,8 +2914,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="veight"
-                          />
+                            id="veight" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="veight"
@@ -2696,8 +2925,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="veightfive"
-                          />
+                            id="veightfive" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="veightfive"
@@ -2716,8 +2944,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="vninefive"
-                          />
+                            id="vninefive" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="vninefive"
@@ -2748,8 +2975,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                             type="checkbox"
                             class="btn-check"
                             id="anywhere"
-                            checked
-                          />
+                            checked />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="anywhere"
@@ -2760,8 +2986,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="onsite"
-                          />
+                            id="onsite" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="onsite"
@@ -2772,8 +2997,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="remote"
-                          />
+                            id="remote" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="remote"
@@ -2795,8 +3019,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="employee1"
-                          />
+                            id="employee1" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="employee1"
@@ -2807,8 +3030,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="frelancers1"
-                          />
+                            id="frelancers1" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="frelancers1"
@@ -2819,8 +3041,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="contractor1"
-                          />
+                            id="contractor1" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="contractor1"
@@ -2831,8 +3052,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="internship1"
-                          />
+                            id="internship1" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="internship1"
@@ -2854,8 +3074,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="fulltime"
-                          />
+                            id="fulltime" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="fulltime"
@@ -2866,8 +3085,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="parttime"
-                          />
+                            id="parttime" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="parttime"
@@ -2879,8 +3097,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                             type="checkbox"
                             class="btn-check"
                             id="freelance2"
-                            checked
-                          />
+                            checked />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="freelance2"
@@ -2891,8 +3108,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           <input
                             type="checkbox"
                             class="btn-check"
-                            id="internship2"
-                          />
+                            id="internship2" />
                           <label
                             class="btn btn-md btn-outline-main font--bold rounded-5"
                             for="internship2"
@@ -2914,8 +3130,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                           type="text"
                           class="js-range-slider"
                           name="my_range"
-                          value=""
-                        />
+                          value="" />
                       </div>
                     </div>
                   </div>
@@ -2933,8 +3148,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-1"
                               class="form-check-input"
                               name="s-1"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-1" class="form-check-label"
                               >IT Computers</label
                             >
@@ -2946,8 +3160,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-2"
                               class="form-check-input"
                               name="s-2"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-2" class="form-check-label"
                               >Web Design</label
                             >
@@ -2959,8 +3172,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-3"
                               class="form-check-input"
                               name="s-3"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-3" class="form-check-label"
                               >Web development</label
                             >
@@ -2972,8 +3184,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-4"
                               class="form-check-input"
                               name="s-4"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-4" class="form-check-label"
                               >SEO Services</label
                             >
@@ -2985,8 +3196,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-5"
                               class="form-check-input"
                               name="s-5"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-5" class="form-check-label"
                               >Financial Service</label
                             >
@@ -2998,8 +3208,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-6"
                               class="form-check-input"
                               name="s-6"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-6" class="form-check-label"
                               >Art, Design, Media</label
                             >
@@ -3011,8 +3220,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-7"
                               class="form-check-input"
                               name="s-7"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-7" class="form-check-label"
                               >Coach & Education</label
                             >
@@ -3024,8 +3232,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-8"
                               class="form-check-input"
                               name="s-8"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-8" class="form-check-label"
                               >Apps Developements</label
                             >
@@ -3037,8 +3244,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-9"
                               class="form-check-input"
                               name="s-9"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-9" class="form-check-label"
                               >IOS Development</label
                             >
@@ -3050,8 +3256,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                               id="s-10"
                               class="form-check-input"
                               name="s-10"
-                              type="checkbox"
-                            />
+                              type="checkbox" />
                             <label for="s-10" class="form-check-label"
                               >Android Development</label
                             >
@@ -3071,8 +3276,7 @@ Find what suits you best and step into opportunities made just for you.</p>
                         <input
                           type="text"
                           class="form-control"
-                          placeholder="Design, Java, Python, WordPress etc..."
-                        />
+                          placeholder="Design, Java, Python, WordPress etc..." />
                       </div>
                     </div>
                   </div>
@@ -3108,7 +3312,7 @@ Find what suits you best and step into opportunities made just for you.</p>
     <script src="assets/js/jquery.nice-select.min.js"></script>
     <script src="assets/js/slick.js"></script>
     <script src="assets/js/counterup.min.js"></script>
-    <script src="assets/js/include.js"></script>  
+    <script src="assets/js/include.js"></script>
     <script src="assets/js/custom.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugins -->
@@ -3118,128 +3322,129 @@ Find what suits you best and step into opportunities made just for you.</p>
   <!-- ======================== Splide Slider Script ================== -->
   <script>
     /* ===== Script for Featured Jobs ===== */
-   
-document.addEventListener("DOMContentLoaded", function () {
-  var splide = new Splide("#jobSplide", {
-    perPage: 4,
-    perMove: 1,
-    gap: "24px",
-    pagination: false,
-    arrows: false,
 
-    /* --- SUPER SMOOTH SLIDE MOTION --- */
-    speed: 1400,
-    easing: "cubic-bezier(.15, .85, .25, 1)",
+    document.addEventListener("DOMContentLoaded", function () {
+      var splide = new Splide("#jobSplide", {
+        perPage: 4,
+        perMove: 1,
+        gap: "24px",
+        pagination: false,
+        arrows: false,
 
-    drag: true,
-    flickPower: 120,
-    flickVelocityThreshold: 0.25,
-    keyboard: "global",
+        /* --- SUPER SMOOTH SLIDE MOTION --- */
+        speed: 1400,
+        easing: "cubic-bezier(.15, .85, .25, 1)",
 
-    /* --- AUTOPLAY --- */
-    type: "loop",
-    autoplay: true,
-    interval: 2800,
-    pauseOnHover: false,
-    pauseOnFocus: false,
+        drag: true,
+        flickPower: 120,
+        flickVelocityThreshold: 0.25,
+        keyboard: "global",
 
-    /* Disable Splide's built-in wheel handler — we'll use a custom one. */
-    wheel: false,
+        /* --- AUTOPLAY --- */
+        type: "loop",
+        autoplay: true,
+        interval: 2800,
+        pauseOnHover: false,
+        pauseOnFocus: false,
 
-    breakpoints: {
-      1200: { perPage: 3 },
-      992: { perPage: 2 },
-      576: { perPage: 1 },
-    },
-  });
+        /* Disable Splide's built-in wheel handler — we'll use a custom one. */
+        wheel: false,
 
-  splide.mount();
+        breakpoints: {
+          1200: { perPage: 3 },
+          992: { perPage: 2 },
+          576: { perPage: 1 },
+        },
+      });
 
-  // custom wheel handling so page scrolls when slider is at ends
-  (function addSmartWheelScroll() {
-    var el = document.querySelector("#jobSplide");
-    if (!el) return;
+      splide.mount();
 
-    var lastWheel = 0;
-    var wheelDelay = 220; // ms debounce between slide moves (tweak for sensitivity)
-    var acc = 0;          // accumulator for small touchpad deltas
-    var accThreshold = 40; // how much aggregated delta triggers a slide (tweak if too sensitive)
+      // custom wheel handling so page scrolls when slider is at ends
+      (function addSmartWheelScroll() {
+        var el = document.querySelector("#jobSplide");
+        if (!el) return;
 
-    // helper to get current perPage (responsive)
-    function getPerPage() {
-      // splide.options.perPage may be a number (or; Splide handles breakpoints internally),
-      // but to be safe, use splide.options.perPage which updates on resize in Splide v4.
-      return (typeof splide.options.perPage === "number") ? splide.options.perPage : 1;
-    }
+        var lastWheel = 0;
+        var wheelDelay = 220; // ms debounce between slide moves (tweak for sensitivity)
+        var acc = 0; // accumulator for small touchpad deltas
+        var accThreshold = 40; // how much aggregated delta triggers a slide (tweak if too sensitive)
 
-    el.addEventListener(
-      "wheel",
-      function (evt) {
-        // only handle vertical wheel
-        if (Math.abs(evt.deltaY) < Math.abs(evt.deltaX)) return;
-
-        // allow the browser to handle when ctrl/alt/meta pressed (user intent)
-        if (evt.ctrlKey || evt.altKey || evt.metaKey) return;
-
-        var now = Date.now();
-        var delta = evt.deltaY;
-
-        // if small delta (like gentle touchpad) accumulate before acting
-        if (Math.abs(delta) < 20) {
-          acc += delta;
-          // only act when accumulated passes threshold
-          if (Math.abs(acc) < accThreshold) {
-            // don't prevent default yet — allow small movement to scroll page if at ends
-            return;
-          }
-          // we've reached threshold — convert to one big delta and reset accumulator
-          delta = acc;
-          acc = 0;
-        } else {
-          // large delta (mouse wheel) -> reset accumulator
-          acc = 0;
+        // helper to get current perPage (responsive)
+        function getPerPage() {
+          // splide.options.perPage may be a number (or; Splide handles breakpoints internally),
+          // but to be safe, use splide.options.perPage which updates on resize in Splide v4.
+          return typeof splide.options.perPage === "number"
+            ? splide.options.perPage
+            : 1;
         }
 
-        // determine slider boundaries
-        var perPage = getPerPage();
-        var maxIndex = Math.max(0, splide.length - perPage);
-        var idx = splide.index;
+        el.addEventListener(
+          "wheel",
+          function (evt) {
+            // only handle vertical wheel
+            if (Math.abs(evt.deltaY) < Math.abs(evt.deltaX)) return;
 
-        // If user is trying to scroll UP and slider is at first slide -> allow page to scroll
-        if (delta < 0 && idx === 0) {
-          // do not preventDefault, let page scroll
-          return;
-        }
+            // allow the browser to handle when ctrl/alt/meta pressed (user intent)
+            if (evt.ctrlKey || evt.altKey || evt.metaKey) return;
 
-        // If user is trying to scroll DOWN and slider is at last slide -> allow page to scroll
-        if (delta > 0 && idx >= maxIndex) {
-          return;
-        }
+            var now = Date.now();
+            var delta = evt.deltaY;
 
-        // Otherwise we want the wheel to control the slider: prevent page scroll
-        evt.preventDefault();
+            // if small delta (like gentle touchpad) accumulate before acting
+            if (Math.abs(delta) < 20) {
+              acc += delta;
+              // only act when accumulated passes threshold
+              if (Math.abs(acc) < accThreshold) {
+                // don't prevent default yet — allow small movement to scroll page if at ends
+                return;
+              }
+              // we've reached threshold — convert to one big delta and reset accumulator
+              delta = acc;
+              acc = 0;
+            } else {
+              // large delta (mouse wheel) -> reset accumulator
+              acc = 0;
+            }
 
-        // simple debounce so we don't trigger too many splide.go calls for continuous wheel
-        if (now - lastWheel < wheelDelay) return;
-        lastWheel = now;
+            // determine slider boundaries
+            var perPage = getPerPage();
+            var maxIndex = Math.max(0, splide.length - perPage);
+            var idx = splide.index;
 
-        if (delta > 0) {
-          splide.go(">");
-        } else {
-          splide.go("<");
-        }
-      },
-      { passive: false } // we call preventDefault, so must be non-passive
-    );
-  })();
+            // If user is trying to scroll UP and slider is at first slide -> allow page to scroll
+            if (delta < 0 && idx === 0) {
+              // do not preventDefault, let page scroll
+              return;
+            }
 
-  // custom arrows
-  var prev = document.querySelector(".splide-custom-prev");
-  var next = document.querySelector(".splide-custom-next");
-  if (prev) prev.addEventListener("click", () => splide.go("<"));
-  if (next) next.addEventListener("click", () => splide.go(">"));
-});
+            // If user is trying to scroll DOWN and slider is at last slide -> allow page to scroll
+            if (delta > 0 && idx >= maxIndex) {
+              return;
+            }
 
+            // Otherwise we want the wheel to control the slider: prevent page scroll
+            evt.preventDefault();
+
+            // simple debounce so we don't trigger too many splide.go calls for continuous wheel
+            if (now - lastWheel < wheelDelay) return;
+            lastWheel = now;
+
+            if (delta > 0) {
+              splide.go(">");
+            } else {
+              splide.go("<");
+            }
+          },
+          { passive: false } // we call preventDefault, so must be non-passive
+        );
+      })();
+
+      // custom arrows
+      var prev = document.querySelector(".splide-custom-prev");
+      var next = document.querySelector(".splide-custom-next");
+      if (prev) prev.addEventListener("click", () => splide.go("<"));
+      if (next) next.addEventListener("click", () => splide.go(">"));
+    });
 
     /* ===== Script for Explore Categories ===== */
     document.addEventListener("DOMContentLoaded", function () {
